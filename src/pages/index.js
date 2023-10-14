@@ -69,7 +69,27 @@ const moreLinks = [
 
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
-const IndexPage = () => (
+const IndexPage = () => { 
+  async function stripeCheckout() {
+    try {
+      const res = await fetch('/.netlify/functions/stripe-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // body: JSON.stringify({ eventType: 'Contact', context:'123' }),
+        body: null, 
+      });
+      const data = await res.json();
+      console.log('Return from netlify functions =', data);
+      window.location = data.url;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
+  
+  return (
   <Layout>
     <div className={styles.textCenter}>
       <StaticImage
@@ -84,6 +104,7 @@ const IndexPage = () => (
       <h1>
         Welcome to <b>Gatsby!</b>
       </h1>
+      <button type="button" onClick={()=>stripeCheckout()}>Hello</button>
       <p className={styles.intro}>
         <b>Example pages:</b>{" "}
         {samplePageLinks.map((link, i) => (
@@ -116,7 +137,7 @@ const IndexPage = () => (
       </React.Fragment>
     ))}
   </Layout>
-)
+);}
 
 /**
  * Head export to define metadata for the page
