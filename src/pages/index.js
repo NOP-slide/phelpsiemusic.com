@@ -104,7 +104,7 @@ const IndexPage = () => {
       <h1>
         Welcome to <b>Gatsby!</b>
       </h1>
-      <button type="button" onClick={()=>stripeCheckout()}>Hello</button>
+      <button className=' bg-blue-600 text-4xl text-red-600 p-24' type="button" onClick={()=>stripeCheckout()}>Hello</button>
       <p className={styles.intro}>
         <b>Example pages:</b>{" "}
         {samplePageLinks.map((link, i) => (
