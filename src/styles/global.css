@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* See https://piccalil.li/quick-tip/a-safer-way-to-vertically-fill-the-viewport/ for details */
+  html,
+  body,
+  #___gatsby,
+  #gatsby-focus-wrapper {
+    height: -webkit-fill-available;
+  }
+
+  /* Use Smooth Scroll for jump links */
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+}
 :root {
   --progress-width: 0;
   --buffered-width: 0;
@@ -35,4 +49,26 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.player-hidden {
+  /* This timing applies on the way OUT */
+  transition-timing-function: ease-in;
+
+  /* Quick on the way out */
+  transition: 0.2s;
+
+  /* Hide thing by pushing it outside by default */
+  transform: translateY(130%);
+}
+
+.player-shown {
+  /* This timing applies on the way IN */
+  transition-timing-function: ease-out;
+
+  /* A litttttle slower on the way in */
+  transition: 0.25s;
+
+  /* Move into place */
+  transform: translateY(0);
 }

@@ -21,14 +21,6 @@ function formatDurationDisplay(duration) {
   return formatted
 }
 
-// interface AudioPlayerProps {
-//   currentSong?: { title: string; src: string }
-//   songIndex: number
-//   songCount: number
-//   onNext: () => void
-//   onPrev: () => void
-// }
-
 export default function AudioPlayer({
   currentSong,
   songCount,
@@ -42,21 +34,22 @@ export default function AudioPlayer({
   const [duration, setDuration] = React.useState(0)
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
-  const [volume, setVolume] = React.useState(0.2)
+  const [volume, setVolume] = React.useState(1.0)
   const [isPlaying, setIsPlaying] = React.useState(false)
 
   const durationDisplay = formatDurationDisplay(duration)
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
 
   React.useEffect(() => {
-    audioRef.current?.pause()
-
-    const timeout = setTimeout(() => {
-      audioRef.current?.play()
-    }, 500)
-
-    return () => {
-      clearTimeout(timeout)
+    audioRef.current?.pause();
+    let playPromise = audioRef.current?.play()
+    if (playPromise !== undefined) {
+      playPromise
+        .then(_ => {
+        })
+        .catch(error => {
+          audioRef.current?.pause()
+        })
     }
   }, [songIndex])
 
@@ -181,7 +174,7 @@ export default function AudioPlayer({
             size="lg"
           >
             {!isReady && currentSong ? (
-                <CgSpinner size={24} className="spinner" />
+              <CgSpinner size={24} className="spinner" />
             ) : isPlaying ? (
               <MdPause size={30} />
             ) : (

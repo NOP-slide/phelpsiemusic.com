@@ -9,8 +9,9 @@ import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
+import Footer from "./footer"
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isPlayerOpen }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -23,14 +24,10 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()} &middot; Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-        </footer>
+      <div className="relative flex flex-col min-h-screen antialiased bg-gray-200 fill-available ">
+        <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
+        <main className="flex flex-col flex-1">{children}</main>
+        <Footer isPlayerOpen={isPlayerOpen}/>
       </div>
     </>
   )

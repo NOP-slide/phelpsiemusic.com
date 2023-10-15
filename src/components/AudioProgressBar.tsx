@@ -26,7 +26,7 @@ export default function AudioProgressBar(props: AudioProgressBarProps) {
   }
 
   return (
-    <div className="absolute left-0 right-0 h-1 -top-4 group">
+    <div className="absolute left-0 right-0 h-1 top-8 group">
       <input
         type="range"
         name="progress"

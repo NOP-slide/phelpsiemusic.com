@@ -1,97 +1,82 @@
 import * as React from "react"
+import {Link} from 'gatsby';
 import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-import { MdPlayArrow, MdPause } from 'react-icons/md';
-import AudioPlayer from '../AudioPlayer';
+import { MdPlayArrow, MdPause } from "react-icons/md"
+import {AiOutlineYoutube,AiFillYoutube,AiOutlineInstagram} from 'react-icons/ai';
+import AudioPlayer from "../AudioPlayer"
 
-import { songs } from '../songs';
+import { demoTracks } from "../demo-tracks"
 
-const IndexPage = () => { 
+const IndexPage = () => {
   async function stripeCheckout() {
     try {
-      const res = await fetch('/.netlify/functions/stripe-checkout', {
-        method: 'POST',
+      const res = await fetch("/.netlify/functions/stripe-checkout", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         // body: JSON.stringify({ eventType: 'Contact', context:'123' }),
-        body: null, 
-      });
-      const data = await res.json();
-      console.log('Return from netlify functions =', data);
-      window.location = data.url;
+        body: null,
+      })
+      const data = await res.json()
+      console.log("Return from netlify functions =", data)
+      window.location = data.url
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error);
+      console.error(error)
     }
   }
 
-  const [currentSongIndex, setCurrentSongIndex] = React.useState(-1);
+  const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
 
-  const currentSong = songs[currentSongIndex];
-  
+  const currentSong = demoTracks[currentSongIndex]
+
   return (
-  <Layout>
-    <div>
-      <StaticImage
-        src="../images/example.png"
-        loading="eager"
-        width={64}
-        quality={95}
-        formats={["auto", "webp", "avif"]}
-        alt=""
-        style={{ marginBottom: `var(--space-3)` }}
-      />
-      <button className='p-24 text-4xl text-red-600 bg-blue-600 ' type="button" onClick={()=>stripeCheckout()}>Hello</button>
+    <Layout isPlayerOpen={currentSongIndex !== -1}>
+      <button
+        className="p-24 text-4xl text-red-600 bg-blue-600 border border-black "
+        type="button"
+        onClick={() => setCurrentSongIndex(0)}
+      >
+        Play Demo 1
+      </button>
+      <button
+        className="p-24 text-4xl text-red-600 bg-blue-600 border border-black "
+        type="button"
+        onClick={() => setCurrentSongIndex(1)}
+      >
+        Play Demo 2
+      </button>
+      <button
+        className="p-24 mb-64 text-4xl text-red-600 bg-blue-600 border border-black "
+        type="button"
+        onClick={() => stripeCheckout()}
+      >
+        Hello
+      </button>
 
-      <div className="flex flex-col h-full bg-slate-800 text-slate-300">
-      <div className="container flex-1 px-6 py-8 mx-auto">
-        <h1 className="mb-8 text-4xl font-bold">My Audio Player</h1>
-        <ul>
-          {songs.map((song, index) => (
-            <li key={song.title} className="mb-1">
-              <button
-                onClick={() => setCurrentSongIndex(index)}
-                className={`flex items-center py-4 px-3  w-full space-evenly rounded ${
-                  currentSongIndex === index
-                    ? 'bg-amber-600 text-white'
-                    : ' hover:bg-amber-600 hover:text-white'
-                }`}
-              >
-                <span className="text-sm">
-                  {index + 1 < 10 ? '0' + (index + 1) : index + 1}
-                </span>
-                <h2 className="flex-1">{song.title}</h2>
-                <span>
-                  {index === currentSongIndex ? (
-                    <MdPause size={20} />
-                  ) : (
-                    <MdPlayArrow size={20} />
-                  )}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-auto">
+      <div className='w-full bg-gray-200 h-96'/>
+      <div
+        className={`fixed bottom-0 flex flex-col w-full transform bg-slate-800 text-slate-300 ${
+          currentSongIndex !== -1 ? "player-shown" : "player-hidden"
+        }`}
+      >
         <AudioPlayer
           key={currentSongIndex}
           currentSong={currentSong}
-          songCount={songs.length}
+          songCount={demoTracks.length}
           songIndex={currentSongIndex}
-          onNext={() => setCurrentSongIndex((i) => i + 1)}
-          onPrev={() => setCurrentSongIndex((i) => i - 1)}
+          onNext={() => setCurrentSongIndex(i => i + 1)}
+          onPrev={() => setCurrentSongIndex(i => i - 1)}
         />
       </div>
-    </div>
-
-    </div>
-  </Layout>
-);}
+    </Layout>
+  )
+}
 
 /**
  * Head export to define metadata for the page
