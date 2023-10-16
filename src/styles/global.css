@@ -22,6 +22,63 @@
   --buffered-left: 0;
 }
 
+.cart-modal-container {
+  background: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+  z-index: 30;
+}
+
+.cart-modal-fadein {
+  animation: modal-fadein 0.4s ease-in-out;
+}
+
+.cart-modal-slidein {
+  animation: modal-slidein 0.4s ease-in-out;
+}
+
+.cart-modal-fadeout {
+  animation: modal-fadeout 0.4s ease-in-out;
+}
+
+.cart-modal-slideout {
+  animation: modal-slideout 0.4s ease-in-out;
+}
+
+@keyframes modal-fadein {
+  0% {
+    background: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+@keyframes modal-slidein {
+  0% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes modal-fadeout {
+  0% {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  100% {
+    background: rgba(0, 0, 0, 0);
+  }
+}
+@keyframes modal-slideout {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
+}
+
 .progress-bar::-webkit-slider-thumb {
   z-index: 4;
   position: relative;

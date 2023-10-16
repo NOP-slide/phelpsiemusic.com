@@ -1,15 +1,21 @@
 import * as React from "react"
-import {Link} from 'gatsby';
+import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
+import { useSiteContext } from "../hooks/use-site-context";
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 import { MdPlayArrow, MdPause } from "react-icons/md"
-import {AiOutlineYoutube,AiFillYoutube,AiOutlineInstagram} from 'react-icons/ai';
-import AudioPlayer from "../AudioPlayer"
+import {
+  AiOutlineYoutube,
+  AiFillYoutube,
+  AiOutlineInstagram,
+} from "react-icons/ai"
+import AudioPlayer from "../components/AudioPlayer"
 
-import { demoTracks } from "../demo-tracks"
+import { demoTracks } from "../data/demo-tracks"
+import { addToCart } from "../functions/addToCart"
 
 const IndexPage = () => {
   async function stripeCheckout() {
@@ -32,6 +38,7 @@ const IndexPage = () => {
   }
 
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
+  const {setIsCartOpen} = useSiteContext();
 
   const currentSong = demoTracks[currentSongIndex]
 
@@ -58,10 +65,20 @@ const IndexPage = () => {
       >
         Hello
       </button>
+      <button
+        className="p-24 mb-64 text-4xl text-red-600 bg-blue-600 border border-black "
+        type="button"
+        onClick={() => {
+          addToCart();
+          setIsCartOpen(true);
+        }}
+      >
+        Add To Cart 1
+      </button>
 
-      <div className='w-full bg-gray-200 h-96'/>
+      <div className="w-full bg-gray-200 h-96" />
       <div
-        className={`fixed bottom-0 py-6 flex z-50 flex-col w-full transform bg-brand-dark text-white ${
+        className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
           currentSongIndex !== -1 ? "player-shown" : "player-hidden"
         }`}
       >

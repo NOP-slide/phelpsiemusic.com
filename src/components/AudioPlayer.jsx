@@ -10,9 +10,9 @@ import {
 import { graphql, useStaticQuery } from "gatsby"
 import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image"
 import { CgSpinner } from "react-icons/cg"
-import IconButton from "./components/IconButton"
-import AudioProgressBar from "./components/AudioProgressBar"
-import VolumeInput from "./components/VolumeInput"
+import IconButton from "./IconButton"
+import AudioProgressBar from "./AudioProgressBar"
+import VolumeInput from "./VolumeInput"
 
 function formatDurationDisplay(duration) {
   const min = Math.floor(duration / 60)
@@ -31,17 +31,40 @@ export default function AudioPlayer({
   onPrev,
   demoTracks,
 }) {
+  const imageData = useStaticQuery(graphql`
+    {
+      allFile(filter: { relativeDirectory: { eq: "products" } }) {
+        edges {
+          node {
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED, quality: 95)
+            }
+          }
+        }
+      }
+    }
+  `)
+
   const audioRef = React.useRef(null)
 
   const [isReady, setIsReady] = React.useState(false)
   const [duration, setDuration] = React.useState(0)
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
-  const [volume, setVolume] = React.useState(1.0)
+  const [volume, setVolume] = React.useState(
+    localStorage.getItem("phelpsieVolume")
+      ? localStorage.getItem("phelpsieVolume")
+      : 1.0
+  )
   const [isPlaying, setIsPlaying] = React.useState(false)
 
   const durationDisplay = formatDurationDisplay(duration)
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
+
+  // let phelpsieVolume = localStorage.getItem("phelpsieVolume");
+  // if (phelpsieVolume) {
+  //   setVolume(phelpsieVolume);
+  // }
 
   React.useEffect(() => {
     audioRef.current?.pause()
@@ -96,15 +119,17 @@ export default function AudioPlayer({
     if (!audioRef.current) return
 
     if (audioRef.current.volume !== 0) {
+      localStorage.setItem("phelpsieVolume", audioRef.current.volume)
       audioRef.current.volume = 0
     } else {
-      audioRef.current.volume = 1
+      audioRef.current.volume = localStorage.getItem("phelpsieVolume")
     }
   }
 
   const handleVolumeChange = volumeValue => {
     if (!audioRef.current) return
     audioRef.current.volume = volumeValue
+    localStorage.setItem("phelpsieVolume", volumeValue)
     setVolume(volumeValue)
   }
 
@@ -148,8 +173,8 @@ export default function AudioPlayer({
         }}
       />
 
-      <div className="flex items-center">
-        <div className="flex items-center w-full sm:w-1/2">
+      <div className="flex flex-wrap items-center justify-center text-sm sm:text-base">
+        <div className="flex items-center justify-center w-full space-x-8 lg:w-1/2">
           <div className="">
             <IconButton
               disabled={!isReady}
@@ -188,26 +213,38 @@ export default function AudioPlayer({
             </span>
           </div>
         </div>
-        <div className="flex items-center w-full sm:w-1/2">
+        <div className="flex items-center justify-center w-full mt-2 space-x-2 sm:mt-0 sm:space-x-6 lg:space-x-8 lg:w-1/2">
           <div>
-            <StaticImage
-              quality={95}
-              src="./images/imaginarium-vol-1-art.jpg"
-              placeholder="none"
-              alt=""
-              className="w-12 h-16"
-            />
-            {/* <GatsbyImage
-              quality={95}
-              // src="./images/imaginarium-vol-1-art.jpg"
-              src={demoTracks[songIndex]?.image}
-              placeholder="none"
-              alt=""
-              className="w-16 h-16"
-            /> */}
+            {imageData.allFile.edges[songIndex]?.node.childImageSharp
+              .gatsbyImageData && (
+              <GatsbyImage
+                image={
+                  imageData.allFile.edges[songIndex]?.node.childImageSharp
+                    .gatsbyImageData
+                }
+                className="w-16 h-16"
+                alt=""
+              />
+            )}
           </div>
           <div className="">
-            <p className="">{currentSong?.title ?? "Select a track"}</p>
+            <p className="line-clamp-1 lg:pr-0">
+              {currentSong?.title ?? "Select a track"}
+            </p>
+          </div>
+          <div>
+            <p className='px-2 line-through bg-red-700 rounded-full'>{currentSong?.oldPrice}</p>
+          </div>
+          <div>
+            <p className='font-black'>{currentSong?.newPrice}</p>
+          </div>
+          <div className="">
+            <button
+              type="button"
+              className="px-4 py-2 text-xs font-bold text-white rounded-full sm:text-sm md:text-base whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+            >
+              ADD TO CART
+            </button>
           </div>
         </div>
       </div>
