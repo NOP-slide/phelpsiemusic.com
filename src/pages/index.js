@@ -61,11 +61,12 @@ const IndexPage = () => {
 
       <div className='w-full bg-gray-200 h-96'/>
       <div
-        className={`fixed bottom-0 flex flex-col w-full transform bg-slate-800 text-slate-300 ${
+        className={`fixed bottom-0 py-6 flex z-50 flex-col w-full transform bg-brand-dark text-white ${
           currentSongIndex !== -1 ? "player-shown" : "player-hidden"
         }`}
       >
         <AudioPlayer
+          demoTracks={demoTracks}
           key={currentSongIndex}
           currentSong={currentSong}
           songCount={demoTracks.length}

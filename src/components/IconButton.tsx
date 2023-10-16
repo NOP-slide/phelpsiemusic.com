@@ -10,7 +10,7 @@ interface IconButtonProps extends React.ComponentPropsWithoutRef<"button"> {
 }
 
 const colorMap: Record<Intent, string> = {
-  primary: "bg-amber-600 text-white",
+  primary: "bg-brand-teal text-white",
   secondary: "bg-slate-800 text-slate-400",
 }
 
@@ -29,7 +29,7 @@ export default function IconButton({
   const colorClass = colorMap[intent]
   const sizeClass = sizeMap[size]
   const classes = cn(
-    "rounded-full flex items-center justify-center ring-offset-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2 disabled:opacity-60",
+    "rounded-full flex items-center justify-center ring-offset-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-teal focus:ring-offset-2 disabled:opacity-60",
     colorClass,
     sizeClass,
     className

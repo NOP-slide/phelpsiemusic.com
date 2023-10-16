@@ -7,6 +7,8 @@ import {
   MdVolumeUp,
   MdVolumeOff,
 } from "react-icons/md"
+import { graphql, useStaticQuery } from "gatsby"
+import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image"
 import { CgSpinner } from "react-icons/cg"
 import IconButton from "./components/IconButton"
 import AudioProgressBar from "./components/AudioProgressBar"
@@ -27,6 +29,7 @@ export default function AudioPlayer({
   songIndex,
   onNext,
   onPrev,
+  demoTracks,
 }) {
   const audioRef = React.useRef(null)
 
@@ -41,12 +44,11 @@ export default function AudioPlayer({
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
 
   React.useEffect(() => {
-    audioRef.current?.pause();
+    audioRef.current?.pause()
     let playPromise = audioRef.current?.play()
     if (playPromise !== undefined) {
       playPromise
-        .then(_ => {
-        })
+        .then(_ => {})
         .catch(error => {
           audioRef.current?.pause()
         })
@@ -109,7 +111,7 @@ export default function AudioPlayer({
   return (
     <div
       style={{ position: "relative" }}
-      className="p-3 bg-slate-900 text-slate-400"
+      className="p-3 text-white bg-brand-dark"
     >
       {currentSong && (
         <audio
@@ -118,7 +120,7 @@ export default function AudioPlayer({
           onDurationChange={e => setDuration(e.currentTarget.duration)}
           onPlaying={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onEnded={handleNext}
+          // onEnded={handleNext}
           onCanPlay={e => {
             e.currentTarget.volume = volume
             setIsReady(true)
@@ -146,65 +148,67 @@ export default function AudioPlayer({
         }}
       />
 
-      <div className="flex flex-col items-center justify-center">
-        <div className="mb-1 text-center">
-          <p className="font-bold text-slate-300">
-            {currentSong?.title ?? "Select a song"}
-          </p>
-          <p className="text-xs">Singer Name</p>
-        </div>
-      </div>
-      <div className="grid items-center grid-cols-3 mt-4">
-        <span className="text-xs">
-          {elapsedDisplay} / {durationDisplay}
-        </span>
-        <div className="flex items-center gap-4 justify-self-center">
-          <IconButton
-            onClick={handlePrev}
-            disabled={songIndex === 0}
-            aria-label="go to previous"
-            intent="secondary"
-          >
-            <MdSkipPrevious size={24} />
-          </IconButton>
-          <IconButton
-            disabled={!isReady}
-            onClick={togglePlayPause}
-            aria-label={isPlaying ? "Pause" : "Play"}
-            size="lg"
-          >
-            {!isReady && currentSong ? (
-              <CgSpinner size={24} className="spinner" />
-            ) : isPlaying ? (
-              <MdPause size={30} />
-            ) : (
-              <MdPlayArrow size={30} />
-            )}
-          </IconButton>
-          <IconButton
-            onClick={handleNext}
-            disabled={songIndex === songCount - 1}
-            aria-label="go to next"
-            intent="secondary"
-          >
-            <MdSkipNext size={24} />
-          </IconButton>
-        </div>
+      <div className="flex items-center">
+        <div className="flex items-center w-full sm:w-1/2">
+          <div className="">
+            <IconButton
+              disabled={!isReady}
+              onClick={togglePlayPause}
+              aria-label={isPlaying ? "Pause" : "Play"}
+              size="md"
+            >
+              {!isReady && currentSong ? (
+                <CgSpinner size={24} className="spinner" />
+              ) : isPlaying ? (
+                <MdPause size={30} />
+              ) : (
+                <MdPlayArrow size={30} />
+              )}
+            </IconButton>
+          </div>
 
-        <div className="flex items-center gap-3 justify-self-end">
-          <IconButton
-            intent="secondary"
-            size="sm"
-            onClick={handleMuteUnmute}
-            aria-label={volume === 0 ? "unmute" : "mute"}
-          >
-            {volume === 0 ? (
-              <MdVolumeOff size={20} />
-            ) : (
-              <MdVolumeUp size={20} />
-            )}
-          </IconButton>
-          <VolumeInput volume={volume} onVolumeChange={handleVolumeChange} />
+          <div className="flex items-center">
+            <IconButton
+              intent="secondary"
+              size="sm"
+              onClick={handleMuteUnmute}
+              aria-label={volume === 0 ? "unmute" : "mute"}
+            >
+              {volume === 0 ? (
+                <MdVolumeOff size={20} />
+              ) : (
+                <MdVolumeUp size={20} />
+              )}
+            </IconButton>
+            <VolumeInput volume={volume} onVolumeChange={handleVolumeChange} />
+          </div>
+          <div className="flex items-center">
+            <span className="">
+              {elapsedDisplay} / {durationDisplay}
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center w-full sm:w-1/2">
+          <div>
+            <StaticImage
+              quality={95}
+              src="./images/imaginarium-vol-1-art.jpg"
+              placeholder="none"
+              alt=""
+              className="w-12 h-16"
+            />
+            {/* <GatsbyImage
+              quality={95}
+              // src="./images/imaginarium-vol-1-art.jpg"
+              src={demoTracks[songIndex]?.image}
+              placeholder="none"
+              alt=""
+              className="w-16 h-16"
+            /> */}
+          </div>
+          <div className="">
+            <p className="">{currentSong?.title ?? "Select a track"}</p>
+          </div>
         </div>
       </div>
     </div>
