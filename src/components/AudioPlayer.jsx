@@ -51,25 +51,17 @@ export default function AudioPlayer({
   const [duration, setDuration] = React.useState(0)
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
-  const [volume, setVolume] = React.useState(
-    typeof localStorage !== undefined ? (localStorage?.getItem("phelpsieVolume")
-      ? localStorage?.getItem("phelpsieVolume")
-      : 1.0) : 1.0
-  )
-  // const [volume, setVolume] = React.useState(
-  //   localStorage?.getItem("phelpsieVolume")
-  //     ? localStorage?.getItem("phelpsieVolume")
-  //     : 1.0
-  // )
+  const [volume, setVolume] = React.useState(1.0)
   const [isPlaying, setIsPlaying] = React.useState(false)
 
   const durationDisplay = formatDurationDisplay(duration)
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
 
-  // let phelpsieVolume = localStorage.getItem("phelpsieVolume");
-  // if (phelpsieVolume) {
-  //   setVolume(phelpsieVolume);
-  // }
+  // This is necessary because localStorage isn't available at build time
+  React.useEffect(() => {
+    let phelpsieVolume = localStorage.getItem("phelpsieVolume");
+    if (phelpsieVolume) setVolume(phelpsieVolume);
+  }, []);
 
   React.useEffect(() => {
     audioRef.current?.pause()
