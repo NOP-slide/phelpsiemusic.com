@@ -52,9 +52,9 @@ export default function AudioPlayer({
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
   const [volume, setVolume] = React.useState(
-    localStorage.getItem("phelpsieVolume")
+    typeof localStorage !== undefined ? (localStorage.getItem("phelpsieVolume")
       ? localStorage.getItem("phelpsieVolume")
-      : 1.0
+      : 1.0) : 1.0
   )
   const [isPlaying, setIsPlaying] = React.useState(false)
 
@@ -119,7 +119,7 @@ export default function AudioPlayer({
     if (!audioRef.current) return
 
     if (audioRef.current.volume !== 0) {
-      localStorage.setItem("phelpsieVolume", audioRef.current.volume)
+      if (typeof localStorage !== undefined) localStorage.setItem("phelpsieVolume", audioRef.current.volume)
       audioRef.current.volume = 0
     } else {
       audioRef.current.volume = localStorage.getItem("phelpsieVolume")
@@ -129,7 +129,7 @@ export default function AudioPlayer({
   const handleVolumeChange = volumeValue => {
     if (!audioRef.current) return
     audioRef.current.volume = volumeValue
-    localStorage.setItem("phelpsieVolume", volumeValue)
+    if (typeof localStorage !== undefined) localStorage.setItem("phelpsieVolume", volumeValue)
     setVolume(volumeValue)
   }
 
