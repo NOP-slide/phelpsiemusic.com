@@ -22,6 +22,31 @@
   --buffered-left: 0;
 }
 
+.scroll-without-scrollbar {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.scroll-without-scrollbar::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+.checkout-loading {
+  background-image: linear-gradient(90deg, #2d87d4, #2dd4bf, #2d87d4, #2dd4bf);
+  background-size: 300% 100%;
+  animation: animateBg 0.8s infinite linear;
+}
+@keyframes animateBg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
 .cart-modal-container {
   background: rgba(0, 0, 0, 0.6);
   height: 100vh;

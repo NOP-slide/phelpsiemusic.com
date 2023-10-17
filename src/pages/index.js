@@ -1,46 +1,18 @@
 import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
 import { useSiteContext } from "../hooks/use-site-context";
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-
-import { MdPlayArrow, MdPause } from "react-icons/md"
-import {
-  AiOutlineYoutube,
-  AiFillYoutube,
-  AiOutlineInstagram,
-} from "react-icons/ai"
 import AudioPlayer from "../components/AudioPlayer"
 
-import { demoTracks } from "../data/demo-tracks"
+import { allProducts } from "../data/all-products"
 import { addToCart } from "../functions/addToCart"
 
 const IndexPage = () => {
-  async function stripeCheckout() {
-    try {
-      const res = await fetch("/.netlify/functions/stripe-checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // body: JSON.stringify({ eventType: 'Contact', context:'123' }),
-        body: null,
-      })
-      const data = await res.json()
-      console.log("Return from netlify functions =", data)
-      window.location = data.url
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-    }
-  }
-
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
   const {setIsCartOpen} = useSiteContext();
 
-  const currentSong = demoTracks[currentSongIndex]
+  const currentSong = allProducts[currentSongIndex]
 
   return (
     <Layout isPlayerOpen={currentSongIndex !== -1}>
@@ -61,13 +33,6 @@ const IndexPage = () => {
       <button
         className="p-24 mb-64 text-4xl text-red-600 bg-blue-600 border border-black "
         type="button"
-        onClick={() => stripeCheckout()}
-      >
-        Hello
-      </button>
-      <button
-        className="p-24 mb-64 text-4xl text-red-600 bg-blue-600 border border-black "
-        type="button"
         onClick={() => {
           addToCart();
           setIsCartOpen(true);
@@ -83,10 +48,10 @@ const IndexPage = () => {
         }`}
       >
         <AudioPlayer
-          demoTracks={demoTracks}
+          allProducts={allProducts}
           key={currentSongIndex}
           currentSong={currentSong}
-          songCount={demoTracks.length}
+          songCount={allProducts.length}
           songIndex={currentSongIndex}
           onNext={() => setCurrentSongIndex(i => i + 1)}
           onPrev={() => setCurrentSongIndex(i => i - 1)}

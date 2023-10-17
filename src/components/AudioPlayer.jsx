@@ -2,13 +2,11 @@ import * as React from "react"
 import {
   MdPlayArrow,
   MdPause,
-  MdSkipNext,
-  MdSkipPrevious,
   MdVolumeUp,
   MdVolumeOff,
 } from "react-icons/md"
 import { graphql, useStaticQuery } from "gatsby"
-import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { CgSpinner } from "react-icons/cg"
 import IconButton from "./IconButton"
 import AudioProgressBar from "./AudioProgressBar"
@@ -25,20 +23,17 @@ function formatDurationDisplay(duration) {
 
 export default function AudioPlayer({
   currentSong,
-  songCount,
   songIndex,
-  onNext,
-  onPrev,
-  demoTracks,
 }) {
   const imageData = useStaticQuery(graphql`
     {
-      allFile(filter: { relativeDirectory: { eq: "products" } }) {
+      allFile(filter: {relativeDirectory: {eq: "products"}}, sort: {name: ASC}) {
         edges {
           node {
             childImageSharp {
               gatsbyImageData(placeholder: BLURRED, quality: 95)
             }
+            name
           }
         }
       }
@@ -75,13 +70,6 @@ export default function AudioPlayer({
     }
   }, [songIndex])
 
-  const handleNext = () => {
-    isReady && onNext()
-  }
-
-  const handlePrev = () => {
-    isReady && onPrev()
-  }
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -154,7 +142,7 @@ export default function AudioPlayer({
           onProgress={handleBufferProgress}
           onVolumeChange={e => setVolume(e.currentTarget.volume)}
         >
-          <source type="audio/mpeg" src={currentSong.src} />
+          <source type="audio/mpeg" src={currentSong.audioSrc} />
         </audio>
       )}
       <AudioProgressBar
@@ -233,7 +221,7 @@ export default function AudioPlayer({
             <p className='px-2 line-through bg-red-700 rounded-full'>{currentSong?.oldPrice}</p>
           </div>
           <div>
-            <p className='font-black'>{currentSong?.newPrice}</p>
+            <p className='font-black'>{currentSong?.price}</p>
           </div>
           <div className="">
             <button
