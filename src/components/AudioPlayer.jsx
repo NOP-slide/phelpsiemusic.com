@@ -11,6 +11,7 @@ import { CgSpinner } from "react-icons/cg"
 import IconButton from "./IconButton"
 import AudioProgressBar from "./AudioProgressBar"
 import VolumeInput from "./VolumeInput"
+import { useSiteContext } from "../hooks/use-site-context";
 
 function formatDurationDisplay(duration) {
   const min = Math.floor(duration / 60)
@@ -51,7 +52,31 @@ export default function AudioPlayer({
 
   const durationDisplay = formatDurationDisplay(duration)
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
+  const {setIsCartOpen} = useSiteContext();
 
+  const addToCart = () => {
+    if (typeof localStorage !== undefined) {
+      const phelpsieCart = localStorage.getItem("phelpsieCart");
+      let tempCart = {
+        items:[]
+      };
+
+      // If cart already exists
+      if (phelpsieCart) {
+        // If product is not already in cart
+        if (!phelpsieCart.includes(currentSong.prodCode)) {
+          tempCart = JSON.parse(phelpsieCart);
+          tempCart.items.push(currentSong.prodCode);
+          localStorage.setItem("phelpsieCart", JSON.stringify(tempCart));
+        }
+      // else make a new cart
+      } else {
+        tempCart.items.push(currentSong.prodCode);
+        localStorage.setItem("phelpsieCart", JSON.stringify(tempCart));
+      }
+    }
+    setIsCartOpen(true);
+  }
   // This is necessary because localStorage isn't available at build time
   React.useEffect(() => {
     let phelpsieVolume = localStorage.getItem("phelpsieVolume");
@@ -226,6 +251,7 @@ export default function AudioPlayer({
           <div className="">
             <button
               type="button"
+              onClick={()=>addToCart()}
               className="px-4 py-2 text-xs font-bold text-white rounded-full sm:text-sm md:text-base whitespace-nowrap bg-brand-teal hover:bg-teal-300"
             >
               ADD TO CART

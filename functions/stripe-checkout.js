@@ -1,7 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-exports.handler = async () => {
-    // console.log(event);
+exports.handler = async ({body}) => {
+    console.log("Body: ", body);
     const session = await stripe.checkout.sessions.create({
         line_items: [
           {

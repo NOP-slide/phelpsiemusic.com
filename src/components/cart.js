@@ -4,6 +4,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteContext } from "../hooks/use-site-context"
 import { useOutsideClick } from "../hooks/use-outside-click"
 import { CgPushRight } from "react-icons/cg"
+import { allProducts } from "../data/all-products"
 
 const Cart = () => {
   const [isCheckoutLoading, setIsCheckoutLoading] = React.useState(false)
@@ -16,8 +17,7 @@ const Cart = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify({ eventType: 'Contact', context:'123' }),
-        body: null,
+        body: JSON.stringify(cartItems),
       })
       const data = await res.json()
       console.log("Return from netlify functions =", data)
@@ -29,89 +29,18 @@ const Cart = () => {
     }
   }
 
-  const phelpsieCart = [
-    {
-      title: "Imaginarium Vol. 2 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-2-demo.mp3",
-      oldPrice: 30,
-      price: 17,
-      imgName: "2-imaginarium-vol-2-art",
-      slug: "/imaginarium-vol-2",
-      prodCode: "imaginarium-v-2",
-    },
-    {
-      title: "Imaginarium Vol. 1 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-1-demo.mp3",
-      oldPrice: 40,
-      price: 27,
-      imgName: "1-imaginarium-vol-1-art",
-      slug: "/imaginarium-vol-1",
-      prodCode: "imaginarium-v-1",
-    },
-    {
-      title: "Imaginarium Vol. 1 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-1-demo.mp3",
-      oldPrice: 40,
-      price: 27,
-      imgName: "1-imaginarium-vol-1-art",
-      slug: "/imaginarium-vol-1",
-      prodCode: "imaginarium-v-1",
-    },
-    {
-      title: "Imaginarium Vol. 1 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-1-demo.mp3",
-      oldPrice: 40,
-      price: 27,
-      imgName: "1-imaginarium-vol-1-art",
-      slug: "/imaginarium-vol-1",
-      prodCode: "imaginarium-v-1",
-    },
-    {
-      title: "Imaginarium Vol. 2 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-2-demo.mp3",
-      oldPrice: 30,
-      price: 17,
-      imgName: "2-imaginarium-vol-2-art",
-      slug: "/imaginarium-vol-2",
-      prodCode: "imaginarium-v-2",
-    },
-    {
-      title: "Imaginarium Vol. 2 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-2-demo.mp3",
-      oldPrice: 30,
-      price: 17,
-      imgName: "2-imaginarium-vol-2-art",
-      slug: "/imaginarium-vol-2",
-      prodCode: "imaginarium-v-2",
-    },
-    {
-      title: "Imaginarium Vol. 2 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-2-demo.mp3",
-      oldPrice: 30,
-      price: 17,
-      imgName: "2-imaginarium-vol-2-art",
-      slug: "/imaginarium-vol-2",
-      prodCode: "imaginarium-v-2",
-    },
-    {
-      title: "Imaginarium Vol. 1 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-1-demo.mp3",
-      oldPrice: 40,
-      price: 27,
-      imgName: "1-imaginarium-vol-1-art",
-      slug: "/imaginarium-vol-1",
-      prodCode: "imaginarium-v-1",
-    },
-    {
-      title: "Imaginarium Vol. 1 - Trap & Drill Loop Kit",
-      audioSrc: "imaginarium-vol-1-demo.mp3",
-      oldPrice: 40,
-      price: 27,
-      imgName: "1-imaginarium-vol-1-art",
-      slug: "/imaginarium-vol-1",
-      prodCode: "imaginarium-v-1",
-    },
-  ]
+  
+  // Get cart contents
+  let cartItems = [];
+  if (typeof localStorage !== undefined) {
+    const phelpsieCart = localStorage.getItem("phelpsieCart");
+
+    if (phelpsieCart) {
+      JSON.parse(phelpsieCart).items.map(item => 
+        cartItems.push(allProducts[allProducts.findIndex((e) => e.prodCode === item)])
+      )
+    }
+  }
 
   const imageData = useStaticQuery(graphql`
     {
@@ -141,6 +70,37 @@ const Cart = () => {
   }
 
   const ref = useOutsideClick(handleOutsideClick)
+  const [distance, setDistance] = React.useState(0);
+
+  const observedDiv = React.useRef(null);
+
+  React.useEffect(() => {
+    
+    if (!observedDiv.current) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver((e) => {
+        let div1 = document.getElementById("cart-main")
+        let div2 = document.getElementById("cart-bottom")
+      
+        let rect1 = div1?.getBoundingClientRect()
+        let rect2 = div2?.getBoundingClientRect()
+    
+        setDistance(Math.sqrt(
+          Math.pow(rect1?.left - rect2?.left, 2) + Math.pow(rect1?.top - rect2?.top, 2)
+        ));
+    });
+    
+    resizeObserver.observe(observedDiv.current);
+
+
+    return function cleanup() {
+      resizeObserver.disconnect();
+    }
+  },
+  [distance])
+
   return (
     <div
       className={`cart-modal-container transform ${
@@ -153,7 +113,7 @@ const Cart = () => {
           cartOpen ? "cart-modal-slidein" : "cart-modal-slideout"
         }`}
       >
-        <div className="relative h-screen">
+        <div ref={observedDiv} className="relative h-screen">
           <div className="flex">
             <button
               className="text-3xl text-white"
@@ -170,8 +130,12 @@ const Cart = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col gap-6 px-2 mt-12 overflow-y-auto h-1/2 md:h-4/6 scroll-without-scrollbar">
-            {phelpsieCart.map((item, num) => (
+          <div
+            id="cart-main"
+            style={{height: `${distance}px`}}
+            className={`flex flex-col gap-6 px-2 mt-12 scroll-without-scrollbar`}
+          >
+            {cartItems.map((item, num) => (
               <div
                 key={num}
                 className="flex w-full pb-6 border-b border-gray-700 sm:pb-0 sm:border-none"
@@ -200,9 +164,13 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className="absolute bottom-0 z-30 flex flex-col w-full gap-6 px-0 pt-8 pb-16 sm:px-6 bg-brand-dark fill-available">
+          <div
+            id="cart-bottom"
+            className="absolute bottom-0 z-30 flex flex-col w-full gap-6 px-0 pt-8 pb-16 sm:px-6 bg-brand-dark fill-available"
+          >
             <h3 className="text-lg font-semibold text-center text-gray-500">
-              Subtotal : ${phelpsieCart.map(item => item.price).reduce((a, b) => a + b, 0)}
+              Subtotal : $
+              {cartItems.map(item => item.price).reduce((a, b) => a + b, 0)}
             </h3>
             <button
               className={`whitespace-nowrap transition ease-in-out hover:scale-110 duration-200 hover:bg-teal-300 px-12 py-3 sm:py-4 text-lg text-white font-bold bg-brand-teal rounded-full ${
@@ -221,7 +189,9 @@ const Cart = () => {
                 setCartOpen(false)
                 setTimeout(() => setIsCartOpen(false), 350)
               }}
-            >KEEP SHOPPING</button>
+            >
+              KEEP SHOPPING
+            </button>
           </div>
         </div>
       </div>
