@@ -52,29 +52,32 @@ export default function AudioPlayer({
 
   const durationDisplay = formatDurationDisplay(duration)
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
-  const {setIsCartOpen} = useSiteContext();
+  const {setIsCartOpen, cartItemsFromLS, setCartItemsFromLS} = useSiteContext();
 
   const addToCart = () => {
     if (typeof localStorage !== undefined) {
-      const phelpsieCart = localStorage.getItem("phelpsieCart");
       let tempCart = {
         items:[]
       };
 
       // If cart already exists
-      if (phelpsieCart) {
+      if (cartItemsFromLS.length > 0) {
         // If product is not already in cart
-        if (!phelpsieCart.includes(currentSong.prodCode)) {
-          tempCart = JSON.parse(phelpsieCart);
+        if (!cartItemsFromLS.includes(currentSong.prodCode)) {
+          tempCart = JSON.parse(cartItemsFromLS);
           tempCart.items.push(currentSong.prodCode);
           localStorage.setItem("phelpsieCart", JSON.stringify(tempCart));
+          setCartItemsFromLS(JSON.stringify(tempCart));
         }
       // else make a new cart
       } else {
         tempCart.items.push(currentSong.prodCode);
         localStorage.setItem("phelpsieCart", JSON.stringify(tempCart));
+        setCartItemsFromLS(JSON.stringify(tempCart));
       }
+      console.log("Tempcart: ", tempCart)
     }
+
     setIsCartOpen(true);
   }
   // This is necessary because localStorage isn't available at build time

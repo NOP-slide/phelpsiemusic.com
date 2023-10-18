@@ -4,6 +4,8 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteContext } from "../hooks/use-site-context"
 import { useOutsideClick } from "../hooks/use-outside-click"
 import { CgPushRight } from "react-icons/cg"
+import { HiOutlineShoppingCart } from "react-icons/hi"
+import { MdClose } from "react-icons/md"
 import { allProducts } from "../data/all-products"
 
 const Cart = () => {
@@ -29,17 +31,20 @@ const Cart = () => {
     }
   }
 
-  
-  // Get cart contents
-  let cartItems = [];
-  if (typeof localStorage !== undefined) {
-    const phelpsieCart = localStorage.getItem("phelpsieCart");
+  const { setIsCartOpen, cartItemsFromLS, setCartItemsFromLS } =
+    useSiteContext()
 
-    if (phelpsieCart) {
-      JSON.parse(phelpsieCart).items.map(item => 
-        cartItems.push(allProducts[allProducts.findIndex((e) => e.prodCode === item)])
+  // Get cart contents
+  let cartItems = []
+
+  console.log("CART: ", cartItemsFromLS)
+
+  if (cartItemsFromLS.length > 0) {
+    JSON.parse(cartItemsFromLS).items.map(item =>
+      cartItems.push(
+        allProducts[allProducts.findIndex(e => e.prodCode === item)]
       )
-    }
+    )
   }
 
   const imageData = useStaticQuery(graphql`
@@ -60,7 +65,22 @@ const Cart = () => {
     }
   `)
 
-  const { setIsCartOpen } = useSiteContext()
+  const removeFromCart = item => {
+    if (typeof localStorage !== undefined) {
+      let newCart = { items: [] }
+      let tempRemove = JSON.parse(cartItemsFromLS).items.filter(
+        e => e !== item.prodCode
+      )
+      newCart.items.push(tempRemove.toString())
+      if (tempRemove.length > 0) {
+        localStorage.setItem("phelpsieCart", JSON.stringify(newCart))
+        setCartItemsFromLS(JSON.stringify(newCart))
+      } else {
+        localStorage.removeItem("phelpsieCart");
+        setCartItemsFromLS([]);
+      }
+    }
+  }
 
   const [cartOpen, setCartOpen] = React.useState(true)
 
@@ -70,36 +90,36 @@ const Cart = () => {
   }
 
   const ref = useOutsideClick(handleOutsideClick)
-  const [distance, setDistance] = React.useState(0);
+  const [distance, setDistance] = React.useState(0)
 
-  const observedDiv = React.useRef(null);
+  const observedDiv = React.useRef(null)
 
   React.useEffect(() => {
-    
     if (!observedDiv.current) {
-      return;
+      return
     }
 
-    const resizeObserver = new ResizeObserver((e) => {
-        let div1 = document.getElementById("cart-main")
-        let div2 = document.getElementById("cart-bottom")
-      
-        let rect1 = div1?.getBoundingClientRect()
-        let rect2 = div2?.getBoundingClientRect()
-    
-        setDistance(Math.sqrt(
-          Math.pow(rect1?.left - rect2?.left, 2) + Math.pow(rect1?.top - rect2?.top, 2)
-        ));
-    });
-    
-    resizeObserver.observe(observedDiv.current);
+    const resizeObserver = new ResizeObserver(e => {
+      let div1 = document.getElementById("cart-main")
+      let div2 = document.getElementById("cart-bottom")
 
+      let rect1 = div1?.getBoundingClientRect()
+      let rect2 = div2?.getBoundingClientRect()
+
+      setDistance(
+        Math.sqrt(
+          Math.pow(rect1?.left - rect2?.left, 2) +
+            Math.pow(rect1?.top - rect2?.top, 2)
+        )
+      )
+    })
+
+    resizeObserver.observe(observedDiv.current)
 
     return function cleanup() {
-      resizeObserver.disconnect();
+      resizeObserver.disconnect()
     }
-  },
-  [distance])
+  }, [distance])
 
   return (
     <div
@@ -114,7 +134,7 @@ const Cart = () => {
         }`}
       >
         <div ref={observedDiv} className="relative h-screen">
-          <div className="flex">
+          <div className="flex items-center">
             <button
               className="text-3xl text-white"
               type="button"
@@ -128,70 +148,87 @@ const Cart = () => {
             <h2 className="mx-auto text-2xl font-bold text-center text-white">
               CART
             </h2>
+            <HiOutlineShoppingCart className="block text-2xl text-brand-teal sm:hidden" />
           </div>
 
           <div
             id="cart-main"
-            style={{height: `${distance}px`}}
+            style={{ height: `${distance}px` }}
             className={`flex flex-col gap-6 px-2 mt-12 scroll-without-scrollbar`}
           >
-            {cartItems.map((item, num) => (
-              <div
-                key={num}
-                className="flex w-full pb-6 border-b border-gray-700 sm:pb-0 sm:border-none"
-              >
-                <Link to={item.slug}>
-                  <GatsbyImage
-                    image={
-                      imageData.allFile.edges[
-                        imageData.allFile.edges.findIndex(
-                          edge => edge.node.name === item.imgName
-                        )
-                      ]?.node.childImageSharp.gatsbyImageData
-                    }
-                    className="w-24 h-16 sm:w-24 sm:h-24"
-                    alt=""
-                  />
-                </Link>
-                <div className="flex flex-col justify-center px-4">
-                  <div className="text-sm font-semibold text-white sm:text-base">
-                    {item.title}
-                  </div>
-                  <div className="text-lg font-black text-white sm:text-xl">
-                    ${item.price}
-                  </div>
-                </div>
+            {cartItems.length === 0 ? (
+              <div className="text-xl font-bold text-center text-white">
+                Add Products To Your Cart
               </div>
-            ))}
+            ) : (
+              cartItems.map((item, num) => (
+                <div
+                  key={num}
+                  className="relative flex w-full pb-6 border-b border-gray-700 sm:pb-0 sm:border-none"
+                >
+                  <Link to={item.slug}>
+                    <GatsbyImage
+                      image={
+                        imageData.allFile.edges[
+                          imageData.allFile.edges.findIndex(
+                            edge => edge.node.name === item.imgName
+                          )
+                        ]?.node.childImageSharp.gatsbyImageData
+                      }
+                      className="w-24 h-16 sm:w-24 sm:h-24"
+                      alt=""
+                    />
+                  </Link>
+                  <div className="flex flex-col justify-center px-4">
+                    <div className="text-sm font-semibold text-white sm:text-base">
+                      {item.title}
+                    </div>
+                    <div className="text-lg font-black text-white sm:text-xl">
+                      ${item.price}
+                    </div>
+                  </div>
+                  <MdClose
+                    onClick={() => removeFromCart(item)}
+                    className="absolute top-0 right-0 w-4 h-4 font-black text-white cursor-pointer "
+                  />
+                </div>
+              ))
+            )}
           </div>
           <div
             id="cart-bottom"
             className="absolute bottom-0 z-30 flex flex-col w-full gap-6 px-0 pt-8 pb-16 sm:px-6 bg-brand-dark fill-available"
           >
-            <h3 className="text-lg font-semibold text-center text-gray-500">
-              Subtotal : $
-              {cartItems.map(item => item.price).reduce((a, b) => a + b, 0)}
-            </h3>
-            <button
-              className={`whitespace-nowrap transition ease-in-out hover:scale-110 duration-200 hover:bg-teal-300 px-12 py-3 sm:py-4 text-lg text-white font-bold bg-brand-teal rounded-full ${
-                isCheckoutLoading ? "checkout-loading" : ""
-              }`}
-              disabled={isCheckoutLoading}
-              type="button"
-              onClick={() => stripeCheckout()}
-            >
-              GO TO CHECKOUT
-            </button>
-            <button
-              className="w-auto mx-auto text-sm font-semibold tracking-wide text-center text-gray-400 underline"
-              type="button"
-              onClick={() => {
-                setCartOpen(false)
-                setTimeout(() => setIsCartOpen(false), 350)
-              }}
-            >
-              KEEP SHOPPING
-            </button>
+            {cartItems.length === 0 ? (
+              ""
+            ) : (
+              <>
+                <h3 className="text-lg font-semibold text-center text-gray-500">
+                  Subtotal : $
+                  {cartItems.map(item => item.price).reduce((a, b) => a + b, 0)}
+                </h3>
+                <button
+                  className={`whitespace-nowrap transition ease-in-out hover:scale-110 duration-200 hover:bg-teal-300 px-12 py-3 sm:py-4 text-lg text-white font-bold bg-brand-teal rounded-full ${
+                    isCheckoutLoading ? "checkout-loading" : ""
+                  }`}
+                  disabled={isCheckoutLoading}
+                  type="button"
+                  onClick={() => stripeCheckout()}
+                >
+                  GO TO CHECKOUT
+                </button>
+                <button
+                  className="w-auto mx-auto text-sm font-semibold tracking-wide text-center text-gray-400 underline"
+                  type="button"
+                  onClick={() => {
+                    setCartOpen(false)
+                    setTimeout(() => setIsCartOpen(false), 350)
+                  }}
+                >
+                  KEEP SHOPPING
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
