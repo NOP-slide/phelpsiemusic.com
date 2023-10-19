@@ -148,7 +148,7 @@ const Cart = () => {
             <h2 className="mx-auto text-2xl font-bold text-center text-white">
               CART
             </h2>
-            <HiOutlineShoppingCart className="block text-2xl text-brand-teal sm:hidden" />
+            {/* <HiOutlineShoppingCart className="block text-2xl text-brand-teal sm:hidden" /> */}
           </div>
 
           <div

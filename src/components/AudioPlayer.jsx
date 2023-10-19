@@ -25,6 +25,8 @@ function formatDurationDisplay(duration) {
 export default function AudioPlayer({
   currentSong,
   songIndex,
+  isPaused,
+  setIsPaused,
 }) {
   const imageData = useStaticQuery(graphql`
     {
@@ -98,14 +100,26 @@ export default function AudioPlayer({
     }
   }, [songIndex])
 
-
-  const togglePlayPause = () => {
-    if (isPlaying) {
+  React.useEffect(() => {
+    if (isPaused) {
       audioRef.current?.pause()
       setIsPlaying(false)
     } else {
       audioRef.current?.play()
       setIsPlaying(true)
+    }
+  }, [isPaused])
+
+
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current?.pause()
+      setIsPlaying(false)
+      setIsPaused(true);
+    } else {
+      audioRef.current?.play()
+      setIsPlaying(true)
+      setIsPaused(false);
     }
   }
 
