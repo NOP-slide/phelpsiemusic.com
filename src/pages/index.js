@@ -31,9 +31,8 @@ const IndexPage = () => {
           </h2>
           <br />
           <p className="max-w-lg text-lg text-white sm:text-xl">
-            Want to make your beats sound professional? Want to get the
-            attention of major producers and move your career forward? You're in
-            the right place.
+            Want to make your beats sound professional? Ready to get the
+            attention of major producers and move your career forward? Download pro-quality loops for the inspiration you need.
           </p>
         </div>
       </div>
@@ -65,8 +64,9 @@ const IndexPage = () => {
       {/* Product card section */}
       <div className="w-full bg-brand-dark">
         <div className="flex w-full max-w-5xl gap-16 mx-auto mt-16 h-[28rem]">
-          <div className="w-1/2 p-4 bg-brand-tealDark">
+          <div onClick={() => window.open("https://www.dropbox.com/scl/fi/bb838wyjhznkf6frzxink/Imaginarium-Vol.-1-Phelpsiemusic.com.zip?rlkey=tpspktjo54czkyrk2ck1h7biy&dl=1")} className="w-1/2 p-4 bg-brand-tealDark">
             <StaticImage
+              
               quality={95}
               src="../images/products/1-imaginarium-vol-1-art.jpg"
               placeholder="blurred"
