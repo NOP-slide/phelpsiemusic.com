@@ -172,6 +172,7 @@ export default function AudioPlayer({
           onDurationChange={e => setDuration(e.currentTarget.duration)}
           onPlaying={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
+          onEnded={()=>setIsPaused(true)}
           // onEnded={handleNext}
           onCanPlay={e => {
             e.currentTarget.volume = volume
@@ -260,10 +261,10 @@ export default function AudioPlayer({
             </p>
           </div>
           <div>
-            <p className='px-2 line-through bg-red-700 rounded-full'>{currentSong?.oldPrice}</p>
+            <p className='px-2 line-through bg-red-700 rounded-full'>${currentSong?.oldPrice}</p>
           </div>
           <div>
-            <p className='font-black'>{currentSong?.price}</p>
+            <p className='font-black'>${currentSong?.price}</p>
           </div>
           <div className="">
             <button
