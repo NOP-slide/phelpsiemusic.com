@@ -44,7 +44,7 @@ const IndexPage = () => {
 
       {/* Product card section */}
       <div className="w-full bg-brand-dark">
-        <div className="flex w-full h-full max-w-[22rem] gap-0 mx-auto mt-4 md:max-w-5xl md:mt-16 lg:gap-16">
+        <div className="flex w-full h-full max-w-[22rem] sm:gap-4 sm:max-w-xl gap-0 mx-auto mt-4 md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl md:mt-16 lg:gap-10">
           <div
             onMouseEnter={() => setIsHoveringProd1(true)}
             onMouseLeave={() => setIsHoveringProd1(false)}
@@ -56,7 +56,7 @@ const IndexPage = () => {
                 src="../images/products/1-imaginarium-vol-1-art.jpg"
                 placeholder="blurred"
                 alt=""
-                className={` transition ease-in-out duration-300 w-full h-48 lg:h-[28rem] ${
+                className={` transition ease-in-out duration-300 w-full h-48 sm:h-64 lg:h-[28rem] ${
                   isHoveringProd1 && "brightness-75"
                 }`}
               />
@@ -64,7 +64,7 @@ const IndexPage = () => {
                 type="button"
                 className={`${
                   isHoveringProd1 ? "opacity-100" : "opacity-0"
-                } transition ease-in-out duration-500 absolute px-4 text-sm md:px-16 py-1 md:py-3 md:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap sm:py-4 bg-brand-teal`}
+                } transition ease-in-out duration-500 absolute px-4 text-sm sm:px-8 lg:px-16 py-1 md:py-3 sm:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap bg-brand-teal`}
               >
                 LEARN MORE
               </button>
@@ -80,14 +80,14 @@ const IndexPage = () => {
                 className="h-24 text-white"
               >
                 {isPaused === false && currentSongIndex === 0 ? (
-                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
+                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 hover:scale-110" />
                 ) : (
-                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
+                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 hover:scale-110" />
                 )}
               </button>
             </div>
             <div className="flex items-center justify-between mt-6 mb-3">
-              <p className="max-w-[6rem] text-sm font-bold text-white sm:text-base">
+              <p className="max-w-[6rem] sm:max-w-[10rem] md:max-w-[13rem] text-sm font-bold text-white hover:text-gray-300 sm:text-base">
                 {allProducts[0].title}
               </p>
               <div className="flex flex-col gap-1">
@@ -111,7 +111,7 @@ const IndexPage = () => {
                 src="../images/products/2-imaginarium-vol-2-art.jpg"
                 placeholder="blurred"
                 alt=""
-                className={` transition ease-in-out duration-300 w-full h-48 lg:h-[28rem] ${
+                className={` transition ease-in-out duration-300 w-full h-48 sm:h-64 lg:h-[28rem] ${
                   isHoveringProd2 && "brightness-75"
                 }`}
               />
@@ -119,7 +119,7 @@ const IndexPage = () => {
                 type="button"
                 className={`${
                   isHoveringProd2 ? "opacity-100" : "opacity-0"
-                } transition ease-in-out duration-500 absolute px-4 text-sm md:px-16 py-1 md:py-3 md:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap sm:py-4 bg-brand-teal`}
+                } transition ease-in-out duration-500 absolute px-4 text-sm sm:px-8 lg:px-16 py-1 md:py-3 sm:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap bg-brand-teal`}
               >
                 LEARN MORE
               </button>
@@ -135,14 +135,14 @@ const IndexPage = () => {
                 className="h-24 text-white"
               >
                 {isPaused === false && currentSongIndex === 1 ? (
-                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
+                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 hover:scale-110" />
                 ) : (
-                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
+                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 hover:scale-110" />
                 )}
               </button>
             </div>
             <div className="flex items-center justify-between mt-6 mb-3">
-              <p className="max-w-[6rem] text-sm font-bold text-white sm:text-base">
+              <p className="max-w-[6rem] sm:max-w-[10rem] md:max-w-[13rem] text-sm font-bold text-white hover:text-gray-300 sm:text-base">
                 {allProducts[1].title}
               </p>
               <div className="flex flex-col gap-1">
