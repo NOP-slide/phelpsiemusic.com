@@ -21,9 +21,9 @@ const Footer = ({ isPlayerOpen }) => (
           </Link>
         </div>
         <div className="flex items-center justify-center w-full mt-6 md:justify-end md:w-1/2 md:mt-0">
-          <a href="mailto:phelpsie@phelpsiemusic.com" ><AiOutlineMail className="w-24 h-10 text-white" /></a>
-          <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@phelpsie-kz9py" ><AiFillYoutube className="w-24 h-12 text-white" /></a>
-          <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/phelpsie.music/" ><AiOutlineInstagram className="w-24 h-10 text-white" /></a>
+          <a href="mailto:phelpsie@phelpsiemusic.com" ><AiOutlineMail className="w-24 h-10 text-gray-300" /></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@phelpsie-kz9py" ><AiFillYoutube className="w-24 h-12 text-gray-300" /></a>
+          <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/phelpsie.music/" ><AiOutlineInstagram className="w-24 h-10 text-gray-300" /></a>
         </div>
       </div>
     </div>

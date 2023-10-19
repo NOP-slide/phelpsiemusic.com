@@ -33,6 +33,9 @@
   height: 0;
 }
 
+.play-button {
+  background-image: linear-gradient(90deg, #2d87d4, #2dd4bf);
+}
 .checkout-loading {
   background-image: linear-gradient(90deg, #2d87d4, #2dd4bf, #2d87d4, #2dd4bf);
   background-size: 300% 100%;
