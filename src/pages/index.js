@@ -44,11 +44,11 @@ const IndexPage = () => {
 
       {/* Product card section */}
       <div className="w-full bg-brand-dark">
-        <div className="flex w-full h-full max-w-5xl gap-16 mx-auto mt-16">
+        <div className="flex w-full h-full max-w-[22rem] gap-0 mx-auto mt-4 md:max-w-5xl md:mt-16 lg:gap-16">
           <div
             onMouseEnter={() => setIsHoveringProd1(true)}
             onMouseLeave={() => setIsHoveringProd1(false)}
-            className="relative w-1/2 p-4 bg-brand-tealDark hover:cursor-pointer"
+            className="relative w-1/2 p-2 md:p-4 bg-brand-tealDark hover:cursor-pointer"
           >
             <div className="relative">
               <StaticImage
@@ -56,7 +56,7 @@ const IndexPage = () => {
                 src="../images/products/1-imaginarium-vol-1-art.jpg"
                 placeholder="blurred"
                 alt=""
-                className={` transition ease-in-out duration-300 w-full h-[28rem] ${
+                className={` transition ease-in-out duration-300 w-full h-48 lg:h-[28rem] ${
                   isHoveringProd1 && "brightness-75"
                 }`}
               />
@@ -64,7 +64,7 @@ const IndexPage = () => {
                 type="button"
                 className={`${
                   isHoveringProd1 ? "opacity-100" : "opacity-0"
-                } transition ease-in-out duration-500 absolute px-16 py-3 text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap sm:py-4 bg-brand-teal`}
+                } transition ease-in-out duration-500 absolute px-4 text-sm md:px-16 py-1 md:py-3 md:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap sm:py-4 bg-brand-teal`}
               >
                 LEARN MORE
               </button>
@@ -80,21 +80,21 @@ const IndexPage = () => {
                 className="h-24 text-white"
               >
                 {isPaused === false && currentSongIndex === 0 ? (
-                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-8 right-8 hover:scale-110" />
+                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
                 ) : (
-                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-8 right-8 hover:scale-110" />
+                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
                 )}
               </button>
             </div>
             <div className="flex items-center justify-between mt-6 mb-3">
-              <p className="font-bold text-white text-md">
+              <p className="max-w-[6rem] text-sm font-bold text-white sm:text-base">
                 {allProducts[0].title}
               </p>
               <div className="flex flex-col gap-1">
-                <p className="px-2 text-sm font-bold text-center text-white line-through bg-red-700 rounded-full">
+                <p className="px-2 text-xs font-bold text-center text-white line-through bg-red-700 rounded-full sm:text-sm">
                   ${allProducts[0].oldPrice}
                 </p>
-                <p className="px-2 text-xl font-bold text-brand-teal">
+                <p className="px-2 text-lg font-bold sm:text-xl text-brand-teal">
                   ${allProducts[0].price}
                 </p>
               </div>
@@ -103,7 +103,7 @@ const IndexPage = () => {
           <div
             onMouseEnter={() => setIsHoveringProd2(true)}
             onMouseLeave={() => setIsHoveringProd2(false)}
-            className="relative w-1/2 p-4 bg-brand-tealDark hover:cursor-pointer"
+            className="relative w-1/2 p-2 md:p-4 bg-brand-tealDark hover:cursor-pointer"
           >
             <div className="relative">
               <StaticImage
@@ -111,7 +111,7 @@ const IndexPage = () => {
                 src="../images/products/2-imaginarium-vol-2-art.jpg"
                 placeholder="blurred"
                 alt=""
-                className={` transition ease-in-out duration-300 w-full h-[28rem] ${
+                className={` transition ease-in-out duration-300 w-full h-48 lg:h-[28rem] ${
                   isHoveringProd2 && "brightness-75"
                 }`}
               />
@@ -119,7 +119,7 @@ const IndexPage = () => {
                 type="button"
                 className={`${
                   isHoveringProd2 ? "opacity-100" : "opacity-0"
-                } transition ease-in-out duration-500 absolute px-16 py-3 text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap sm:py-4 bg-brand-teal`}
+                } transition ease-in-out duration-500 absolute px-4 text-sm md:px-16 py-1 md:py-3 md:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap sm:py-4 bg-brand-teal`}
               >
                 LEARN MORE
               </button>
@@ -135,21 +135,21 @@ const IndexPage = () => {
                 className="h-24 text-white"
               >
                 {isPaused === false && currentSongIndex === 1 ? (
-                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-8 right-8 hover:scale-110" />
+                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
                 ) : (
-                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-8 right-8 hover:scale-110" />
+                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 md:bottom-8 md:right-8 hover:scale-110" />
                 )}
               </button>
             </div>
             <div className="flex items-center justify-between mt-6 mb-3">
-              <p className="font-bold text-white text-md">
+              <p className="max-w-[6rem] text-sm font-bold text-white sm:text-base">
                 {allProducts[1].title}
               </p>
               <div className="flex flex-col gap-1">
-                <p className="px-2 text-sm font-bold text-center text-white line-through bg-red-700 rounded-full">
+                <p className="px-2 text-xs font-bold text-center text-white line-through bg-red-700 rounded-full sm:text-sm">
                   ${allProducts[1].oldPrice}
                 </p>
-                <p className="px-2 text-xl font-bold text-brand-teal">
+                <p className="px-2 text-lg font-bold sm:text-xl text-brand-teal">
                   ${allProducts[1].price}
                 </p>
               </div>
