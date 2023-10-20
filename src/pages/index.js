@@ -1,20 +1,18 @@
 import * as React from "react"
-import { useSiteContext } from "../hooks/use-site-context"
 import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import {navigate} from 'gatsby';
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 
 import { allProducts } from "../data/all-products"
-import { addToCart } from "../functions/addToCart"
 
 const IndexPage = () => {
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
   const [isPaused, setIsPaused] = React.useState(false)
   const [isHoveringProd1, setIsHoveringProd1] = React.useState(false)
   const [isHoveringProd2, setIsHoveringProd2] = React.useState(false)
-  const { setIsCartOpen } = useSiteContext()
 
   const currentSong = allProducts[currentSongIndex]
 
@@ -48,6 +46,9 @@ const IndexPage = () => {
           <div
             onMouseEnter={() => setIsHoveringProd1(true)}
             onMouseLeave={() => setIsHoveringProd1(false)}
+            onClick={() => {
+              navigate("/imaginarium-vol-1/")
+            }}
             className="relative w-1/2 p-2 md:p-4 bg-brand-tealDark hover:cursor-pointer"
           >
             <div className="relative">
@@ -70,19 +71,30 @@ const IndexPage = () => {
               </button>
               <button
                 type="button"
-                onClick={() => {
+                id="productplaybutton"
+                onClick={e => {
                   if (currentSongIndex !== 0) {
+                    e.stopPropagation()
                     setCurrentSongIndex(0)
                     setIsPaused(false)
                   }
-                  if (currentSongIndex === 0) setIsPaused(!isPaused)
+                  if (currentSongIndex === 0) {
+                    e.stopPropagation()
+                    setIsPaused(!isPaused)
+                  }
                 }}
                 className="h-24 text-white"
               >
                 {isPaused === false && currentSongIndex === 0 ? (
-                  <MdPause className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 hover:scale-110" />
+                  <MdPause
+                    id="productplaybutton"
+                    className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full checkout-loading bottom-4 right-4 hover:scale-110"
+                  />
                 ) : (
-                  <MdPlayArrow className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 hover:scale-110" />
+                  <MdPlayArrow
+                    id="productplaybutton"
+                    className="absolute w-12 h-12 p-2 transition duration-200 ease-in-out rounded-full play-button bottom-4 right-4 hover:scale-110"
+                  />
                 )}
               </button>
             </div>
@@ -103,6 +115,10 @@ const IndexPage = () => {
           <div
             onMouseEnter={() => setIsHoveringProd2(true)}
             onMouseLeave={() => setIsHoveringProd2(false)}
+            onClick={() => {
+              console.log("click2")
+              // LINK TO PRODUCT PAGE here
+            }}
             className="relative w-1/2 p-2 md:p-4 bg-brand-tealDark hover:cursor-pointer"
           >
             <div className="relative">
@@ -125,12 +141,16 @@ const IndexPage = () => {
               </button>
               <button
                 type="button"
-                onClick={() => {
+                onClick={e => {
                   if (currentSongIndex !== 1) {
+                    e.stopPropagation()
                     setCurrentSongIndex(1)
                     setIsPaused(false)
                   }
-                  if (currentSongIndex === 1) setIsPaused(!isPaused)
+                  if (currentSongIndex === 1) {
+                    e.stopPropagation()
+                    setIsPaused(!isPaused)
+                  }
                 }}
                 className="h-24 text-white"
               >
@@ -158,8 +178,36 @@ const IndexPage = () => {
         </div>
       </div>
 
+      {/* Who I've worked with section */}
+      <div className="w-full pb-20 bg-brand-dark">
+        <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
+          <div className="w-full mt-4 border-0 border-t border-white md:mt-12"></div>
+          <h3 className="mt-12 text-2xl font-bold text-center lg:text-4xl text-brand-teal">
+            WHO I'VE WORKED WITH
+          </h3>
+          <div className="flex mt-8 lg:mt-16">
+            <div className="flex flex-col items-center w-1/2">
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">Twysted Genius</p>
+              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(Lil Baby, Future, Moneybagg Yo)</p>
+            </div>
+            <div className="flex flex-col items-center w-1/2">
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">Ronny J</p>
+              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(Eminem, Kanye West)</p>
+            </div>
+          </div>
+          <div className="flex mt-8 lg:mt-16">
+            <div className="flex flex-col items-center w-1/2">
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">CuBeatz</p>
+              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(Travis Scott, Drake, Nicki Minaj)</p>
+            </div>
+            <div className="flex flex-col items-center w-1/2">
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">Kid Hazel</p>
+              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(21 Savage, Coi Leray)</p>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Audio player section */}
-      <div className="w-full bg-brand-dark h-96" />
       <div
         className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
           currentSongIndex !== -1 ? "player-shown" : "player-hidden"
