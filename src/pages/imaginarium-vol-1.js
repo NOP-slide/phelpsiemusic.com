@@ -60,7 +60,7 @@ const ImaginariumVol1Page = () => {
           className="relative w-full h-36 sm:h-48"
         />
         <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-          <h2 className="text-2xl font-bold text-center text-white sm:text-4xl xl:text-5xl whitespace-nowrap">
+          <h2 className="text-2xl font-bold tracking-wide text-center text-white sm:tracking-normal sm:text-4xl xl:text-5xl whitespace-nowrap">
             Placement-Ready Loops. <br className="block lg:hidden" />
             Trusted By The Pros.
           </h2>
@@ -150,7 +150,7 @@ const ImaginariumVol1Page = () => {
       {/* Who I've worked with section */}
       <div className="w-full pt-4 pb-20 md:pt-12 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
-          <h3 className="mt-12 text-2xl font-bold text-center lg:text-4xl text-brand-teal">
+          <h3 className="mt-12 text-2xl font-bold tracking-wide text-center sm:tracking-normal lg:text-4xl text-brand-teal">
             WHO I'VE WORKED WITH
           </h3>
           <div className="flex mt-8 lg:mt-16">
@@ -190,34 +190,111 @@ const ImaginariumVol1Page = () => {
             </div>
           </div>
           {/* IG screenshots section */}
-          <div className="flex gap-12 mt-16">
-            <div>
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            WHAT THE PROS SAY
+          </h3>
+          <div className="flex flex-wrap gap-8 px-2 mt-8 sm:px-0 sm:mt-16 sm:gap-6 md:gap-12 sm:flex-nowrap">
+            <div className="flex flex-col">
               <StaticImage
                 quality={95}
                 src="../images/twysted.jpg"
                 placeholder="blurred"
                 alt=""
                 imgStyle={{ objectFit: "fill" }}
-                className={`w-full h-[23rem] `}
+                className={`w-full sm:h-[15rem] lg:h-[23rem] `}
               />
+              <div className="flex flex-col py-6 bg-teal-700/50">
+                <div className="text-xl font-bold text-center text-white md:text-2xl">
+                  Twysted Genius
+                </div>
+                <div className="text-base font-medium text-center text-white md:text-lg">
+                  Multiplatinum, Grammy nominated
+                </div>
+              </div>
             </div>
-            <div>
+            <div className="flex flex-col">
               <StaticImage
                 quality={95}
                 src="../images/kidhazel.jpg"
                 placeholder="blurred"
                 alt=""
                 imgStyle={{ objectFit: "fill" }}
-                className={`w-full h-[23rem] `}
+                className={`w-full sm:h-[15rem] lg:h-[23rem] `}
               />
+              <div className="flex flex-col py-6 bg-teal-700/50">
+                <div className="text-xl font-bold text-center text-white md:text-2xl">
+                  Kid Hazel
+                </div>
+                <div className="text-base font-medium text-center text-white md:text-lg">
+                  Multiplatinum, Grammy nominated
+                </div>
+              </div>
             </div>
           </div>
+          <div className="relative px-2 mx-auto mt-12 sm:px-0">
+            <StaticImage
+              quality={95}
+              src="../images/twysted-screenshot.jpg"
+              placeholder="blurred"
+              alt=""
+              imgStyle={{ objectFit: "fill" }}
+              className={`w-full sm:w-96 h-[24rem] sm:h-[30rem] mx-auto `}
+            />
+            <button
+              className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
+              type="button"
+              onClick={() => setIsVideoPlayerOpen(true)}
+            >
+              <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
+            </button>
+          </div>
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            WHAT YOU'LL GET
+          </h3>
+          <p className="px-2 mt-12 text-xl font-bold text-white sm:px-0">
+            Imaginarium Vol. 1 - Trap and Drill Loop Kit
+          </p>
+          <p className="px-2 mt-6 text-white sm:px-0">
+            Enter a world of musical fantasy, ranging from epic choirs, ethnic
+            strings and heavenly bells to silky nylon guitars, real whistling
+            leads and much more. Featuring whimsical melodies and arrangements
+            full of character, with a touch of melancholy throughout, this loop
+            kit is sure to <span className="font-bold">inspire you</span> and
+            leave your <span className="font-bold">listeners in awe.</span>
+            <br />
+            <br />
+            Contains <span className="font-bold">50+</span> gorgeous instrument
+            and sound effect stems, carefully arranged into ten original
+            trap/drill compositions, in WAV format for use in any audio software
+            (FL Studio, Ableton, Cubase, etc.), and any platform (Windows/Mac).
+            <br />
+            <br />
+            All compositions are{" "}
+            <span className="font-black">professionally mixed</span>, have A and
+            B sections, and are made up of{" "}
+            <span className="font-black">several layers</span>, perfectly
+            designed to be added or removed as you please when arranging your
+            track.
+            <br />
+            <br />
+            As a <span className="font-black">special bonus</span>, this kit
+            also includes an additional fingerstyle and electric guitar loop.
+            <br />
+            <br />
+            <span className="font-black">Royalty free</span> for online beat
+            leasing (eg. Beatstars, Traktrain). Please read the included text
+            file for full terms after purchase.
+            <br />
+            <br />
+            To get your copy now, and start making <span className="font-black">industry level beats</span>, simply click "
+            <span className="font-black">Add To Cart</span>".
+          </p>
           <button
-            className="mt-6 text-white"
             type="button"
-            onClick={() => setIsVideoPlayerOpen(true)}
+            onClick={() => addToCart()}
+            className="w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
           >
-            Open
+            ADD TO CART
           </button>
         </div>
       </div>
