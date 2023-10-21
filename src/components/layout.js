@@ -31,7 +31,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
     <>
       <div className="relative flex flex-col min-h-screen antialiased bg-gray-200 fill-available">
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-        <main className="flex flex-col flex-1">{children}</main>
+        <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
         {isCartOpen && <Cart />}
         {isVideoPlayerOpen && <VideoPlayer />}
         <Footer isPlayerOpen={isPlayerOpen} />

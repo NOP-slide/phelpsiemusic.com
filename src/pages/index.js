@@ -116,8 +116,7 @@ const IndexPage = () => {
             onMouseEnter={() => setIsHoveringProd2(true)}
             onMouseLeave={() => setIsHoveringProd2(false)}
             onClick={() => {
-              console.log("click2")
-              // LINK TO PRODUCT PAGE here
+              navigate("/imaginarium-vol-2/")
             }}
             className="relative w-1/2 p-2 md:p-4 bg-brand-tealDark hover:cursor-pointer"
           >
