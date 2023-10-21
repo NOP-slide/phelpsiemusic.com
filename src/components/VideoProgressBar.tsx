@@ -1,0 +1,43 @@
+import * as React from "react"
+
+interface ProgressCSSProps extends React.CSSProperties {
+  "--progress-width": number
+  "--buffered-width": number
+}
+
+interface VideoProgressBarProps
+  extends React.ComponentPropsWithoutRef<"input"> {
+  duration: number
+  currentProgress: number
+  buffered: number
+}
+
+export default function VideoProgressBar(props: VideoProgressBarProps) {
+  const { duration, currentProgress, buffered, ...rest } = props
+
+  const progressBarWidth = isNaN(currentProgress / duration)
+    ? 0
+    : currentProgress / duration
+  const bufferedWidth = isNaN(buffered / duration) ? 0 : buffered / duration
+
+  const progressStyles: ProgressCSSProps = {
+    "--progress-width": progressBarWidth,
+    "--buffered-width": bufferedWidth,
+  }
+
+  return (
+    <div className="absolute bottom-0 left-0 right-0 h-1 group">
+      <input
+        type="range"
+        name="progress"
+        className={`progress-bar appearance-none absolute inset-0 w-full m-0 h-full bg-teal-700 cursor-pointer group-hover:h-2 transition-all accent-brand-teal hover:accent-brand-teal before:absolute before:inset-0 before:h-full before:w-full before:bg-brand-teal before:origin-left after:absolute after:h-full after:w-full after:bg-teal-700`}
+        style={progressStyles}
+        min={0}
+        step={0.01}
+        max={duration}
+        value={currentProgress}
+        {...rest}
+      />
+    </div>
+  )
+}

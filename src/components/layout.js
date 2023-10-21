@@ -11,10 +11,11 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import Footer from "./footer"
 import Cart from "./cart"
+import VideoPlayer from "./VideoPlayer"
 import { useSiteContext } from "../hooks/use-site-context";
 
 const Layout = ({ children, isPlayerOpen = false }) => {
-  const {isCartOpen} = useSiteContext();
+  const {isCartOpen, isVideoPlayerOpen} = useSiteContext();
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -32,6 +33,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main className="flex flex-col flex-1">{children}</main>
         {isCartOpen && <Cart />}
+        {isVideoPlayerOpen && <VideoPlayer />}
         <Footer isPlayerOpen={isPlayerOpen} />
       </div>
     </>

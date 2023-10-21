@@ -14,8 +14,12 @@ const ImaginariumVol1Page = () => {
 
   const currentSong = allProducts[currentSongIndex]
 
-  const { setIsCartOpen, cartItemsFromLS, setCartItemsFromLS } =
-    useSiteContext()
+  const {
+    setIsVideoPlayerOpen,
+    setIsCartOpen,
+    cartItemsFromLS,
+    setCartItemsFromLS,
+  } = useSiteContext()
 
   const addToCart = () => {
     if (typeof localStorage !== undefined) {
@@ -134,29 +138,28 @@ const ImaginariumVol1Page = () => {
             </div>
           </div>
         </div>
-          <button
-            type="button"
-            onClick={() => addToCart()}
-            className="block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
-          >
-            ADD TO CART
-          </button>
+        <button
+          type="button"
+          onClick={() => addToCart()}
+          className="block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+        >
+          ADD TO CART
+        </button>
       </div>
 
       {/* Who I've worked with section */}
       <div className="w-full pt-4 pb-20 md:pt-12 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
-          {/* <div className="w-full mt-4 border-0 border-t border-white md:mt-12"></div> */}
           <h3 className="mt-12 text-2xl font-bold text-center lg:text-4xl text-brand-teal">
             WHO I'VE WORKED WITH
           </h3>
           <div className="flex mt-8 lg:mt-16">
             <div className="flex flex-col items-center w-1/2">
               <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
-                Twysted Genius
+                CuBeatz
               </p>
               <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
-                (Lil Baby, Future, Moneybagg Yo)
+                (Travis Scott, Drake, Nicki Minaj)
               </p>
             </div>
             <div className="flex flex-col items-center w-1/2">
@@ -171,10 +174,10 @@ const ImaginariumVol1Page = () => {
           <div className="flex mt-8 lg:mt-16">
             <div className="flex flex-col items-center w-1/2">
               <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
-                CuBeatz
+                Twysted Genius
               </p>
               <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
-                (Travis Scott, Drake, Nicki Minaj)
+                (Lil Baby, Future, Moneybagg Yo)
               </p>
             </div>
             <div className="flex flex-col items-center w-1/2">
@@ -186,6 +189,36 @@ const ImaginariumVol1Page = () => {
               </p>
             </div>
           </div>
+          {/* IG screenshots section */}
+          <div className="flex gap-12 mt-16">
+            <div>
+              <StaticImage
+                quality={95}
+                src="../images/twysted.jpg"
+                placeholder="blurred"
+                alt=""
+                imgStyle={{ objectFit: "fill" }}
+                className={`w-full h-[23rem] `}
+              />
+            </div>
+            <div>
+              <StaticImage
+                quality={95}
+                src="../images/kidhazel.jpg"
+                placeholder="blurred"
+                alt=""
+                imgStyle={{ objectFit: "fill" }}
+                className={`w-full h-[23rem] `}
+              />
+            </div>
+          </div>
+          <button
+            className="mt-6 text-white"
+            type="button"
+            onClick={() => setIsVideoPlayerOpen(true)}
+          >
+            Open
+          </button>
         </div>
       </div>
       {/* Audio player section */}

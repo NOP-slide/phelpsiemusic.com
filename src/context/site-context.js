@@ -3,13 +3,16 @@ import React, { createContext, useState } from "react"
 
 const SiteContext = createContext({
   isCartOpen: false,
+  isVideoPlayerOpen: false,
   cartItemsFromLS: [],
   setCartItemsFromLS: () => {},
   setIsCartOpen: () => {},
+  setIsVideoPlayerOpen: () => {},
 })
 
 function SiteProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isVideoPlayerOpen, setIsVideoPlayerOpen] = useState(false)
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -30,6 +33,8 @@ function SiteProvider({ children }) {
         setIsCartOpen,
         cartItemsFromLS,
         setCartItemsFromLS,
+        isVideoPlayerOpen,
+        setIsVideoPlayerOpen,
       }}
     >
       {children}
