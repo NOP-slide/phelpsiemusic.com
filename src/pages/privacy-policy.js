@@ -2,6 +2,7 @@ import * as React from "react"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import {navigate} from 'gatsby';
 
 const PrivacyPolicyPage = () => (
   <Layout>
@@ -375,7 +376,8 @@ const PrivacyPolicyPage = () => (
       <br />
       <h2 className="text-4xl font-bold text-brand-teal">
         Disclosure of Your Personal Data
-      </h2><br/>
+      </h2>
+      <br />
       <h2 className="text-3xl font-bold text-brand-teal">
         Business Transactions
       </h2>
@@ -398,7 +400,9 @@ const PrivacyPolicyPage = () => (
       </h2>
       <p className="mt-6 text-white">
         The Company may disclose Your Personal Data in the good faith belief
-        that such action is necessary to:<br/><br/>
+        that such action is necessary to:
+        <br />
+        <br />
         <ul className="list-disc">
           <li>Comply with a legal obligation</li>
           <li>Protect and defend the rights or property of the Company</li>
@@ -474,12 +478,20 @@ const PrivacyPolicyPage = () => (
       <br />
       <h2 className="text-3xl font-bold text-brand-teal">Contact Us</h2>
       <p className="mt-6 text-white">
-        If you have any questions about this Privacy Policy, You can contact us:<br/><br/>
+        If you have any questions about this Privacy Policy, You can contact us:
+        <br />
+        <br />
         <ul className="ml-12 list-disc">
           <li>By email: phelpsie@phelpsiemusic.com</li>
         </ul>
       </p>
-      <br />
+    <button
+      type="button"
+      onClick={() => navigate("/")}
+      className="flex items-center justify-center px-4 py-1 mx-auto mt-6 text-xl font-bold text-white rounded-full bg-brand-teal"
+    >
+      Back To Shop
+    </button>
     </div>
   </Layout>
 )
