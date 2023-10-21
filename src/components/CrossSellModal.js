@@ -1,5 +1,6 @@
 import * as React from "react"
 import { graphql, useStaticQuery, Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteContext } from "../hooks/use-site-context"
 import { useOutsideClick } from "../hooks/use-outside-click"
@@ -12,186 +13,185 @@ import {
   MdPause,
   MdVolumeOff,
   MdVolumeUp,
+  MdStop,
 } from "react-icons/md"
 import { allProducts } from "../data/all-products"
 
-function formatDurationDisplay(duration) {
-  const min = Math.floor(duration / 60)
-  const sec = Math.floor(duration - min * 60)
-
-  const formatted = [min, sec].map(n => (n < 10 ? "0" + n : n)).join(":")
-
-  return formatted
-}
-
 const CrossSellModal = () => {
-  const videoRef = React.useRef(null)
-  const [videoOpen, setVideoOpen] = React.useState(true)
-  const [isPlaying, setIsPlaying] = React.useState(false)
+  const [modalOpen, setModalOpen] = React.useState(true)
+  const [isPlayingModalAudio, setIsPlayingModalAudio] = React.useState(false)
   const [isReady, setIsReady] = React.useState(false)
-  const [duration, setDuration] = React.useState(0)
-  const [currrentProgress, setCurrrentProgress] = React.useState(0)
-  const [buffered, setBuffered] = React.useState(0)
-  const durationDisplay = formatDurationDisplay(duration)
-  const elapsedDisplay = formatDurationDisplay(currrentProgress)
-  const [volume, setVolume] = React.useState(1.0)
   const {
-    setIsVideoPlayerOpen,
-    setIsCartOpen,
     setIsCrossSellModalOpen,
     crossSellItem,
+    crossSellItemNum,
     setPlayerZIndexBoost,
     playerZIndexBoost,
+    cartItemsFromLS,
+    setCartItemsFromLS,
   } = useSiteContext()
 
-  const handleBufferProgress = e => {
-    const video = e.currentTarget
-    const dur = video.duration
-    if (dur > 0) {
-      for (let i = 0; i < video.buffered.length; i++) {
-        if (
-          video.buffered.start(video.buffered.length - 1 - i) <
-          video.currentTime
-        ) {
-          const bufferedLength = video.buffered.end(
-            video.buffered.length - 1 - i
-          )
-          setBuffered(bufferedLength)
-          break
+  const addToCart = () => {
+    if (typeof localStorage !== undefined) {
+      let tempCart = {
+        items: [],
+      }
+
+      // If cart already exists
+      if (cartItemsFromLS.length > 0) {
+        // If product is not already in cart
+        if (!cartItemsFromLS.includes(allProducts[crossSellItemNum].prodCode)) {
+          tempCart = JSON.parse(cartItemsFromLS)
+          tempCart.items.push(allProducts[crossSellItemNum].prodCode)
+          localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
+          setCartItemsFromLS(JSON.stringify(tempCart))
+        }
+        // else make a new cart
+      } else {
+        tempCart.items.push(allProducts[crossSellItemNum].prodCode)
+        localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
+        setCartItemsFromLS(JSON.stringify(tempCart))
+      }
+      setModalOpen(false)
+      setPlayerZIndexBoost(false)
+      setTimeout(() => setIsCrossSellModalOpen(false), 350)
+    }
+  }
+
+  const imageData = useStaticQuery(graphql`
+    {
+      allFile(
+        filter: { relativeDirectory: { eq: "products" } }
+        sort: { name: ASC }
+      ) {
+        edges {
+          node {
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED, quality: 95)
+            }
+            name
+          }
         }
       }
     }
-  }
-
-  const handlePlay = () => {
-    if (isPlaying) {
-      videoRef.current.pause()
-      setIsPlaying(false)
-    } else {
-      videoRef.current.play()
-      setIsPlaying(true)
-    }
-  }
-
-  const handleMuteUnmute = () => {
-    if (!videoRef.current) return
-
-    if (videoRef.current.volume !== 0) {
-      videoRef.current.volume = 0
-    } else {
-      videoRef.current.volume = 1.0
-    }
-  }
-
-  const handleVolumeChange = volumeValue => {
-    if (!videoRef.current) return
-    videoRef.current.volume = volumeValue
-    setVolume(volumeValue)
-  }
-
-  const handleOutsideClick = () => {
-    setVideoOpen(false)
-    setPlayerZIndexBoost(false);
-    setTimeout(() => setIsCrossSellModalOpen(false), 350)
-  }
-
-  const outsideClickRef = useOutsideClick(handleOutsideClick)
-
-  console.log(crossSellItem)
+  `)
 
   return (
     <div
       className={`cart-modal-container transform ${
-        videoOpen ? "cart-modal-fadein" : "cart-modal-fadeout"
+        modalOpen ? "cart-modal-fadein" : "cart-modal-fadeout"
       }`}
     >
       <div
-        className={`fixed h-4/5 w-4/5 lg:w-1/2 transition-opacity ease-in-out duration-500 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 bg-brand-dark ${
-          videoOpen ? "opacity-1" : "opacity-0"
+        className={`fixed h-1/2 w-full md:max-w-2xl lg:max-w-4xl top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 bg-brand-dark ${
+          modalOpen ? "cross-sell-modal-fadein" : "cross-sell-modal-fadeout"
         }`}
       >
-        <div className="relative w-full h-full p-8 lg:p-16">
+        <div className="relative w-full h-full">
           <MdClose
             onClick={() => {
-              setVideoOpen(false)
-              setPlayerZIndexBoost(false);
+              setModalOpen(false)
+              setPlayerZIndexBoost(false)
               setTimeout(() => setIsCrossSellModalOpen(false), 350)
             }}
-            className="absolute text-3xl text-white cursor-pointer top-1 right-2"
+            className="absolute text-white cursor-pointer md:text-lg lg:text-xl top-2 right-2"
           />
-          <video
-            ref={videoRef}
-            className="w-full h-full"
-            disableRemotePlayback
-            onDurationChange={e => setDuration(e.currentTarget.duration)}
-            onTimeUpdate={e => {
-              setCurrrentProgress(e.currentTarget.currentTime)
-              handleBufferProgress(e)
-            }}
-            onProgress={handleBufferProgress}
-            onCanPlay={() => {
-              setIsReady(true)
-              handlePlay()
-            }}
-            onEnded={() => setIsPlaying(false)}
-            onPause={() => setIsPlaying(false)}
-            onPlaying={() => setIsPlaying(true)}
-            onVolumeChange={e => setVolume(e.currentTarget.volume)}
-            preload="auto"
-            src="/twysted-ig-vertical.mp4"
-          />
-          <VideoProgressBar
-            duration={duration}
-            currentProgress={currrentProgress}
-            buffered={buffered}
-            onChange={e => {
-              if (!videoRef.current) return
-
-              videoRef.current.currentTime = e.currentTarget.valueAsNumber
-
-              setCurrrentProgress(e.currentTarget.valueAsNumber)
-            }}
-          />
-          <button
-            type="button"
-            disabled={!isReady}
-            onClick={() => {
-              setPlayerZIndexBoost(!playerZIndexBoost)
-            }}
-            className="absolute flex items-center justify-center w-10 h-10 text-white rounded-full bottom-4 left-4 bg-brand-teal disabled:opacity-60"
-          >
-            {!isReady ? (
-              <CgSpinner size={24} className="spinner" />
-            ) : isPlaying ? (
-              <MdPause size={30} />
-            ) : (
-              <MdPlayArrow size={30} />
-            )}
-          </button>
-          <div className="absolute flex items-center gap-1 right-4 bottom-5">
+          <div className="flex items-center justify-center w-full h-24 crossSellBackground">
+            <h2 className="max-w-xl text-2xl font-bold text-center text-white">
+              Producers Who Bought This Item Also Bought "
+              {allProducts[crossSellItemNum].title}"
+            </h2>
+          </div>
+          {/* Product section */}
+          <div className="w-full bg-brand-dark">
+            <div className="flex items-center w-full h-full">
+              <div className="relative w-1/2 md:p-6 lg:p-12">
+                <div className="relative">
+                  <GatsbyImage
+                    image={
+                      imageData.allFile.edges[
+                        imageData.allFile.edges.findIndex(
+                          edge =>
+                            edge.node.name ===
+                            allProducts[crossSellItemNum].imgName
+                        )
+                      ]?.node.childImageSharp.gatsbyImageData
+                    }
+                    quality={95}
+                    placeholder="blurred"
+                    className={` transition ease-in-out duration-300 w-full`}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="md:block hidden border-l border-white h-48 md:h-[18rem] lg:h-[22rem]"></div>
+              <div className="relative w-1/2 p-6 lg:p-12">
+                <div className="flex flex-col">
+                  <p className="max-w-[10rem] sm:max-w-[10rem] md:max-w-[19rem] text-base font-bold text-white md:text-lg lg:text-2xl">
+                    {allProducts[crossSellItemNum].title}
+                  </p>
+                  <div className="flex items-center mt-2">
+                    <p className="px-3 text-xs font-bold text-center text-white line-through bg-red-700 rounded-full md:text-sm">
+                      ${allProducts[crossSellItemNum].oldPrice}
+                    </p>
+                    <p className="ml-2 text-lg font-bold md:text-2xl text-brand-teal">
+                      ${allProducts[crossSellItemNum].price}
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    <button
+                      type="button"
+                      id="productplaybutton"
+                      onClick={() => {
+                        setIsPlayingModalAudio(!isPlayingModalAudio)
+                        setPlayerZIndexBoost(!playerZIndexBoost)
+                      }}
+                      className="h-24 text-white"
+                    >
+                      {isPlayingModalAudio ? (
+                        <MdStop
+                          id="productplaybutton"
+                          className="w-10 h-10 p-2 transition duration-200 ease-in-out rounded-full md:w-12 md:h-12 lg:w-14 lg:h-14 checkout-loading hover:scale-110"
+                        />
+                      ) : (
+                        <MdPlayArrow
+                          id="productplaybutton"
+                          className="w-10 h-10 p-2 transition duration-200 ease-in-out rounded-full md:w-12 md:h-12 lg:w-14 lg:h-14 play-button hover:scale-110"
+                        />
+                      )}
+                    </button>
+                    <p className="ml-3 text-sm font-bold text-white md:text-base lg:text-lg">
+                      Play Demo
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => addToCart()}
+                    className="hidden text-xs font-bold text-white rounded-full md:py-2 lg:py-3 md:w-64 lg:w-80 sm:block md:mt-0 lg:mt-3 sm:text-sm md:text-base lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+                  >
+                    YES, ADD TO MY ORDER
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setModalOpen(false)
+                      setPlayerZIndexBoost(false)
+                      setTimeout(() => setIsCrossSellModalOpen(false), 350)
+                    }}
+                    className="hidden text-xs font-bold text-white bg-gray-600 rounded-full md:py-2 lg:py-3 md:w-64 lg:w-80 hover:bg-gray-500 sm:block md:mt-2 lg:mt-3 sm:text-sm md:text-base lg:text-xl whitespace-nowrap"
+                  >
+                    NO, THANKS
+                  </button>
+                </div>
+              </div>
+            </div>
             <button
-              onClick={() => handleMuteUnmute()}
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 disabled:opacity-60"
+              type="button"
+              onClick={() => addToCart()}
+              className="block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
             >
-              {volume === 0 ? (
-                <MdVolumeOff size={20} />
-              ) : (
-                <MdVolumeUp size={20} />
-              )}
+              ADD TO CART
             </button>
-            <input
-              aria-label="volume"
-              name="volume"
-              type="range"
-              min={0}
-              step={0.05}
-              max={1}
-              value={volume}
-              className="w-[80px] ml-2 sm:ml-0 h-2 appearance-none rounded-full accent-brand-teal bg-gray-700 cursor-pointer"
-              onChange={e => {
-                handleVolumeChange(e.currentTarget.valueAsNumber)
-              }}
-            />
           </div>
         </div>
       </div>

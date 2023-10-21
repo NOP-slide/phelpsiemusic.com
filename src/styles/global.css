@@ -58,6 +58,42 @@
   z-index: 30;
 }
 
+.crossSellBackground {
+  background-image: linear-gradient(
+    to right,
+    #453ebb,
+    #0067d0,
+    #0082c5,
+    #0095ac,
+    #28a495
+  );
+}
+
+.cross-sell-modal-fadein {
+  animation: cross-sell-fadein 0.4s ease-in-out;
+}
+
+.cross-sell-modal-fadeout {
+  animation: cross-sell-fadeout 0.4s ease-in-out;
+}
+
+@keyframes cross-sell-fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes cross-sell-fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .cart-modal-fadein {
   animation: modal-fadein 0.4s ease-in-out;
 }
