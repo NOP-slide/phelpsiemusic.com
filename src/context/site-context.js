@@ -6,6 +6,8 @@ const SiteContext = createContext({
   isVideoPlayerOpen: false,
   isCrossSellModalOpen: false,
   crossSellItem: '',
+  crossSellItemNum: -1,
+  setCrossSellItemNum: () => {},
   setCrossSellItem: () => {},
   cartItemsFromLS: [],
   setCartItemsFromLS: () => {},
@@ -22,6 +24,7 @@ function SiteProvider({ children }) {
   const [isCrossSellModalOpen, setIsCrossSellModalOpen] = useState(false)
   const [playerZIndexBoost, setPlayerZIndexBoost] = useState(false)
   const [crossSellItem, setCrossSellItem] = useState('')
+  const [crossSellItemNum, setCrossSellItemNum] = useState(-1)
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -48,6 +51,8 @@ function SiteProvider({ children }) {
         setIsCrossSellModalOpen,
         crossSellItem,
         setCrossSellItem,
+        crossSellItemNum,
+        setCrossSellItemNum,
         playerZIndexBoost,
         setPlayerZIndexBoost,
       }}

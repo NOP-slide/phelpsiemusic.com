@@ -91,6 +91,7 @@ const CrossSellModal = () => {
 
   const handleOutsideClick = () => {
     setVideoOpen(false)
+    setPlayerZIndexBoost(false);
     setTimeout(() => setIsCrossSellModalOpen(false), 350)
   }
 
@@ -105,7 +106,6 @@ const CrossSellModal = () => {
       }`}
     >
       <div
-        ref={outsideClickRef}
         className={`fixed h-4/5 w-4/5 lg:w-1/2 transition-opacity ease-in-out duration-500 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 bg-brand-dark ${
           videoOpen ? "opacity-1" : "opacity-0"
         }`}
@@ -114,6 +114,7 @@ const CrossSellModal = () => {
           <MdClose
             onClick={() => {
               setVideoOpen(false)
+              setPlayerZIndexBoost(false);
               setTimeout(() => setIsCrossSellModalOpen(false), 350)
             }}
             className="absolute text-3xl text-white cursor-pointer top-1 right-2"

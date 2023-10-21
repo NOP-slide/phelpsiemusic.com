@@ -18,7 +18,13 @@ const ImaginariumVol2Page = () => {
     setIsVideoPlayerOpen,
     setIsCartOpen,
     cartItemsFromLS,
+    isCrossSellModalOpen,
+    setIsCrossSellModalOpen,
+    setCrossSellItem,
+    setCrossSellItemNum,
+    crossSellItemNum,
     setCartItemsFromLS,
+    playerZIndexBoost,
   } = useSiteContext()
 
   const addToCart = () => {
@@ -43,6 +49,17 @@ const ImaginariumVol2Page = () => {
         setCartItemsFromLS(JSON.stringify(tempCart))
       }
       console.log("Tempcart: ", tempCart)
+    }
+
+    if (allProducts[1].crossSellsWith) {
+      if (!cartItemsFromLS.includes(allProducts[1].crossSellsWith)) {
+        setCrossSellItem(allProducts[1].crossSellsWith)
+        setCrossSellItemNum(allProducts[1].crossSellsWithNum)
+        setTimeout(() => {
+          setIsPaused(true)
+          setIsCrossSellModalOpen(true)
+        }, 400)
+      }
     }
 
     setIsCartOpen(true)
@@ -243,7 +260,10 @@ const ImaginariumVol2Page = () => {
             <button
               className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
               type="button"
-              onClick={() => setIsVideoPlayerOpen(true)}
+              onClick={() => {
+                setIsPaused(true)
+                setIsVideoPlayerOpen(true)
+              }}
             >
               <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
             </button>
@@ -282,8 +302,9 @@ const ImaginariumVol2Page = () => {
             file for full terms after purchase.
             <br />
             <br />
-            To get your copy now, and start making <span className="font-black">industry level beats</span>, simply click "
-            <span className="font-black">Add To Cart</span>".
+            To get your copy now, and start making{" "}
+            <span className="font-black">industry level beats</span>, simply
+            click "<span className="font-black">Add To Cart</span>".
           </p>
           <button
             type="button"
@@ -295,23 +316,45 @@ const ImaginariumVol2Page = () => {
         </div>
       </div>
       {/* Audio player section */}
-      <div
-        className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
-          currentSongIndex !== -1 ? "player-shown" : "player-hidden"
-        }`}
-      >
-        <AudioPlayer
-          allProducts={allProducts}
-          key={currentSongIndex}
-          isPaused={isPaused}
-          setIsPaused={setIsPaused}
-          currentSong={currentSong}
-          songCount={allProducts.length}
-          songIndex={currentSongIndex}
-          onNext={() => setCurrentSongIndex(i => i + 1)}
-          onPrev={() => setCurrentSongIndex(i => i - 1)}
-        />
-      </div>
+      {isCrossSellModalOpen ? (
+        <div
+          className={`fixed bottom-0 py-2 flex z-50 flex-col w-full transform bg-brand-dark text-white ${
+            playerZIndexBoost ? "player-shown" : "player-hidden"
+          }`}
+        >
+          <AudioPlayer
+            allProducts={allProducts}
+            key={crossSellItemNum}
+            isPaused={!playerZIndexBoost}
+            setIsPaused={setIsPaused}
+            currentSong={allProducts[crossSellItemNum]
+            }
+            songCount={allProducts.length}
+            songIndex={crossSellItemNum
+            }
+            onNext={() => setCurrentSongIndex(i => i + 1)}
+            onPrev={() => setCurrentSongIndex(i => i - 1)}
+          />
+        </div>
+      ) : (
+        <div
+          className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
+            currentSongIndex !== -1 ? "player-shown" : "player-hidden"
+          }`}
+        >
+          <AudioPlayer
+            allProducts={allProducts}
+            key={currentSongIndex}
+            isPaused={isPaused}
+            setIsPaused={setIsPaused}
+            currentSong={currentSong}
+            songCount={allProducts.length}
+            songIndex={currentSongIndex}
+            onNext={() => setCurrentSongIndex(i => i + 1)}
+            onPrev={() => setCurrentSongIndex(i => i - 1)}
+          />
+        </div>
+      )}
     </Layout>
   )
 }

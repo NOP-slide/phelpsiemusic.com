@@ -1,17 +1,13 @@
 import * as React from "react"
-import {
-  MdPlayArrow,
-  MdPause,
-  MdVolumeUp,
-  MdVolumeOff,
-} from "react-icons/md"
+import { MdPlayArrow, MdPause, MdVolumeUp, MdVolumeOff } from "react-icons/md"
 import { graphql, useStaticQuery } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { CgSpinner } from "react-icons/cg"
 import IconButton from "./IconButton"
 import AudioProgressBar from "./AudioProgressBar"
 import VolumeInput from "./VolumeInput"
-import { useSiteContext } from "../hooks/use-site-context";
+import { useSiteContext } from "../hooks/use-site-context"
+import { allProducts } from "../data/all-products"
 
 function formatDurationDisplay(duration) {
   const min = Math.floor(duration / 60)
@@ -30,7 +26,10 @@ export default function AudioPlayer({
 }) {
   const imageData = useStaticQuery(graphql`
     {
-      allFile(filter: {relativeDirectory: {eq: "products"}}, sort: {name: ASC}) {
+      allFile(
+        filter: { relativeDirectory: { eq: "products" } }
+        sort: { name: ASC }
+      ) {
         edges {
           node {
             childImageSharp {
@@ -54,39 +53,58 @@ export default function AudioPlayer({
 
   const durationDisplay = formatDurationDisplay(duration)
   const elapsedDisplay = formatDurationDisplay(currrentProgress)
-  const {setIsCartOpen, cartItemsFromLS, setCartItemsFromLS} = useSiteContext();
+  const {
+    setIsCartOpen,
+    cartItemsFromLS,
+    setCartItemsFromLS,
+    isCrossSellModalOpen,
+    setCrossSellItem,
+    setCrossSellItemNum,
+    setIsCrossSellModalOpen,
+  } = useSiteContext()
 
   const addToCart = () => {
     if (typeof localStorage !== undefined) {
       let tempCart = {
-        items:[]
-      };
+        items: [],
+      }
 
       // If cart already exists
       if (cartItemsFromLS.length > 0) {
         // If product is not already in cart
         if (!cartItemsFromLS.includes(currentSong.prodCode)) {
-          tempCart = JSON.parse(cartItemsFromLS);
-          tempCart.items.push(currentSong.prodCode);
-          localStorage.setItem("phelpsieCart", JSON.stringify(tempCart));
-          setCartItemsFromLS(JSON.stringify(tempCart));
+          tempCart = JSON.parse(cartItemsFromLS)
+          tempCart.items.push(currentSong.prodCode)
+          localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
+          setCartItemsFromLS(JSON.stringify(tempCart))
         }
-      // else make a new cart
+        // else make a new cart
       } else {
-        tempCart.items.push(currentSong.prodCode);
-        localStorage.setItem("phelpsieCart", JSON.stringify(tempCart));
-        setCartItemsFromLS(JSON.stringify(tempCart));
+        tempCart.items.push(currentSong.prodCode)
+        localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
+        setCartItemsFromLS(JSON.stringify(tempCart))
       }
       console.log("Tempcart: ", tempCart)
     }
 
-    setIsCartOpen(true);
+    if (allProducts[songIndex].crossSellsWith) {
+      if (!cartItemsFromLS.includes(allProducts[songIndex].crossSellsWith)) {
+        setCrossSellItem(allProducts[songIndex].crossSellsWith)
+        setCrossSellItemNum(allProducts[songIndex].crossSellsWithNum)
+        setTimeout(() => {
+          setIsPaused(true)
+          setIsCrossSellModalOpen(true)
+        }, 400)
+      }
+    }
+
+    setIsCartOpen(true)
   }
   // This is necessary because localStorage isn't available at build time
   React.useEffect(() => {
-    let phelpsieVolume = localStorage.getItem("phelpsieVolume");
-    if (phelpsieVolume) setVolume(phelpsieVolume);
-  }, []);
+    let phelpsieVolume = localStorage.getItem("phelpsieVolume")
+    if (phelpsieVolume) setVolume(phelpsieVolume)
+  }, [])
 
   React.useEffect(() => {
     audioRef.current?.pause()
@@ -110,16 +128,15 @@ export default function AudioPlayer({
     }
   }, [isPaused])
 
-
   const togglePlayPause = () => {
     if (isPlaying) {
       audioRef.current?.pause()
       setIsPlaying(false)
-      setIsPaused(true);
+      !isCrossSellModalOpen && setIsPaused(true)
     } else {
       audioRef.current?.play()
       setIsPlaying(true)
-      setIsPaused(false);
+      !isCrossSellModalOpen && setIsPaused(false)
     }
   }
 
@@ -146,7 +163,8 @@ export default function AudioPlayer({
     if (!audioRef.current) return
 
     if (audioRef.current.volume !== 0) {
-      if (typeof localStorage !== undefined) localStorage.setItem("phelpsieVolume", audioRef.current.volume)
+      if (typeof localStorage !== undefined)
+        localStorage.setItem("phelpsieVolume", audioRef.current.volume)
       audioRef.current.volume = 0
     } else {
       audioRef.current.volume = localStorage.getItem("phelpsieVolume")
@@ -156,7 +174,8 @@ export default function AudioPlayer({
   const handleVolumeChange = volumeValue => {
     if (!audioRef.current) return
     audioRef.current.volume = volumeValue
-    if (typeof localStorage !== undefined) localStorage.setItem("phelpsieVolume", volumeValue)
+    if (typeof localStorage !== undefined)
+      localStorage.setItem("phelpsieVolume", volumeValue)
     setVolume(volumeValue)
   }
 
@@ -172,7 +191,7 @@ export default function AudioPlayer({
           onDurationChange={e => setDuration(e.currentTarget.duration)}
           onPlaying={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onEnded={()=>setIsPaused(true)}
+          onEnded={() => setIsPaused(true)}
           // onEnded={handleNext}
           onCanPlay={e => {
             e.currentTarget.volume = volume
@@ -261,20 +280,28 @@ export default function AudioPlayer({
             </p>
           </div>
           <div>
-            <p className='px-2 line-through bg-red-700 rounded-full'>${currentSong?.oldPrice}</p>
+            {!isCrossSellModalOpen && (
+              <p className="px-2 line-through bg-red-700 rounded-full">
+                ${currentSong?.oldPrice}
+              </p>
+            )}
           </div>
           <div>
-            <p className='font-black'>${currentSong?.price}</p>
+            {!isCrossSellModalOpen && (
+              <p className="font-black">${currentSong?.price}</p>
+            )}
           </div>
-          <div className="">
-            <button
-              type="button"
-              onClick={()=>addToCart()}
-              className="px-4 py-2 text-xs font-bold text-white rounded-full sm:text-sm md:text-base whitespace-nowrap bg-brand-teal hover:bg-teal-300"
-            >
-              ADD TO CART
-            </button>
-          </div>
+          {!isCrossSellModalOpen && (
+            <div className="">
+              <button
+                type="button"
+                onClick={() => addToCart()}
+                className="px-4 py-2 text-xs font-bold text-white rounded-full sm:text-sm md:text-base whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+              >
+                ADD TO CART
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
