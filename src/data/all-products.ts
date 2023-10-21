@@ -7,6 +7,7 @@ export const allProducts = [
     imgName: "1-imaginarium-vol-1-art",
     slug: "/imaginarium-vol-1",
     prodCode: "imaginarium-v-1",
+    crossSellsWith: "imaginarium-v-2",
   },
   {
     title: "Imaginarium Vol. 2 - Trap & Drill Loop Kit",
@@ -16,5 +17,6 @@ export const allProducts = [
     imgName: "2-imaginarium-vol-2-art",
     slug: "/imaginarium-vol-2",
     prodCode: "imaginarium-v-2",
+    crossSellsWith: "imaginarium-v-1",
   },
 ]

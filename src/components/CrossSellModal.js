@@ -1,7 +1,10 @@
 import * as React from "react"
+import { graphql, useStaticQuery, Link } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteContext } from "../hooks/use-site-context"
 import { useOutsideClick } from "../hooks/use-outside-click"
 import { CgSpinner } from "react-icons/cg"
+import { HiOutlineShoppingCart } from "react-icons/hi"
 import VideoProgressBar from "./VideoProgressBar"
 import {
   MdClose,
@@ -10,8 +13,18 @@ import {
   MdVolumeOff,
   MdVolumeUp,
 } from "react-icons/md"
+import { allProducts } from "../data/all-products"
 
-const VideoPlayer = () => {
+function formatDurationDisplay(duration) {
+  const min = Math.floor(duration / 60)
+  const sec = Math.floor(duration - min * 60)
+
+  const formatted = [min, sec].map(n => (n < 10 ? "0" + n : n)).join(":")
+
+  return formatted
+}
+
+const CrossSellModal = () => {
   const videoRef = React.useRef(null)
   const [videoOpen, setVideoOpen] = React.useState(true)
   const [isPlaying, setIsPlaying] = React.useState(false)
@@ -19,8 +32,17 @@ const VideoPlayer = () => {
   const [duration, setDuration] = React.useState(0)
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
+  const durationDisplay = formatDurationDisplay(duration)
+  const elapsedDisplay = formatDurationDisplay(currrentProgress)
   const [volume, setVolume] = React.useState(1.0)
-  const { setIsVideoPlayerOpen } = useSiteContext()
+  const {
+    setIsVideoPlayerOpen,
+    setIsCartOpen,
+    setIsCrossSellModalOpen,
+    crossSellItem,
+    setPlayerZIndexBoost,
+    playerZIndexBoost,
+  } = useSiteContext()
 
   const handleBufferProgress = e => {
     const video = e.currentTarget
@@ -69,10 +91,12 @@ const VideoPlayer = () => {
 
   const handleOutsideClick = () => {
     setVideoOpen(false)
-    setTimeout(() => setIsVideoPlayerOpen(false), 350)
+    setTimeout(() => setIsCrossSellModalOpen(false), 350)
   }
 
   const outsideClickRef = useOutsideClick(handleOutsideClick)
+
+  console.log(crossSellItem)
 
   return (
     <div
@@ -90,7 +114,7 @@ const VideoPlayer = () => {
           <MdClose
             onClick={() => {
               setVideoOpen(false)
-              setTimeout(() => setIsVideoPlayerOpen(false), 350)
+              setTimeout(() => setIsCrossSellModalOpen(false), 350)
             }}
             className="absolute text-3xl text-white cursor-pointer top-1 right-2"
           />
@@ -130,7 +154,9 @@ const VideoPlayer = () => {
           <button
             type="button"
             disabled={!isReady}
-            onClick={() => handlePlay()}
+            onClick={() => {
+              setPlayerZIndexBoost(!playerZIndexBoost)
+            }}
             className="absolute flex items-center justify-center w-10 h-10 text-white rounded-full bottom-4 left-4 bg-brand-teal disabled:opacity-60"
           >
             {!isReady ? (
@@ -172,4 +198,4 @@ const VideoPlayer = () => {
   )
 }
 
-export default VideoPlayer
+export default CrossSellModal

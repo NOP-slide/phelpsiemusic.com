@@ -4,15 +4,24 @@ import React, { createContext, useState } from "react"
 const SiteContext = createContext({
   isCartOpen: false,
   isVideoPlayerOpen: false,
+  isCrossSellModalOpen: false,
+  crossSellItem: '',
+  setCrossSellItem: () => {},
   cartItemsFromLS: [],
   setCartItemsFromLS: () => {},
   setIsCartOpen: () => {},
   setIsVideoPlayerOpen: () => {},
+  setIsCrossSellModalOpen: () => {},
+  playerZIndexBoost: false,
+  setPlayerZIndexBoost: () => {},
 })
 
 function SiteProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isVideoPlayerOpen, setIsVideoPlayerOpen] = useState(false)
+  const [isCrossSellModalOpen, setIsCrossSellModalOpen] = useState(false)
+  const [playerZIndexBoost, setPlayerZIndexBoost] = useState(false)
+  const [crossSellItem, setCrossSellItem] = useState('')
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -35,6 +44,12 @@ function SiteProvider({ children }) {
         setCartItemsFromLS,
         isVideoPlayerOpen,
         setIsVideoPlayerOpen,
+        isCrossSellModalOpen,
+        setIsCrossSellModalOpen,
+        crossSellItem,
+        setCrossSellItem,
+        playerZIndexBoost,
+        setPlayerZIndexBoost,
       }}
     >
       {children}

@@ -4,7 +4,6 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import { useSiteContext } from "../hooks/use-site-context"
 import { useOutsideClick } from "../hooks/use-outside-click"
 import { CgPushRight } from "react-icons/cg"
-import { HiOutlineShoppingCart } from "react-icons/hi"
 import { MdClose } from "react-icons/md"
 import { allProducts } from "../data/all-products"
 
@@ -31,8 +30,12 @@ const Cart = () => {
     }
   }
 
-  const { setIsCartOpen, cartItemsFromLS, setCartItemsFromLS } =
-    useSiteContext()
+  const {
+    setIsCartOpen,
+    cartItemsFromLS,
+    setCartItemsFromLS,
+    isCrossSellModalOpen,
+  } = useSiteContext()
 
   // Get cart contents
   let cartItems = []
@@ -76,8 +79,8 @@ const Cart = () => {
         localStorage.setItem("phelpsieCart", JSON.stringify(newCart))
         setCartItemsFromLS(JSON.stringify(newCart))
       } else {
-        localStorage.removeItem("phelpsieCart");
-        setCartItemsFromLS([]);
+        localStorage.removeItem("phelpsieCart")
+        setCartItemsFromLS([])
       }
     }
   }
@@ -85,8 +88,10 @@ const Cart = () => {
   const [cartOpen, setCartOpen] = React.useState(true)
 
   const handleOutsideClick = () => {
-    setCartOpen(false)
-    setTimeout(() => setIsCartOpen(false), 350)
+    if (!isCrossSellModalOpen) {
+      setCartOpen(false)
+      setTimeout(() => setIsCartOpen(false), 350)
+    }
   }
 
   const ref = useOutsideClick(handleOutsideClick)
@@ -166,7 +171,7 @@ const Cart = () => {
                   key={num}
                   className="relative flex w-full pb-6 border-b border-gray-700 sm:pb-0 sm:border-none"
                 >
-                  <Link to={item.slug}>
+                  <Link onClick={() => setIsCartOpen(false)} to={item.slug}>
                     <GatsbyImage
                       image={
                         imageData.allFile.edges[

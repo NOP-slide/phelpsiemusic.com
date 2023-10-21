@@ -19,6 +19,9 @@ const ImaginariumVol1Page = () => {
     setIsCartOpen,
     cartItemsFromLS,
     setCartItemsFromLS,
+    setIsCrossSellModalOpen,
+    setCrossSellItem,
+    playerZIndexBoost,
   } = useSiteContext()
 
   const addToCart = () => {
@@ -45,9 +48,18 @@ const ImaginariumVol1Page = () => {
       console.log("Tempcart: ", tempCart)
     }
 
+    if (allProducts[0].crossSellsWith) {
+      if (!cartItemsFromLS.includes(allProducts[0].crossSellsWith)) {
+        setCrossSellItem(allProducts[0].crossSellsWith);
+        setTimeout(()=>setIsCrossSellModalOpen(true), 400);
+      }
+    }
+
     setIsCartOpen(true)
   }
 
+  console.log(playerZIndexBoost);
+  
   return (
     <Layout isPlayerOpen={currentSongIndex !== -1}>
       {/* Hero section */}
@@ -300,7 +312,7 @@ const ImaginariumVol1Page = () => {
       </div>
       {/* Audio player section */}
       <div
-        className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
+        className={`fixed bottom-0 py-2 flex ${playerZIndexBoost ? 'z-50' : 'z-20'} flex-col w-full transform bg-brand-dark text-white ${
           currentSongIndex !== -1 ? "player-shown" : "player-hidden"
         }`}
       >
