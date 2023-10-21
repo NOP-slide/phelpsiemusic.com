@@ -16,7 +16,7 @@ import CrossSellModal from "./CrossSellModal"
 import { useSiteContext } from "../hooks/use-site-context";
 
 const Layout = ({ children, isPlayerOpen = false }) => {
-  const {isCartOpen, isVideoPlayerOpen, isCrossSellModalOpen} = useSiteContext();
+  const {isCartOpen, isVideoPlayerOpen, isCrossSellModalOpen, playerZIndexBoost} = useSiteContext();
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -30,13 +30,13 @@ const Layout = ({ children, isPlayerOpen = false }) => {
 
   return (
     <>
-      <div className="relative flex flex-col min-h-screen antialiased bg-gray-200 fill-available">
+      <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
         {isCartOpen && <Cart />}
         {isVideoPlayerOpen && <VideoPlayer />}
         {isCrossSellModalOpen && <CrossSellModal />}
-        <Footer isPlayerOpen={isPlayerOpen} />
+        <Footer isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen} />
       </div>
     </>
   )
