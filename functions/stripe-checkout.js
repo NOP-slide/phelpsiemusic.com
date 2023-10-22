@@ -2,20 +2,28 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.handler = async ({body}) => {
     console.log("Body: ", body);
+    let lineItems = [];
+    JSON.parse(body).map(item=>{
+      let obj = {};
+      obj.price = item.stripeCode;
+      obj.quantity = 1;
+      lineItems.push(obj)
+    });
+
+    console.log("Lineitems: ", lineItems);
+
     const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: 'price_1O140pAHwqgwuHo34UD20mDj',
-            quantity: 1,
-          },
-          {
-            price: 'price_1O141LAHwqgwuHo3QYrwT1JD',
-            quantity: 1,
-          },
-        ],
+        line_items: lineItems,
         mode: 'payment',
-        success_url: `https://localhost:8888/?success=true`,
-        cancel_url: `https://localhost:8888/?canceled=true`,
+        success_url: `https://phelpsiemusic.com/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://phelpsiemusic.com/`,
+        after_expiration: {
+          recovery: {
+            enabled: true,
+            allow_promotion_codes: true,
+          },
+        },
+        expires_at: Math.floor(Date.now() / 1000) + (3600 / 2), // Configured to expire after 30 min
       });
   return {
     statusCode: 200,
