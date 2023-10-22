@@ -37,10 +37,7 @@ const NotFoundPage = () => {
         <p className='my-4 text-3xl text-center text-white'>{volume}</p>
         <video
           ref={videoRef}
-          onVolumeChange={e => setVolume(e.currentTarget.volume)}
-          className="w-full h-96 bg-brand-dark"
-          preload="auto"
-          src="/twysted-ig-vertical.mp4"
+          onVolumeChange={e => alert("hello")}
         />
       </div>
     </Layout>
