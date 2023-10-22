@@ -34,6 +34,7 @@ const NotFoundPage = () => {
         >
           Back To Shop
         </button>
+        <p className='my-4 text-3xl text-center text-white'>{volume}</p>
         <video
           ref={videoRef}
           onVolumeChange={e => setVolume(e.currentTarget.volume)}
