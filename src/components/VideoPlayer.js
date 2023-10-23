@@ -117,6 +117,7 @@ const VideoPlayer = () => {
             onPlaying={() => setIsPlaying(true)}
             onVolumeChange={e => setVolume(e.currentTarget.volume)}
             preload="auto"
+            playsInline
             src="/twysted-ig-vertical.mp4"
           />
           <VideoProgressBar
