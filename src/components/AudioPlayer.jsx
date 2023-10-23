@@ -193,10 +193,16 @@ export default function AudioPlayer({
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPaused(true)}
           // onEnded={handleNext}
-          onCanPlay={e => {
+          onLoadedMetadata={e => {
             e.currentTarget.volume = volume
+            console.log("onLoadedMetadata fired");
             setIsReady(true)
           }}
+          // onCanPlay={e => {
+          //   e.currentTarget.volume = volume
+          //   console.log("onCanPlay fired");
+          //   setIsReady(true)
+          // }}
           onTimeUpdate={e => {
             setCurrrentProgress(e.currentTarget.currentTime)
             handleBufferProgress(e)

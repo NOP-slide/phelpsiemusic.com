@@ -2,7 +2,7 @@ import * as React from "react"
 import { useSiteContext } from "../hooks/use-site-context"
 
 const IosChecker = () => {
-  const { setIsIOS, setIosFlagHasBeenSet } = useSiteContext()
+  const { setIsIOS } = useSiteContext()
   const videoRef = React.useRef(null)
   const [didFire, setDidFire] = React.useState(false)
 
@@ -12,11 +12,16 @@ const IosChecker = () => {
       if (didFire) {
         setIsIOS(false)
       }
-      setIosFlagHasBeenSet(true)
     }
-  }, [videoRef.current, didFire, setIosFlagHasBeenSet, setIsIOS])
+  }, [videoRef.current, didFire, setIsIOS])
 
-  return <video className="hidden" ref={videoRef} onVolumeChange={() => setDidFire(true)} />
+  return (
+    <video
+      className="hidden"
+      ref={videoRef}
+      onVolumeChange={() => setDidFire(true)}
+    />
+  )
 }
 
 export default IosChecker
