@@ -20,7 +20,7 @@ const VideoPlayer = () => {
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
   const [volume, setVolume] = React.useState(1.0)
-  const { setIsVideoPlayerOpen } = useSiteContext()
+  const { setIsVideoPlayerOpen, isIOS } = useSiteContext()
 
   const handleBufferProgress = e => {
     const video = e.currentTarget
@@ -146,31 +146,33 @@ const VideoPlayer = () => {
               <MdPlayArrow size={30} />
             )}
           </button>
-          <div className="absolute flex items-center gap-1 right-4 bottom-5">
-            <button
-              onClick={() => handleMuteUnmute()}
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 disabled:opacity-60"
-            >
-              {volume === 0 ? (
-                <MdVolumeOff size={20} />
-              ) : (
-                <MdVolumeUp size={20} />
-              )}
-            </button>
-            <input
-              aria-label="volume"
-              name="volume"
-              type="range"
-              min={0}
-              step={0.05}
-              max={1}
-              value={volume}
-              className="w-[80px] ml-2 sm:ml-0 h-2 appearance-none rounded-full accent-brand-teal bg-gray-700 cursor-pointer"
-              onChange={e => {
-                handleVolumeChange(e.currentTarget.valueAsNumber)
-              }}
-            />
-          </div>
+          {!isIOS && (
+            <div className="absolute flex items-center gap-1 right-4 bottom-5">
+              <button
+                onClick={() => handleMuteUnmute()}
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-slate-400 disabled:opacity-60"
+              >
+                {volume === 0 ? (
+                  <MdVolumeOff size={20} />
+                ) : (
+                  <MdVolumeUp size={20} />
+                )}
+              </button>
+              <input
+                aria-label="volume"
+                name="volume"
+                type="range"
+                min={0}
+                step={0.05}
+                max={1}
+                value={volume}
+                className="w-[80px] ml-2 sm:ml-0 h-2 appearance-none rounded-full accent-brand-teal bg-gray-700 cursor-pointer"
+                onChange={e => {
+                  handleVolumeChange(e.currentTarget.valueAsNumber)
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

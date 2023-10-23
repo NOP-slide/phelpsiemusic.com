@@ -61,6 +61,7 @@ export default function AudioPlayer({
     setCrossSellItem,
     setCrossSellItemNum,
     setIsCrossSellModalOpen,
+    isIOS,
   } = useSiteContext()
 
   const addToCart = () => {
@@ -195,7 +196,7 @@ export default function AudioPlayer({
           // onEnded={handleNext}
           onLoadedMetadata={e => {
             e.currentTarget.volume = volume
-            console.log("onLoadedMetadata fired");
+            console.log("onLoadedMetadata fired")
             setIsReady(true)
           }}
           // onCanPlay={e => {
@@ -245,21 +246,26 @@ export default function AudioPlayer({
             </IconButton>
           </div>
 
-          <div className="flex items-center">
-            <IconButton
-              intent="secondary"
-              size="sm"
-              onClick={handleMuteUnmute}
-              aria-label={volume === 0 ? "unmute" : "mute"}
-            >
-              {volume === 0 ? (
-                <MdVolumeOff size={20} />
-              ) : (
-                <MdVolumeUp size={20} />
-              )}
-            </IconButton>
-            <VolumeInput volume={volume} onVolumeChange={handleVolumeChange} />
-          </div>
+          {!isIOS && (
+            <div className="flex items-center">
+              <IconButton
+                intent="secondary"
+                size="sm"
+                onClick={handleMuteUnmute}
+                aria-label={volume === 0 ? "unmute" : "mute"}
+              >
+                {volume === 0 ? (
+                  <MdVolumeOff size={20} />
+                ) : (
+                  <MdVolumeUp size={20} />
+                )}
+              </IconButton>
+              <VolumeInput
+                volume={volume}
+                onVolumeChange={handleVolumeChange}
+              />
+            </div>
+          )}
           <div className="flex items-center">
             <span className="">
               {elapsedDisplay} / {durationDisplay}
