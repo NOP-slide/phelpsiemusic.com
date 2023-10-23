@@ -13,10 +13,16 @@ import Footer from "./footer"
 import Cart from "./cart"
 import VideoPlayer from "./VideoPlayer"
 import CrossSellModal from "./CrossSellModal"
-import { useSiteContext } from "../hooks/use-site-context";
+import IosChecker from "./IosChecker"
+import { useSiteContext } from "../hooks/use-site-context"
 
 const Layout = ({ children, isPlayerOpen = false }) => {
-  const {isCartOpen, isVideoPlayerOpen, isCrossSellModalOpen, playerZIndexBoost} = useSiteContext();
+  const {
+    isCartOpen,
+    isVideoPlayerOpen,
+    isCrossSellModalOpen,
+    playerZIndexBoost,
+  } = useSiteContext()
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -33,10 +39,13 @@ const Layout = ({ children, isPlayerOpen = false }) => {
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
+        <IosChecker />
         {isCartOpen && <Cart />}
         {isVideoPlayerOpen && <VideoPlayer />}
         {isCrossSellModalOpen && <CrossSellModal />}
-        <Footer isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen} />
+        <Footer
+          isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}
+        />
       </div>
     </>
   )

@@ -2,6 +2,10 @@ import PropTypes from "prop-types"
 import React, { createContext, useState } from "react"
 
 const SiteContext = createContext({
+  isIOS: true,
+  setIsIOS: () => {},
+  iosFlagHasBeenSet: false,
+  setIosFlagHasBeenSet: () => {},
   isCartOpen: false,
   isVideoPlayerOpen: false,
   isCrossSellModalOpen: false,
@@ -25,6 +29,8 @@ function SiteProvider({ children }) {
   const [playerZIndexBoost, setPlayerZIndexBoost] = useState(false)
   const [crossSellItem, setCrossSellItem] = useState('')
   const [crossSellItemNum, setCrossSellItemNum] = useState(-1)
+  const [isIOS, setIsIOS] = useState(true);
+  const [iosFlagHasBeenSet, setIosFlagHasBeenSet] = useState(false);
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -41,6 +47,10 @@ function SiteProvider({ children }) {
   return (
     <SiteContext.Provider
       value={{
+        isIOS,
+        setIsIOS,
+        iosFlagHasBeenSet,
+        setIosFlagHasBeenSet,
         isCartOpen,
         setIsCartOpen,
         cartItemsFromLS,
