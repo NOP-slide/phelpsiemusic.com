@@ -104,10 +104,14 @@ const VideoPlayer = () => {
               handleBufferProgress(e)
             }}
             onProgress={handleBufferProgress}
-            onCanPlay={() => {
+            onLoadedMetadata={() => {
               setIsReady(true)
               handlePlay()
             }}
+            // onCanPlay={() => {
+            //   setIsReady(true)
+            //   handlePlay()
+            // }}
             onEnded={() => setIsPlaying(false)}
             onPause={() => setIsPlaying(false)}
             onPlaying={() => setIsPlaying(true)}
