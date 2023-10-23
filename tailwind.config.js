@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         brand: {
           teal: "rgb(45 212 191);",
+          tealTranslucent: "rgba(45, 212, 191, 0.5",
           tealDark: "rgba(45, 212, 191, 0.03);",
           dark: "rgb(17 24 39);",
         },

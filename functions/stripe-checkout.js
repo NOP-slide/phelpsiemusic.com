@@ -3,12 +3,14 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.handler = async ({body}) => {
     console.log("Body: ", body);
     let lineItems = [];
-    JSON.parse(body).map(item=>{
+    JSON.parse(body).cartItems.map(item=>{
       let obj = {};
       obj.price = item.stripeCode;
       obj.quantity = 1;
       lineItems.push(obj)
     });
+
+    const email = JSON.parse(body).email;
 
     console.log("Lineitems: ", lineItems);
 
@@ -23,7 +25,7 @@ exports.handler = async ({body}) => {
             allow_promotion_codes: true,
           },
         },
-        customer_email: 'seadoo14@gmail.com',
+        customer_email: email,
         expires_at: Math.floor(Date.now() / 1000) + (3600 / 2), // Configured to expire after 30 min
       });
   return {

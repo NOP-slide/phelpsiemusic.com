@@ -17,38 +17,13 @@ exports.handler = async ({ body, headers }) => {
       apiKey: process.env.MAILERSEND_API_KEY,
     })
 
-    const sentFrom = new Sender("phelpsie@phelpsiemusic.com", "Phelpsie Music")
-    const recipients = [new Recipient("seadoo14@gmail.com", "")]
-
-    const something = "asdfasdfasdfasdfasdf"
-
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setReplyTo(sentFrom)
-      .setSubject("This is a Subject")
-      .setHtml(
-        `<p>
-    Happy editing!
-</p>
-<p>
-    Frankly, there's something you should know.
-</p>
-<a style="color:blue" href="https://google.com">Click here</a>
-<br /><br /><br />
-<p>
-    Thank you,
-</p>
-<p>
-    Phelpsie
-</p>`
-      )
-      .setText("This is the text content")
-
     // Fulfill order if this is a successful Stripe Checkout purchase
     if (stripeEvent.type === "checkout.session.completed") {
       const eventObject = stripeEvent.data.object
       console.log("****EventObject******: ", eventObject)
+      const email = eventObject.customer_details.email
+      const fullName = eventObject.customer_details.name
+
       const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
         stripeEvent.data.object.id,
         {
@@ -58,15 +33,44 @@ exports.handler = async ({ body, headers }) => {
       const lineItems = sessionWithLineItems.line_items
       console.log("LINE ITEMS: ", lineItems)
 
-      let purchaseItemField = ""
-      lineItems.data.map(
-        item => (purchaseItemField = purchaseItemField + item.description + ",")
-      )
-
       try {
+        let emailHtml = `<p>Hey ${fullName},</p><p>Thank you so much for purchasing from me at Phelpsie Music. I appreciate you!</p><p>Please find your downloads below:</p>`
+        lineItems.data.map(item => {
+          switch (item.description) {
+            case "Imaginarium Vol. 1 - Trap & Drill Loop Kit":
+              emailHtml +=
+                `<a href="` +
+                "https://www.dropbox.com/scl/fi/8c2h0rl2x3cma7q8t3k1u/Imaginarium-Vol.-1-Phelpsiemusic.com.zip?rlkey=ln57hz2nt773b6en9od83uy7m&dl=1" +
+                `">` +
+                item.description +
+                `</a><br/>`
+              break
+            case "Imaginarium Vol. 2 - Trap & Drill Loop Kit":
+              emailHtml +=
+                `<a href="` +
+                "https://www.dropbox.com/scl/fi/lxd66aib5r1xi6gkr2xh8/Imaginarium-Vol.-2-Phelpsiemusic.com.zip?rlkey=osaypki1dn9d99xgqce7epu39&dl=1" +
+                `">` +
+                item.description +
+                `</a><br/>`
+              break
+          }
+        })
+
+        emailHtml += `<br/><p>I wish you continued inspiration, and hope to see you again soon. Keep making music!</p><br/><p>Your friend,</p><p>Phelpsie</p>`
+
+        const sentFrom = new Sender(
+          "phelpsie@phelpsiemusic.com",
+          "Phelpsie Music"
+        )
+        const recipients = [new Recipient(email, fullName)]
+
+        const emailParams = new EmailParams()
+          .setFrom(sentFrom)
+          .setTo(recipients)
+          .setReplyTo(sentFrom)
+          .setSubject(`Thank you ${fullName}! Your download links are inside`)
+          .setHtml(emailHtml)
         const res = await mailerSend.email.send(emailParams)
-        const data = await res.json()
-        console.log("Return from mailersend =", data)
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error)

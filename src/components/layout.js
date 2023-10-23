@@ -15,6 +15,7 @@ import VideoPlayer from "./VideoPlayer"
 import CrossSellModal from "./CrossSellModal"
 import IosChecker from "./IosChecker"
 import { useSiteContext } from "../hooks/use-site-context"
+import EmailCollector from "./EmailCollector"
 
 const Layout = ({ children, isPlayerOpen = false }) => {
   const {
@@ -22,6 +23,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
     isVideoPlayerOpen,
     isCrossSellModalOpen,
     playerZIndexBoost,
+    isEmailCollectorOpen,
   } = useSiteContext()
 
   const data = useStaticQuery(graphql`
@@ -43,6 +45,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
         {isCartOpen && <Cart />}
         {isVideoPlayerOpen && <VideoPlayer />}
         {isCrossSellModalOpen && <CrossSellModal />}
+        {isEmailCollectorOpen && <EmailCollector />}
         <Footer
           isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}
         />

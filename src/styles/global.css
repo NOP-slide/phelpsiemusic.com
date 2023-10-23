@@ -50,6 +50,21 @@
   }
 }
 
+.invalid-email {
+  animation: invalidEmail 0.2s infinite ease-in-out;
+}
+
+@keyframes invalidEmail {
+  0% {
+    opacity: 0.3;
+    background-color: rgb(200 0 100);
+  }
+  100% {
+    opacity: 1;
+    background-color: rgb(200 0 100);
+  }
+}
+
 .cart-modal-container {
   background: rgba(0, 0, 0, 0.6);
   height: 100vh;

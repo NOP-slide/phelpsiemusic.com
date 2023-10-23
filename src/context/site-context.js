@@ -4,6 +4,8 @@ import React, { createContext, useState } from "react"
 const SiteContext = createContext({
   isIOS: true,
   setIsIOS: () => {},
+  isEmailCollectorOpen: false,
+  setIsEmailCollectorOpen: () => {},
   iosFlagHasBeenSet: false,
   setIosFlagHasBeenSet: () => {},
   isCartOpen: false,
@@ -31,6 +33,7 @@ function SiteProvider({ children }) {
   const [crossSellItemNum, setCrossSellItemNum] = useState(-1)
   const [isIOS, setIsIOS] = useState(true);
   const [iosFlagHasBeenSet, setIosFlagHasBeenSet] = useState(false);
+  const [isEmailCollectorOpen, setIsEmailCollectorOpen] = useState(false);
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -47,6 +50,8 @@ function SiteProvider({ children }) {
   return (
     <SiteContext.Provider
       value={{
+        isEmailCollectorOpen,
+        setIsEmailCollectorOpen,
         isIOS,
         setIsIOS,
         iosFlagHasBeenSet,

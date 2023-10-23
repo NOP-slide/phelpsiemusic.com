@@ -10,6 +10,10 @@ import { allProducts } from "../data/all-products"
 const Cart = () => {
   const [isCheckoutLoading, setIsCheckoutLoading] = React.useState(false)
 
+  const collectEmail = () => {
+    setIsEmailCollectorOpen(true);
+  }
+  
   async function stripeCheckout() {
     setIsCheckoutLoading(true)
     try {
@@ -35,6 +39,8 @@ const Cart = () => {
     cartItemsFromLS,
     setCartItemsFromLS,
     isCrossSellModalOpen,
+    isEmailCollectorOpen,
+    setIsEmailCollectorOpen,
   } = useSiteContext()
 
   // Get cart contents
@@ -88,7 +94,7 @@ const Cart = () => {
   const [cartOpen, setCartOpen] = React.useState(true)
 
   const handleOutsideClick = () => {
-    if (!isCrossSellModalOpen) {
+    if (!isCrossSellModalOpen && !isEmailCollectorOpen) {
       setCartOpen(false)
       setTimeout(() => setIsCartOpen(false), 350)
     }
@@ -218,7 +224,7 @@ const Cart = () => {
                   }`}
                   disabled={isCheckoutLoading}
                   type="button"
-                  onClick={() => stripeCheckout()}
+                  onClick={() => collectEmail()}
                 >
                   GO TO CHECKOUT
                 </button>
