@@ -17,8 +17,8 @@ exports.handler = async ({body}) => {
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: `http://localhost:8888/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:8888/`,
+        success_url: `https://phelpsiemusic.com/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://phelpsiemusic.com/`,
         after_expiration: {
           recovery: {
             enabled: true,
