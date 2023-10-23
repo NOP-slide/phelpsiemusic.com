@@ -15,14 +15,15 @@ exports.handler = async ({body}) => {
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: `https://phelpsiemusic.com/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `https://phelpsiemusic.com/`,
+        success_url: `http://localhost:8888/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `http://localhost:8888/`,
         after_expiration: {
           recovery: {
             enabled: true,
             allow_promotion_codes: true,
           },
         },
+        customer_email: 'seadoo14@gmail.com',
         expires_at: Math.floor(Date.now() / 1000) + (3600 / 2), // Configured to expire after 30 min
       });
   return {
