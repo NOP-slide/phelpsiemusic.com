@@ -5,6 +5,7 @@ import Seo from "../components/seo"
 import {navigate} from 'gatsby';
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
+import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
 
@@ -15,6 +16,12 @@ const IndexPage = () => {
   const [isHoveringProd2, setIsHoveringProd2] = React.useState(false)
 
   const currentSong = allProducts[currentSongIndex]
+
+  const {
+    isCrossSellModalOpen,
+    crossSellItemNum,
+    playerZIndexBoost,
+  } = useSiteContext()
 
   return (
     <Layout isPlayerOpen={currentSongIndex !== -1}>
@@ -207,23 +214,45 @@ const IndexPage = () => {
         </div>
       </div>
       {/* Audio player section */}
-      <div
-        className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
-          currentSongIndex !== -1 ? "player-shown" : "player-hidden"
-        }`}
-      >
-        <AudioPlayer
-          allProducts={allProducts}
-          key={currentSongIndex}
-          isPaused={isPaused}
-          setIsPaused={setIsPaused}
-          currentSong={currentSong}
-          songCount={allProducts.length}
-          songIndex={currentSongIndex}
-          onNext={() => setCurrentSongIndex(i => i + 1)}
-          onPrev={() => setCurrentSongIndex(i => i - 1)}
-        />
-      </div>
+      {isCrossSellModalOpen ? (
+        <div
+          className={`fixed bottom-0 py-2 flex z-50 flex-col w-full transform bg-brand-dark text-white ${
+            playerZIndexBoost ? "player-shown" : "player-hidden"
+          }`}
+        >
+          <AudioPlayer
+            allProducts={allProducts}
+            key={crossSellItemNum}
+            isPaused={!playerZIndexBoost}
+            setIsPaused={setIsPaused}
+            currentSong={allProducts[crossSellItemNum]
+            }
+            songCount={allProducts.length}
+            songIndex={crossSellItemNum
+            }
+            onNext={() => setCurrentSongIndex(i => i + 1)}
+            onPrev={() => setCurrentSongIndex(i => i - 1)}
+          />
+        </div>
+      ) : (
+        <div
+          className={`fixed bottom-0 py-2 flex z-20 flex-col w-full transform bg-brand-dark text-white ${
+            currentSongIndex !== -1 ? "player-shown" : "player-hidden"
+          }`}
+        >
+          <AudioPlayer
+            allProducts={allProducts}
+            key={currentSongIndex}
+            isPaused={isPaused}
+            setIsPaused={setIsPaused}
+            currentSong={currentSong}
+            songCount={allProducts.length}
+            songIndex={currentSongIndex}
+            onNext={() => setCurrentSongIndex(i => i + 1)}
+            onPrev={() => setCurrentSongIndex(i => i - 1)}
+          />
+        </div>
+      )}
     </Layout>
   )
 }
