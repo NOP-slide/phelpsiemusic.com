@@ -102,7 +102,7 @@ const SuccessPage = () => {
             "Purchase",
             {
               value: Number(data.session.amount_total.toString().slice(0, -2)),
-              currency: data.session.current.toUpperCase(),
+              currency: data.session.currency.toUpperCase(),
             },
             { eventID: sessionID }
           )
