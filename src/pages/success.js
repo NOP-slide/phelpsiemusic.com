@@ -8,7 +8,71 @@ import { useSiteContext } from "../hooks/use-site-context"
 
 const SuccessPage = () => {
   const [customerInfo, setCustomerInfo] = React.useState({})
-  const {setCartItemsFromLS} = useSiteContext();
+  const { setCartItemsFromLS } = useSiteContext()
+
+  const isBrowser = typeof window !== "undefined"
+
+  const getSHA256Hash = async input => {
+    const textAsBuffer = new TextEncoder().encode(input)
+    const hashBuffer = await window.crypto.subtle.digest(
+      "SHA-256",
+      textAsBuffer
+    )
+    const hashArray = Array.from(new Uint8Array(hashBuffer))
+    return hashArray.map(item => item.toString(16).padStart(2, "0")).join("")
+  }
+
+  async function conversionsAPI(em, country, currency, value, sessionID) {
+    const cookies = document.cookie.split(";")
+    let fbp = "none"
+    let fbc = "none"
+    console.log(cookies)
+
+    cookies.map(cookie => {
+      if (cookie.includes("_fbp=")) {
+        fbp = cookie.slice(cookie.indexOf("_fbp=") + 5)
+        console.log(fbp)
+      }
+    })
+    cookies.map(cookie => {
+      if (cookie.includes("_fbc=")) {
+        fbc = cookie.slice(cookie.indexOf("_fbc=") + 5)
+        console.log(fbc)
+      }
+    })
+
+    if (fbc === "none" && window.location.search.includes("fbclid=")) {
+      const params = new URL(document.location).searchParams
+      fbc = "fb.1." + +new Date() + "." + params.get("fbclid")
+    }
+    try {
+      const email = await getSHA256Hash(em)
+      const thecountry = await getSHA256Hash(country)
+      const thevalue = Number(value.toString().slice(0, -2))
+      console.log("TheValue: ", thevalue)
+      const res = await fetch("/.netlify/functions/conversions-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          eventType: "Purchase",
+          fbp,
+          fbc,
+          email,
+          thecountry,
+          currency,
+          thevalue,
+          sessionID,
+        }),
+      })
+      const result = await res.json()
+      console.log("Return from netlify functions conversionsAPI =", result)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }
 
   async function stripeGetCustomerInfo(sessionID) {
     try {
@@ -23,6 +87,29 @@ const SuccessPage = () => {
       })
       const data = await res.json()
       console.log("Return from Get Customer Info =", data)
+
+      if (localStorage.getItem("phelpsieSession") !== sessionID) {
+        conversionsAPI(
+          data.customer.email.toLowerCase(),
+          data.customer.address.country.toLowerCase(),
+          data.session.currency.toUpperCase(),
+          data.session.amount_total,
+          sessionID
+        )
+        if (isBrowser && window.fbq)
+          window.fbq(
+            "track",
+            "Purchase",
+            {
+              value: Number(data.session.amount_total.toString().slice(0, -2)),
+              currency: data.session.current.toUpperCase(),
+            },
+            { eventID: sessionID }
+          )
+      } else {
+        console.log("duplicate session conversion prevented")
+      }
+      localStorage.setItem("phelpsieSession", sessionID)
       setCustomerInfo(data.customer)
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -44,7 +131,9 @@ const SuccessPage = () => {
       <div className="max-w-xs mx-auto my-auto sm:max-w-md md:max-w-3xl">
         {!customerInfo.name ? (
           <div>
-            <h2 className='mx-auto text-3xl font-bold text-center text-white sm:text-4xl'>Loading Order Details</h2>
+            <h2 className="mx-auto text-3xl font-bold text-center text-white sm:text-4xl">
+              Loading Order Details
+            </h2>
             <CgSpinner className="w-24 h-24 mx-auto mt-6 text-brand-teal spinner" />
           </div>
         ) : (

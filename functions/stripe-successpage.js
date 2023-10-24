@@ -7,6 +7,7 @@ exports.handler = async ({ body }) => {
     statusCode: 200,
     body: JSON.stringify({
       customer: session.customer_details,
+      session: session,
     }),
   }
 }

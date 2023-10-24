@@ -128,7 +128,7 @@ const EmailCollector = () => {
             autoFocus
             className={`transition ${
               isInputBlinking && "invalid-email"
-            } flex justify-center w-64 md:w-72 lg:w-1/3 mx-auto mt-2 text-lg font-semibold text-center bg-white rounded-full outline-none text-brand-dark focus:ring-8 focus:ring-blue-800`}
+            } flex justify-center appearance-none w-64 md:w-72 lg:w-1/3 mx-auto mt-2 text-lg font-semibold text-center bg-white rounded-full outline-none text-brand-dark focus:ring-8 focus:ring-blue-800`}
             type="email"
           />
           <button
