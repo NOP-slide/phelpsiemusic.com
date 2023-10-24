@@ -9,9 +9,56 @@ import { allProducts } from "../data/all-products"
 
 const Cart = () => {
   const [isCheckoutLoading, setIsCheckoutLoading] = React.useState(false)
+  const isBrowser = typeof window !== "undefined"
 
   const collectEmail = () => {
+    let eventID = crypto.randomUUID();
+    conversionsAPI(eventID);
+    if (isBrowser && window.fbq) window.fbq('track', 'InitiateCheckout', {}, { eventID: eventID });
     setIsEmailCollectorOpen(true);
+  }
+
+  async function conversionsAPI(eventID) {
+    const cookies = document.cookie.split(";")
+    let fbp = "none"
+    let fbc = "none"
+
+    cookies.map(cookie => {
+      if (cookie.includes("_fbp=")) {
+        fbp = cookie.slice(cookie.indexOf("_fbp=") + 5)
+        console.log(fbp)
+      }
+    })
+    cookies.map(cookie => {
+      if (cookie.includes("_fbc=")) {
+        fbc = cookie.slice(cookie.indexOf("_fbc=") + 5)
+        console.log(fbc)
+      }
+    })
+
+    if (fbc === "none" && window.location.search.includes("fbclid=")) {
+      const params = new URL(document.location).searchParams
+      fbc = "fb.1." + +new Date() + "." + params.get("fbclid")
+    }
+    try {
+      const res = await fetch("/.netlify/functions/conversions-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          eventType: "InitiateCheckout",
+          fbp,
+          fbc,
+          eventID,
+        }),
+      })
+      const result = await res.json()
+      console.log("Return from netlify functions conversionsAPI =", result)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
   }
   
   async function stripeCheckout() {

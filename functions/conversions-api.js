@@ -26,6 +26,7 @@ async function conversionsAPI(
           client_ip_address: ipAddress,
           client_user_agent: userAgent,
         },
+        event_id: eventID,
       },
     ],
     test_event_code: "TEST52906",
@@ -101,7 +102,6 @@ exports.handler = async event => {
     eventID,
   } = JSON.parse(event.body)
 
-  console.log("CURRENCY: ", currency);
   const result = await conversionsAPI(
     eventType,
     event.headers.referer,
