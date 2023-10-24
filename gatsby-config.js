@@ -13,9 +13,9 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     title: `Phelpsie Music`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    description: `Want to make your beats sound professional? Ready to get the attention of major producers and move your career forward? Download pro-quality loops for the inspiration you need.`,
+    author: `Phelpsie`,
+    siteUrl: `https://phelpsiemusic.com/`,
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -32,15 +32,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `phelpsie-music`,
+        short_name: `PhelpsieMusic`,
         start_url: `/`,
         background_color: `#663399`,
         // This will impact how browsers show your PWA/website
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
       },
     },
   ],
