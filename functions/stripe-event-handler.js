@@ -33,48 +33,48 @@ exports.handler = async ({ body, headers }) => {
       const lineItems = sessionWithLineItems.line_items
       console.log("LINE ITEMS: ", lineItems)
 
-      // try {
-      //   let emailHtml = `<p>Hey,</p><p>Thank you so much for purchasing from me at Phelpsie Music. I appreciate you!</p><p>Please find your downloads below:</p>`
-      //   lineItems.data.map(item => {
-      //     switch (item.description) {
-      //       case "Imaginarium Vol. 1 - Trap & Drill Loop Kit":
-      //         emailHtml +=
-      //           `<a href="` +
-      //           "https://www.dropbox.com/scl/fi/8c2h0rl2x3cma7q8t3k1u/Imaginarium-Vol.-1-Phelpsiemusic.com.zip?rlkey=ln57hz2nt773b6en9od83uy7m&dl=1" +
-      //           `">` +
-      //           item.description +
-      //           `</a><br/>`
-      //         break
-      //       case "Imaginarium Vol. 2 - Trap & Drill Loop Kit":
-      //         emailHtml +=
-      //           `<a href="` +
-      //           "https://www.dropbox.com/scl/fi/lxd66aib5r1xi6gkr2xh8/Imaginarium-Vol.-2-Phelpsiemusic.com.zip?rlkey=osaypki1dn9d99xgqce7epu39&dl=1" +
-      //           `">` +
-      //           item.description +
-      //           `</a><br/>`
-      //         break
-      //     }
-      //   })
+      try {
+        let emailHtml = `<p>Hey,</p><p>Thank you so much for purchasing from me at Phelpsie Music. I appreciate you!</p><p>Please find your downloads below:</p>`
+        lineItems.data.map(item => {
+          switch (item.description) {
+            case "Imaginarium Vol. 1 - Trap & Drill Loop Kit":
+              emailHtml +=
+                `<a href="` +
+                "https://www.dropbox.com/scl/fi/8c2h0rl2x3cma7q8t3k1u/Imaginarium-Vol.-1-Phelpsiemusic.com.zip?rlkey=ln57hz2nt773b6en9od83uy7m&dl=1" +
+                `">` +
+                item.description +
+                `</a><br/>`
+              break
+            case "Imaginarium Vol. 2 - Trap & Drill Loop Kit":
+              emailHtml +=
+                `<a href="` +
+                "https://www.dropbox.com/scl/fi/lxd66aib5r1xi6gkr2xh8/Imaginarium-Vol.-2-Phelpsiemusic.com.zip?rlkey=osaypki1dn9d99xgqce7epu39&dl=1" +
+                `">` +
+                item.description +
+                `</a><br/>`
+              break
+          }
+        })
 
-      //   emailHtml += `<br/><p>I wish you continued inspiration, and hope to see you again soon. Keep making music!</p><br/><p>Your friend,</p><p>Phelpsie</p>`
+        emailHtml += `<br/><p>I wish you continued inspiration, and hope to see you again soon. Keep making music!</p><br/><p>Your friend,</p><p>Phelpsie</p>`
 
-      //   const sentFrom = new Sender(
-      //     "phelpsie@phelpsiemusic.com",
-      //     "Phelpsie Music"
-      //   )
-      //   const recipients = [new Recipient(email, fullName)]
+        const sentFrom = new Sender(
+          "phelpsie@phelpsiemusic.com",
+          "Phelpsie Music"
+        )
+        const recipients = [new Recipient(email, fullName)]
 
-      //   const emailParams = new EmailParams()
-      //     .setFrom(sentFrom)
-      //     .setTo(recipients)
-      //     .setReplyTo(sentFrom)
-      //     .setSubject(`Thank you ${fullName}! Your download links are inside`)
-      //     .setHtml(emailHtml)
-      //   const res = await mailerSend.email.send(emailParams)
-      // } catch (error) {
-      //   // eslint-disable-next-line no-console
-      //   console.error(error)
-      // }
+        const emailParams = new EmailParams()
+          .setFrom(sentFrom)
+          .setTo(recipients)
+          .setReplyTo(sentFrom)
+          .setSubject(`Thank you ${fullName}! Your download links are inside`)
+          .setHtml(emailHtml)
+        const res = await mailerSend.email.send(emailParams)
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      }
     }
 
     // Handle abandoned carts

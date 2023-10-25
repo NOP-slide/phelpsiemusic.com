@@ -75,9 +75,10 @@ const ImaginariumVol2Page = () => {
       let tempCart = {
         items: [],
       }
-      let eventID = crypto.randomUUID();
-      conversionsAPI(eventID);
-      if (isBrowser && window.fbq) window.fbq('track', 'AddToCart', {}, { eventID: eventID });
+      let eventID = crypto.randomUUID()
+      conversionsAPI(eventID)
+      if (isBrowser && window.fbq)
+        window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
       // If cart already exists
       if (cartItemsFromLS.length > 0) {
@@ -343,6 +344,10 @@ const ImaginariumVol2Page = () => {
             track.
             <br />
             <br />
+            As a <span className="font-black">special bonus</span>, this kit
+            also includes a free additional loop.
+            <br />
+            <br />
             <span className="font-black">Royalty free</span> for online beat
             leasing (eg. Beatstars, Traktrain). Please read the included text
             file for full terms after purchase.
@@ -373,11 +378,9 @@ const ImaginariumVol2Page = () => {
             key={crossSellItemNum}
             isPaused={!playerZIndexBoost}
             setIsPaused={setIsPaused}
-            currentSong={allProducts[crossSellItemNum]
-            }
+            currentSong={allProducts[crossSellItemNum]}
             songCount={allProducts.length}
-            songIndex={crossSellItemNum
-            }
+            songIndex={crossSellItemNum}
             onNext={() => setCurrentSongIndex(i => i + 1)}
             onPrev={() => setCurrentSongIndex(i => i - 1)}
           />
