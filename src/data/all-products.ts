@@ -1,7 +1,7 @@
 export const allProducts = [
   {
     title: "Imaginarium Vol. 1 - Trap & Drill Loop Kit",
-    audioSrc: "/imaginarium-vol-1-demo.mp3",
+    audioSrc: "/imaginarium-vol-1-demo-new.mp3",
     oldPrice: 30,
     price: 17,
     imgName: "1-imaginarium-vol-1-art",
@@ -13,7 +13,7 @@ export const allProducts = [
   },
   {
     title: "Imaginarium Vol. 2 - Trap & Drill Loop Kit",
-    audioSrc: "/imaginarium-vol-2-demo.mp3",
+    audioSrc: "/imaginarium-vol-2-demo-new.mp3",
     oldPrice: 30,
     price: 17,
     imgName: "2-imaginarium-vol-2-art",
