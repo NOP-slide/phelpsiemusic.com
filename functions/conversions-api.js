@@ -29,7 +29,6 @@ async function conversionsAPI(
         event_id: eventID,
       },
     ],
-    test_event_code: "TEST49031",
   }
 
   let purchaseBody
@@ -55,7 +54,6 @@ async function conversionsAPI(
           },
         },
       ],
-      test_event_code: "TEST49031",
     }
   }
 
