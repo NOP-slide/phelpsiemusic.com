@@ -27,7 +27,7 @@ const ImaginariumVol2Page = () => {
     playerZIndexBoost,
   } = useSiteContext()
 
-  async function conversionsAPI(eventID) {
+  async function conversionsAPI(eventID, eventType) {
     const cookies = document.cookie.split(";")
     let fbp = "none"
     let fbc = "none"
@@ -56,10 +56,11 @@ const ImaginariumVol2Page = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          eventType: "AddToCart",
+          eventType: eventType,
           fbp,
           fbc,
           eventID,
+          content_name: allProducts[1].title,
         }),
       })
       const result = await res.json()
@@ -76,7 +77,7 @@ const ImaginariumVol2Page = () => {
         items: [],
       }
       let eventID = crypto.randomUUID()
-      conversionsAPI(eventID)
+      conversionsAPI(eventID, "AddToCart");
       if (isBrowser && window.fbq)
         window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
@@ -111,6 +112,12 @@ const ImaginariumVol2Page = () => {
 
     setIsCartOpen(true)
   }
+
+  React.useEffect(() => {
+    let eventID = crypto.randomUUID();
+    conversionsAPI(eventID, "ViewContent");
+    if (isBrowser && window.fbq) window.fbq('track', 'ViewContent', {content_name: allProducts[1].title}, { eventID: eventID });
+  }, [])
 
   return (
     <Layout isPlayerOpen={currentSongIndex !== -1}>
