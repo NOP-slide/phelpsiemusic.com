@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
+import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
@@ -78,9 +79,10 @@ const ImaginariumVol1Page = () => {
       let tempCart = {
         items: [],
       }
-      let eventID = crypto.randomUUID();
-      conversionsAPI(eventID, "AddToCart");
-      if (isBrowser && window.fbq) window.fbq('track', 'AddToCart', {}, { eventID: eventID });
+      let eventID = crypto.randomUUID()
+      conversionsAPI(eventID, "AddToCart")
+      if (isBrowser && window.fbq)
+        window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
       // If cart already exists
       if (cartItemsFromLS.length > 0) {
@@ -117,9 +119,15 @@ const ImaginariumVol1Page = () => {
   console.log(playerZIndexBoost)
 
   React.useEffect(() => {
-    let eventID = crypto.randomUUID();
-    conversionsAPI(eventID, "ViewContent");
-    if (isBrowser && window.fbq) window.fbq('track', 'ViewContent', {content_name: allProducts[0].title}, { eventID: eventID });
+    let eventID = crypto.randomUUID()
+    conversionsAPI(eventID, "ViewContent")
+    if (isBrowser && window.fbq)
+      window.fbq(
+        "track",
+        "ViewContent",
+        { content_name: allProducts[0].title },
+        { eventID: eventID }
+      )
   }, [])
 
   return (
@@ -376,6 +384,15 @@ const ImaginariumVol1Page = () => {
           </button>
         </div>
       </div>
+      <div className="flex items-center justify-center mt-12">
+        <TfiLock className="w-8 h-8 text-white" />
+        <p className="ml-2 text-lg font-bold text-white sm:text-xl">Secure Payment</p>
+      </div>
+      <p className="max-w-xs mx-auto mt-6 mb-12 text-sm text-center text-white sm:text-justify sm:text-base sm:max-w-lg">
+        All orders are processed through Stripe, with industry-leading 256-bit
+        SSL encryption, and your information is never shared. I respect your
+        privacy.
+      </p>
       {/* Audio player section */}
       {isCrossSellModalOpen ? (
         <div
@@ -388,11 +405,9 @@ const ImaginariumVol1Page = () => {
             key={crossSellItemNum}
             isPaused={!playerZIndexBoost}
             setIsPaused={setIsPaused}
-            currentSong={allProducts[crossSellItemNum]
-            }
+            currentSong={allProducts[crossSellItemNum]}
             songCount={allProducts.length}
-            songIndex={crossSellItemNum
-            }
+            songIndex={crossSellItemNum}
             onNext={() => setCurrentSongIndex(i => i + 1)}
             onPrev={() => setCurrentSongIndex(i => i - 1)}
           />

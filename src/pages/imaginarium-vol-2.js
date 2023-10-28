@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
+import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
@@ -373,6 +374,15 @@ const ImaginariumVol2Page = () => {
           </button>
         </div>
       </div>
+      <div className="flex items-center justify-center mt-12">
+        <TfiLock className="w-8 h-8 text-white" />
+        <p className="ml-2 text-lg font-bold text-white sm:text-xl">Secure Payment</p>
+      </div>
+      <p className="max-w-xs mx-auto mt-6 mb-12 text-sm text-center text-white sm:text-justify sm:text-base sm:max-w-lg">
+        All orders are processed through Stripe, with industry-leading 256-bit
+        SSL encryption, and your information is never shared. I respect your
+        privacy.
+      </p>
       {/* Audio player section */}
       {isCrossSellModalOpen ? (
         <div
