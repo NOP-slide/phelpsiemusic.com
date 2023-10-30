@@ -15,7 +15,7 @@ module.exports = {
     title: `Phelpsie Music`,
     description: `Want to make your beats sound professional? Ready to get the attention of major producers and move your career forward? Download pro-quality loops for the inspiration you need.`,
     author: `Phelpsie`,
-    siteUrl: `https://phelpsiemusic.com/`,
+    siteUrl: `https://www.phelpsiemusic.com/`,
   },
   plugins: [
     `gatsby-plugin-image`,
@@ -27,6 +27,7 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
+    `gatsby-plugin-sitemap`,
     'gatsby-plugin-postcss',
     `gatsby-plugin-sharp`,
     {
