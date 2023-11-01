@@ -40,7 +40,7 @@ exports.handler = async ({ body, headers }) => {
             case "Imaginarium Vol. 1 - Trap & Drill Loop Kit":
               emailHtml +=
                 `<a href="` +
-                "https://www.dropbox.com/scl/fi/8c2h0rl2x3cma7q8t3k1u/Imaginarium-Vol.-1-Phelpsiemusic.com.zip?rlkey=ln57hz2nt773b6en9od83uy7m&dl=1" +
+                "https://www.dropbox.com/scl/fi/9klvjpr9dt4c19wtha643/Imaginarium-Vol.-1-Phelpsiemusic.com.zip?rlkey=c2rmjcjrih22adn324to1x916&dl=1" +
                 `">` +
                 item.description +
                 `</a><br/>`
