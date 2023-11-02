@@ -22,6 +22,8 @@ const SiteContext = createContext({
   setIsCrossSellModalOpen: () => {},
   playerZIndexBoost: false,
   setPlayerZIndexBoost: () => {},
+  isExitIntentModalOpen: false,
+  setIsExitIntentModalOpen: () => {},
 })
 
 function SiteProvider({ children }) {
@@ -34,6 +36,7 @@ function SiteProvider({ children }) {
   const [isIOS, setIsIOS] = useState(true);
   const [iosFlagHasBeenSet, setIosFlagHasBeenSet] = useState(false);
   const [isEmailCollectorOpen, setIsEmailCollectorOpen] = useState(false);
+  const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -64,6 +67,8 @@ function SiteProvider({ children }) {
         setIsVideoPlayerOpen,
         isCrossSellModalOpen,
         setIsCrossSellModalOpen,
+        isExitIntentModalOpen,
+        setIsExitIntentModalOpen,
         crossSellItem,
         setCrossSellItem,
         crossSellItemNum,

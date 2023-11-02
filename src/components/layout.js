@@ -16,6 +16,7 @@ import CrossSellModal from "./CrossSellModal"
 import IosChecker from "./IosChecker"
 import { useSiteContext } from "../hooks/use-site-context"
 import EmailCollector from "./EmailCollector"
+import ExitIntentModal from "./ExitIntentModal"
 
 const Layout = ({ children, isPlayerOpen = false }) => {
   const {
@@ -24,6 +25,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
     isCrossSellModalOpen,
     playerZIndexBoost,
     isEmailCollectorOpen,
+    isExitIntentModalOpen,
   } = useSiteContext()
 
   const data = useStaticQuery(graphql`
@@ -46,6 +48,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
         {isVideoPlayerOpen && <VideoPlayer />}
         {isCrossSellModalOpen && <CrossSellModal />}
         {isEmailCollectorOpen && <EmailCollector />}
+        {isExitIntentModalOpen && <ExitIntentModal />}
         <Footer
           isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}
         />

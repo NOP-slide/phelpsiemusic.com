@@ -25,6 +25,9 @@ const ImaginariumVol1Page = () => {
     setIsCrossSellModalOpen,
     setCrossSellItem,
     crossSellItem,
+    isExitIntentModalOpen,
+    setIsEmailCollectorOpen,
+    setIsExitIntentModalOpen,
     setCrossSellItemNum,
     crossSellItemNum,
     playerZIndexBoost,
@@ -128,6 +131,19 @@ const ImaginariumVol1Page = () => {
         { content_name: allProducts[0].title },
         { eventID: eventID }
       )
+    if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
+      window.history.pushState({}, null, null)
+      localStorage.setItem("phelpsiePopup", true);
+
+      window.addEventListener("popstate", event => {
+        if (event.state === null) {
+          // localStorage.removeItem("phelpsiePopup");
+          setIsEmailCollectorOpen(false);
+          setIsCrossSellModalOpen(false);
+          setIsExitIntentModalOpen(true);
+        }
+      })
+    }
   }, [])
 
   return (
@@ -386,7 +402,9 @@ const ImaginariumVol1Page = () => {
       </div>
       <div className="flex items-center justify-center mt-12">
         <TfiLock className="w-8 h-8 text-white" />
-        <p className="ml-2 text-lg font-bold text-white sm:text-xl">Secure Payment</p>
+        <p className="ml-2 text-lg font-bold text-white sm:text-xl">
+          Secure Payment
+        </p>
       </div>
       <p className="max-w-xs mx-auto mt-6 mb-12 text-sm text-center text-white sm:text-justify sm:text-base sm:max-w-lg">
         All orders are processed through Stripe, with industry-leading 256-bit
