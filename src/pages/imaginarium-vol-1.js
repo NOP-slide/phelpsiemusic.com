@@ -140,6 +140,7 @@ const ImaginariumVol1Page = () => {
           // localStorage.removeItem("phelpsiePopup");
           setIsEmailCollectorOpen(false);
           setIsCrossSellModalOpen(false);
+          setIsVideoPlayerOpen(false);
           setIsExitIntentModalOpen(true);
         }
       })
