@@ -18,6 +18,24 @@ async function conversionsAPI(
   const endpoint = `https://graph.facebook.com/v16.0/616426149897518/events?access_token=EAAEPnJFBJjUBO8PwSCBWBsQUEvRdjCdvy3URjbawYxeDvwHSYXtVsxGo1TLOHByGMQNrAvWZBtOUFIQNYGFVAxbULpXE5NlvQbrmIUAl3jATwE9OxBn7ks9SgAVbSMZB7vmP5AXLdzH8nlQsRgfLTeesl0lDcZAhElf32cDhP8iREPdVKPN8sBCywZCKzZAVESwZDZD`
   let body;
 
+  if (eventName === "MyPurchase") {
+    body = {
+      data: [
+        {
+          event_name: eventName,
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: "website",
+          event_source_url: source,
+          user_data: {
+            client_ip_address: ipAddress,
+            client_user_agent: userAgent,
+          },
+          event_id: eventID,
+        },
+      ],
+      test_event_code: 'TEST99147',
+    }
+  }
   if (eventName === "ViewContent") {
     body = {
       data: [

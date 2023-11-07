@@ -33,6 +33,49 @@ const ImaginariumVol1Page = () => {
     playerZIndexBoost,
   } = useSiteContext()
 
+  async function fakePurchase(eventID) {
+    const cookies = document.cookie.split(";")
+    let fbp = "none"
+    let fbc = "none"
+
+    cookies.map(cookie => {
+      if (cookie.includes("_fbp=")) {
+        fbp = cookie.slice(cookie.indexOf("_fbp=") + 5)
+        console.log(fbp)
+      }
+    })
+    cookies.map(cookie => {
+      if (cookie.includes("_fbc=")) {
+        fbc = cookie.slice(cookie.indexOf("_fbc=") + 5)
+        console.log(fbc)
+      }
+    })
+
+    if (fbc === "none" && window.location.search.includes("fbclid=")) {
+      const params = new URL(document.location).searchParams
+      fbc = "fb.1." + +new Date() + "." + params.get("fbclid")
+    }
+    try {
+      const res = await fetch("/.netlify/functions/conversions-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          eventType: "MyPurchase",
+          fbp,
+          fbc,
+          eventID,
+        }),
+      })
+      const result = await res.json()
+      console.log("Return from netlify functions conversionsAPI =", result)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }
+
   async function conversionsAPI(eventID, eventType) {
     const cookies = document.cookie.split(";")
     let fbp = "none"
@@ -131,17 +174,23 @@ const ImaginariumVol1Page = () => {
         { content_name: allProducts[0].title },
         { eventID: eventID }
       )
+
+    eventID = crypto.randomUUID()
+    fakePurchase(eventID)
+    if (isBrowser && window.fbq)
+      window.fbq("trackCustom", "MyPurchase", {}, { eventID: eventID })
+
     if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
       window.history.pushState({}, null, null)
-      localStorage.setItem("phelpsiePopup", true);
+      localStorage.setItem("phelpsiePopup", true)
 
       window.addEventListener("popstate", event => {
         if (event.state === null) {
           // localStorage.removeItem("phelpsiePopup");
-          setIsEmailCollectorOpen(false);
-          setIsCrossSellModalOpen(false);
-          setIsVideoPlayerOpen(false);
-          setIsExitIntentModalOpen(true);
+          setIsEmailCollectorOpen(false)
+          setIsCrossSellModalOpen(false)
+          setIsVideoPlayerOpen(false)
+          setIsExitIntentModalOpen(true)
         }
       })
     }
