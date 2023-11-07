@@ -33,7 +33,6 @@ async function conversionsAPI(
           event_id: eventID,
         },
       ],
-      test_event_code: 'TEST99147',
     }
   }
   if (eventName === "ViewContent") {
