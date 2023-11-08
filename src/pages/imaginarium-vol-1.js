@@ -175,10 +175,10 @@ const ImaginariumVol1Page = () => {
         { eventID: eventID }
       )
 
-    eventID = crypto.randomUUID()
-    fakePurchase(eventID)
-    if (isBrowser && window.fbq)
-      window.fbq("trackCustom", "MyPurchase", {}, { eventID: eventID })
+    // eventID = crypto.randomUUID()
+    // fakePurchase(eventID)
+    // if (isBrowser && window.fbq)
+    //   window.fbq("trackCustom", "MyPurchase", {}, { eventID: eventID })
 
     if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
       window.history.pushState({}, null, null)
