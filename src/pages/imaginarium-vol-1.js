@@ -17,6 +17,7 @@ const ImaginariumVol1Page = () => {
 
   const {
     setIsVideoPlayerOpen,
+    setVideoPlayerSrc,
     isVideoPlayerOpen,
     setIsCartOpen,
     cartItemsFromLS,
@@ -162,8 +163,6 @@ const ImaginariumVol1Page = () => {
     setIsCartOpen(true)
   }
 
-  console.log(playerZIndexBoost)
-
   React.useEffect(() => {
     let eventID = crypto.randomUUID()
     conversionsAPI(eventID, "ViewContent")
@@ -174,11 +173,6 @@ const ImaginariumVol1Page = () => {
         { content_name: allProducts[0].title },
         { eventID: eventID }
       )
-
-    // eventID = crypto.randomUUID()
-    // fakePurchase(eventID)
-    // if (isBrowser && window.fbq)
-    //   window.fbq("trackCustom", "MyPurchase", {}, { eventID: eventID })
 
     if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
       window.history.pushState({}, null, null)
@@ -393,6 +387,7 @@ const ImaginariumVol1Page = () => {
               type="button"
               onClick={() => {
                 setIsPaused(true)
+                setVideoPlayerSrc("/twysted-ig-vertical.mp4")
                 setIsVideoPlayerOpen(true)
               }}
             >
@@ -448,8 +443,41 @@ const ImaginariumVol1Page = () => {
           >
             ADD TO CART
           </button>
+          {/* Loop howto video section */}
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            HOW TO USE IT
+          </h3>
+          <div className="relative px-2 mx-auto mt-12 sm:px-0">
+            <StaticImage
+              quality={95}
+              src="../images/howto-screenshot.jpg"
+              placeholder="blurred"
+              alt=""
+              imgStyle={{ objectFit: "fill" }}
+              className={`w-full sm:w-96 h-[24rem] sm:h-[30rem] mx-auto `}
+            />
+            <button
+              className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
+              type="button"
+              onClick={() => {
+                setIsPaused(true)
+                setVideoPlayerSrc("/howto-vertical.mp4")
+                setIsVideoPlayerOpen(true)
+              }}
+            >
+              <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => addToCart()}
+            className="w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+          >
+            ADD TO CART
+          </button>
         </div>
       </div>
+
       <div className="flex items-center justify-center mt-12">
         <TfiLock className="w-8 h-8 text-white" />
         <p className="ml-2 text-lg font-bold text-white sm:text-xl">

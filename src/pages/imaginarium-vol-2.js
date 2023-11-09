@@ -17,6 +17,7 @@ const ImaginariumVol2Page = () => {
 
   const {
     setIsVideoPlayerOpen,
+    setVideoPlayerSrc,
     setIsCartOpen,
     cartItemsFromLS,
     isCrossSellModalOpen,
@@ -317,6 +318,7 @@ const ImaginariumVol2Page = () => {
               type="button"
               onClick={() => {
                 setIsPaused(true)
+                setVideoPlayerSrc('/twysted-ig-vertical.mp4')
                 setIsVideoPlayerOpen(true)
               }}
             >

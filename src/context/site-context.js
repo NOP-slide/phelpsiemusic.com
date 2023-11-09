@@ -19,6 +19,8 @@ const SiteContext = createContext({
   setCartItemsFromLS: () => {},
   setIsCartOpen: () => {},
   setIsVideoPlayerOpen: () => {},
+  videoPlayerSrc: '',
+  setVideoPlayerSrc: () => {},
   setIsCrossSellModalOpen: () => {},
   playerZIndexBoost: false,
   setPlayerZIndexBoost: () => {},
@@ -29,6 +31,7 @@ const SiteContext = createContext({
 function SiteProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isVideoPlayerOpen, setIsVideoPlayerOpen] = useState(false)
+  const [videoPlayerSrc, setVideoPlayerSrc] = useState('')
   const [isCrossSellModalOpen, setIsCrossSellModalOpen] = useState(false)
   const [playerZIndexBoost, setPlayerZIndexBoost] = useState(false)
   const [crossSellItem, setCrossSellItem] = useState('')
@@ -65,6 +68,8 @@ function SiteProvider({ children }) {
         setCartItemsFromLS,
         isVideoPlayerOpen,
         setIsVideoPlayerOpen,
+        videoPlayerSrc,
+        setVideoPlayerSrc,
         isCrossSellModalOpen,
         setIsCrossSellModalOpen,
         isExitIntentModalOpen,

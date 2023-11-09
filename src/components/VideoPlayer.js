@@ -20,7 +20,7 @@ const VideoPlayer = () => {
   const [currrentProgress, setCurrrentProgress] = React.useState(0)
   const [buffered, setBuffered] = React.useState(0)
   const [volume, setVolume] = React.useState(1.0)
-  const { setIsVideoPlayerOpen, isIOS } = useSiteContext()
+  const { setIsVideoPlayerOpen, isIOS, videoPlayerSrc } = useSiteContext()
 
   const handleBufferProgress = e => {
     const video = e.currentTarget
@@ -118,7 +118,7 @@ const VideoPlayer = () => {
             onVolumeChange={e => setVolume(e.currentTarget.volume)}
             preload="auto"
             playsInline
-            src="/twysted-ig-vertical.mp4"
+            src={videoPlayerSrc}
           />
           <VideoProgressBar
             duration={duration}
