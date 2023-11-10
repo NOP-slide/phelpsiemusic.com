@@ -16,7 +16,7 @@ async function conversionsAPI(
   content_name
 ) {
   const endpoint = `https://graph.facebook.com/v16.0/616426149897518/events?access_token=EAAEPnJFBJjUBO8PwSCBWBsQUEvRdjCdvy3URjbawYxeDvwHSYXtVsxGo1TLOHByGMQNrAvWZBtOUFIQNYGFVAxbULpXE5NlvQbrmIUAl3jATwE9OxBn7ks9SgAVbSMZB7vmP5AXLdzH8nlQsRgfLTeesl0lDcZAhElf32cDhP8iREPdVKPN8sBCywZCKzZAVESwZDZD`
-  let body;
+  let body
 
   if (eventName === "MyPurchase") {
     body = {
@@ -50,13 +50,13 @@ async function conversionsAPI(
           event_id: eventID,
           custom_data: {
             content_name: content_name,
-          }
+          },
         },
       ],
     }
   }
 
-  if (eventName === "AddToCart" || eventName === 'InitiateCheckout') {
+  if (eventName === "AddToCart" || eventName === "InitiateCheckout") {
     body = {
       data: [
         {
@@ -101,12 +101,18 @@ async function conversionsAPI(
   }
 
   if (fbp !== "none") {
-    if (eventName === "Purchase") purchaseBody.data[0].user_data.fbp = fbp
-    body.data[0].user_data.fbp = fbp
+    if (eventName === "Purchase") {
+      purchaseBody.data[0].user_data.fbp = fbp
+    } else {
+      body.data[0].user_data.fbp = fbp
+    }
   }
   if (fbc !== "none") {
-    if (eventName === "Purchase") purchaseBody.data[0].user_data.fbc = fbc
-    body.data[0].user_data.fbc = fbc
+    if (eventName === "Purchase") {
+      purchaseBody.data[0].user_data.fbc = fbc
+    } else {
+      body.data[0].user_data.fbc = fbc
+    }
   }
 
   try {
