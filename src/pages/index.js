@@ -41,7 +41,7 @@ const IndexPage = () => {
           <br />
           <p className="max-w-lg text-white text-md sm:text-xl">
             Want to make your beats sound professional? Ready to get the
-            attention of major producers and move your career forward? Download
+            attention of major artists and move your career forward? Download
             pro-quality loops for the inspiration you need.
           </p>
         </div>
