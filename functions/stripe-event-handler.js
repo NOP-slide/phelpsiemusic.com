@@ -87,12 +87,12 @@ exports.handler = async ({ body, headers }) => {
 
       if (email && recoveryUrl) {
         try {
-          let emailHtml = `<p>Hey bro,</p><p>Thanks for checking out the loops on my website, I appreciate it. I noticed you didn't complete your purchase - no worries if you don't feel like these loops are right for your music, but if you change your mind, use this link and enter the coupon code WELCOMEBACK to receive 15% off your order.</p>`
+          let emailHtml = `<p>Hey producer!</p><p>Thanks for checking out my website, I appreciate it. I noticed you didn't complete your purchase - no worries at all, but if you change your mind, use this link and enter the coupon code WELCOMEBACK to receive 15% off.</p>`
 
           emailHtml +=
-            `<a href="` + recoveryUrl + `">Complete your order here</a><br/>`
+            `<a href="` + recoveryUrl + `">Complete your purchase</a><br/>`
 
-          emailHtml += `<br/><p>Your friend,</p><p>Phelpsie</p>`
+          emailHtml += `<br/><p>Warm regards,</p><p>Phelpsie</p>`
 
           const sentFrom = new Sender(
             "phelpsie@phelpsiemusic.com",
