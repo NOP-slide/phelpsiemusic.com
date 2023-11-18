@@ -10,6 +10,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import Footer from "./footer"
+import Banner from "./banner"
 import Cart from "./cart"
 import VideoPlayer from "./VideoPlayer"
 import CrossSellModal from "./CrossSellModal"
@@ -61,6 +62,7 @@ const Layout = ({ children, isPlayerOpen = false }) => {
   return (
     <>
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
+        <Banner />
         <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
         <IosChecker />

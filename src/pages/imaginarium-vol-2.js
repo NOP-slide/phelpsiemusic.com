@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
+import { IoStarSharp } from "react-icons/io5"
 import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
@@ -374,6 +375,51 @@ const ImaginariumVol2Page = () => {
           >
             ADD TO CART
           </button>
+                    {/* Reviews section */}
+                    <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            CUSTOMER REVIEWS
+          </h3>
+          <div className="flex flex-wrap w-full mt-12 space-x-0 text-center text-white md:flex-nowrap md:space-x-6">
+            <div className="w-full md:w-1/3">
+              <div className="flex justify-center mb-4">
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+              </div>
+              <p>
+                Every loop from my man Phelpsie is worth 100 of the ones you already got. Just pull the trigger fam,
+                these joints hard
+              </p>
+              <br />
+              <p className="font-bold">Darion Williams - Detroit, USA</p>
+            </div>
+            <div className="w-full mt-6 md:w-1/3 md:mt-0">
+              <div className="flex justify-center mb-4">
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+              </div>
+              <p>Thank you bro, I was able to make 5 beats with your loops so far. Every sound is just so clean</p>
+              <br />
+              <p className="font-bold">Ravi Mahajan - Brampton, Canada</p>
+            </div>
+            <div className="w-full mt-6 md:w-1/3 md:mt-0">
+              <div className="flex justify-center mb-4">
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+              </div>
+              <p>I compose professionally for film & TV, and I can tell you that this guy has it. The variety of vibes is just brilliant!</p>
+              <br />
+              <p className="font-bold">Daniel Morris - Leeds, UK</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex items-center justify-center mt-12">
