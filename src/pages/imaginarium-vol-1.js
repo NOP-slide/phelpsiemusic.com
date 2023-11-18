@@ -32,6 +32,7 @@ const ImaginariumVol1Page = () => {
     setCrossSellItemNum,
     crossSellItemNum,
     playerZIndexBoost,
+    setIsUserAFK,
   } = useSiteContext()
 
   async function fakePurchase(eventID) {
@@ -184,6 +185,7 @@ const ImaginariumVol1Page = () => {
           setIsEmailCollectorOpen(false)
           setIsCrossSellModalOpen(false)
           setIsVideoPlayerOpen(false)
+          setIsUserAFK(false);
           setIsExitIntentModalOpen(true)
         }
       })

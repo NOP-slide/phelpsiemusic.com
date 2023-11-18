@@ -26,6 +26,8 @@ const SiteContext = createContext({
   setPlayerZIndexBoost: () => {},
   isExitIntentModalOpen: false,
   setIsExitIntentModalOpen: () => {},
+  isUserAFK: false,
+  setIsUserAFK: () => {},
 })
 
 function SiteProvider({ children }) {
@@ -40,6 +42,7 @@ function SiteProvider({ children }) {
   const [iosFlagHasBeenSet, setIosFlagHasBeenSet] = useState(false);
   const [isEmailCollectorOpen, setIsEmailCollectorOpen] = useState(false);
   const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
+  const [isUserAFK, setIsUserAFK] = useState(false);
 
   // Get cart contents from local storage and provide to each component
   let cartItems = []
@@ -80,6 +83,8 @@ function SiteProvider({ children }) {
         setCrossSellItemNum,
         playerZIndexBoost,
         setPlayerZIndexBoost,
+        isUserAFK,
+        setIsUserAFK,
       }}
     >
       {children}

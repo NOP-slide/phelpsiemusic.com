@@ -15,6 +15,7 @@ import VideoPlayer from "./VideoPlayer"
 import CrossSellModal from "./CrossSellModal"
 import IosChecker from "./IosChecker"
 import { useSiteContext } from "../hooks/use-site-context"
+import { useUserIdle } from "../hooks/use-user-idle"
 import EmailCollector from "./EmailCollector"
 import ExitIntentModal from "./ExitIntentModal"
 
@@ -26,7 +27,26 @@ const Layout = ({ children, isPlayerOpen = false }) => {
     playerZIndexBoost,
     isEmailCollectorOpen,
     isExitIntentModalOpen,
+    setIsUserAFK,
+    setIsExitIntentModalOpen,
   } = useSiteContext()
+
+  const onAFK = () => {
+    if (
+      !isVideoPlayerOpen &&
+      !isCrossSellModalOpen &&
+      !isEmailCollectorOpen &&
+      !isCartOpen &&
+      !isExitIntentModalOpen &&
+      !localStorage.getItem("phelpsieAFK")
+    ) {
+      setIsUserAFK(true)
+      localStorage.setItem("phelpsieAFK", true)
+      setIsExitIntentModalOpen(true)
+    }
+  }
+
+  const { reset } = useUserIdle(30000, onAFK)
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {

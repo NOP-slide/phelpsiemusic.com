@@ -34,6 +34,8 @@ const ExitIntentModal = () => {
     cartItemsFromLS,
     setCartItemsFromLS,
     setIsExitIntentModalOpen,
+    isUserAFK,
+    setIsUserAFK,
   } = useSiteContext()
 
   // Get cart contents
@@ -51,21 +53,20 @@ const ExitIntentModal = () => {
 
   const doExitIntentAction = () => {
     if (isValidEmail) {
-      exitIntentAction();
+      exitIntentAction()
     } else {
-      setIsInputBlinking(true);
-      setTimeout(()=>setIsInputBlinking(false), 700);
+      setIsInputBlinking(true)
+      setTimeout(() => setIsInputBlinking(false), 700)
     }
   }
-  
+
   async function exitIntentAction() {
-    
     setIsCheckoutLoading(true)
 
-    let finalCart = {};
-    finalCart.cartItems = cartItems;
-    finalCart.email = emailAddress;
-    console.log("Final cart: ",finalCart);
+    let finalCart = {}
+    finalCart.cartItems = cartItems
+    finalCart.email = emailAddress
+    console.log("Final cart: ", finalCart)
 
     try {
       const res = await fetch("/.netlify/functions/exit-intent-action", {
@@ -77,7 +78,7 @@ const ExitIntentModal = () => {
       })
       const data = await res.json()
       console.log("Return from netlify functions =", data)
-      setIsCheckoutLoading(false);
+      setIsCheckoutLoading(false)
       setModalOpen(false)
       setTimeout(() => setIsExitIntentModalOpen(false), 350)
     } catch (error) {
@@ -108,11 +109,13 @@ const ExitIntentModal = () => {
           />
           <div className="flex items-center justify-center w-full h-16 md:h-24 crossSellBackground">
             <h2 className="max-w-[16rem] sm:max-w-sm text-xl font-bold text-center text-white md:text-2xl md:max-w-xl">
-              Just Before You Go
+              {isUserAFK ? "Are You Still There?" : "Just Before You Go"}
             </h2>
           </div>
           <p className="px-2 mt-6 text-xl font-bold text-center md:px-0 md:mt-12 md:text-3xl text-brand-teal">
-            A FREE loop for you, as a thank you <br className="hidden md:block" />from Phelpsie Music ❤
+            A FREE loop for you, as a thank you{" "}
+            <br className="hidden md:block" />
+            from Phelpsie Music ❤
           </p>
           <p className="mt-4 text-lg font-semibold text-center text-white md:mt-8 md:text-xl">
             Your email address:
@@ -126,7 +129,7 @@ const ExitIntentModal = () => {
                 )
               )
             }}
-            onKeyDown={(e)=>e.key === 'Enter' && doExitIntentAction() }
+            onKeyDown={e => e.key === "Enter" && doExitIntentAction()}
             autoFocus
             className={`transition ${
               isInputBlinking && "invalid-email"
