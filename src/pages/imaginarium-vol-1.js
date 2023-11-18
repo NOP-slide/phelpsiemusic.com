@@ -482,7 +482,7 @@ const ImaginariumVol1Page = () => {
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             CUSTOMER REVIEWS
           </h3>
-          <div className="flex flex-wrap w-full mt-12 space-x-0 text-center text-white md:flex-nowrap md:space-x-6">
+          <div className="flex flex-wrap w-full px-2 mt-12 space-x-0 text-center text-white sm:px-0 md:flex-nowrap md:space-x-6">
             <div className="w-full md:w-1/3">
               <div className="flex justify-center mb-4">
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
