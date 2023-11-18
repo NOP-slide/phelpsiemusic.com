@@ -17,7 +17,7 @@ export const useUserIdle = (timeout, onExpire) => {
     document.addEventListener("mousedown", handleUserActivity)
     document.addEventListener("keydown", handleUserActivity)
     document.addEventListener("touchstart", handleUserActivity)
-    document.addEventListener("scroll", handleUserActivity, {passive: true})
+    document.addEventListener("scroll", handleUserActivity, { passive: true })
 
     handleUserActivity()
 
@@ -28,7 +28,7 @@ export const useUserIdle = (timeout, onExpire) => {
       document.removeEventListener("mousedown", handleUserActivity)
       document.removeEventListener("keydown", handleUserActivity)
       document.removeEventListener("touchstart", handleUserActivity)
-      document.addEventListener("scroll", handleUserActivity)
+      document.addEventListener("scroll", handleUserActivity, { passive: true })
     }
   }, [handleUserActivity])
 
