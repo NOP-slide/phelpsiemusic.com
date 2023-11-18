@@ -28,7 +28,7 @@ export const useUserIdle = (timeout, onExpire) => {
       document.removeEventListener("mousedown", handleUserActivity)
       document.removeEventListener("keydown", handleUserActivity)
       document.removeEventListener("touchstart", handleUserActivity)
-      document.addEventListener("scroll", handleUserActivity, { passive: true })
+      document.removeEventListener("scroll", handleUserActivity, { passive: true })
     }
   }, [handleUserActivity])
 
