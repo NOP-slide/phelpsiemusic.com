@@ -7,28 +7,8 @@ import { useSiteContext } from "../hooks/use-site-context"
 const Header = () => {
   const { setIsCartOpen, cartItemsFromLS } = useSiteContext()
   
-  const [distance, setDistance] = React.useState(0)
-
-  const observedDiv = React.useRef(null)
-
-  React.useEffect(() => {
-    if (!observedDiv.current) {
-      return
-    }
-
-    const resizeObserver = new ResizeObserver(e => {
-      setDistance(document.getElementById("thebanner")?.offsetHeight)
-    })
-
-    resizeObserver.observe(observedDiv.current)
-
-    return function cleanup() {
-      resizeObserver.disconnect()
-    }
-  }, [distance])
-  
   return (
-    <header ref={observedDiv} style={{marginTop: `${distance}px`}}>
+    <header className='mt-[32px] md:mt-[44px]'>
       <div className={`w-full bg-brand-dark py-4 px-6 lg:px-6`}>
         <div className="relative">
           <div className="relative flex items-center justify-between w-full">
