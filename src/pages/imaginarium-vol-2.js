@@ -403,7 +403,7 @@ const ImaginariumVol2Page = () => {
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
               </div>
-              <p>Thank you bro, I was able to make 5 beats with your loops so far. Every sound is just so clean</p>
+              <p>Thank you bro, I was able to make 5 beats with your loops so far. Every sound is soooo clean</p>
               <br />
               <p className="font-bold">Ravi Mahajan - Brampton, Canada</p>
             </div>
