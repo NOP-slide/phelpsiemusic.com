@@ -46,6 +46,8 @@ const Layout = ({ children, isPlayerOpen = false }) => {
       setIsUserAFK(true)
       localStorage.setItem("phelpsieAFK", true)
       setIsExitIntentModalOpen(true)
+    } else {
+      reset();
     }
   }
 
