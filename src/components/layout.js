@@ -34,6 +34,8 @@ const Layout = ({ children, isPlayerOpen = false }) => {
 
   const onAFK = () => {
     if (
+      !isPlayerOpen &&
+      !playerZIndexBoost &&
       !isVideoPlayerOpen &&
       !isCrossSellModalOpen &&
       !isEmailCollectorOpen &&
