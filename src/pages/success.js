@@ -106,6 +106,14 @@ const SuccessPage = () => {
             },
             { eventID: sessionID }
           )
+        if (isBrowser && window.gtag) {
+          gtag("event", "conversion", {
+            send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
+            value: Number(data.session.amount_total.toString().slice(0, -2)),
+            currency: data.session.currency.toUpperCase(),
+            transaction_id: "",
+          })
+        }
       } else {
         console.log("duplicate session conversion prevented")
       }
