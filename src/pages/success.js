@@ -107,6 +107,9 @@ const SuccessPage = () => {
             { eventID: sessionID }
           )
         if (isBrowser && window.gtag) {
+          gtag("set", "user_data", {
+            email: data.customer.email.toLowerCase(),
+          })
           gtag("event", "conversion", {
             send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
             value: Number(data.session.amount_total.toString().slice(0, -2)),
