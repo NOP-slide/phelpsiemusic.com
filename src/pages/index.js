@@ -5,6 +5,8 @@ import Seo from "../components/seo"
 import {navigate} from 'gatsby';
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
+import { IoStarSharp } from "react-icons/io5"
+import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
@@ -21,6 +23,8 @@ const IndexPage = () => {
     isCrossSellModalOpen,
     crossSellItemNum,
     playerZIndexBoost,
+    setVideoPlayerSrc,
+    setIsVideoPlayerOpen,
   } = useSiteContext()
 
   return (
@@ -187,7 +191,7 @@ const IndexPage = () => {
       {/* Who I've worked with section */}
       <div className="w-full pb-20 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
-          <div className="w-full mt-4 border-0 border-t border-white md:mt-12"></div>
+          <div className="w-full mt-4 border-t-2 border-gray-600 md:mt-12"></div>
           <h3 className="mt-12 text-2xl font-bold text-center lg:text-4xl text-brand-teal">
             WHO I'VE WORKED WITH
           </h3>
@@ -211,8 +215,133 @@ const IndexPage = () => {
               <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(21 Savage, Coi Leray)</p>
             </div>
           </div>
+          {/* IG screenshots section */}
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            WHAT THE PROS SAY
+          </h3>
+          <div className="flex flex-wrap gap-8 px-2 mt-8 sm:px-0 sm:mt-16 sm:gap-6 md:gap-12 sm:flex-nowrap">
+            <div className="flex flex-col">
+              <StaticImage
+                quality={95}
+                src="../images/twysted.jpg"
+                placeholder="blurred"
+                alt=""
+                imgStyle={{ objectFit: "fill" }}
+                className={`w-full sm:h-[15rem] lg:h-[23rem] `}
+              />
+              <div className="flex flex-col py-6 bg-teal-700/50">
+                <div className="text-xl font-bold text-center text-white md:text-2xl">
+                  Twysted Genius
+                </div>
+                <div className="text-base font-medium text-center text-white md:text-lg">
+                  Multiplatinum, Grammy nominated
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <StaticImage
+                quality={95}
+                src="../images/kidhazel.jpg"
+                placeholder="blurred"
+                alt=""
+                imgStyle={{ objectFit: "fill" }}
+                className={`w-full sm:h-[15rem] lg:h-[23rem] `}
+              />
+              <div className="flex flex-col py-6 bg-teal-700/50">
+                <div className="text-xl font-bold text-center text-white md:text-2xl">
+                  Kid Hazel
+                </div>
+                <div className="text-base font-medium text-center text-white md:text-lg">
+                  Multiplatinum, Grammy nominated
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="relative px-2 mx-auto mt-12 sm:px-0">
+            <StaticImage
+              quality={95}
+              src="../images/twysted-screenshot.jpg"
+              placeholder="blurred"
+              alt=""
+              imgStyle={{ objectFit: "fill" }}
+              className={`w-full sm:w-96 h-[24rem] sm:h-[30rem] mx-auto `}
+            />
+            <button
+              className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
+              type="button"
+              onClick={() => {
+                setIsPaused(true)
+                setVideoPlayerSrc("/twysted-ig-vertical.mp4")
+                setIsVideoPlayerOpen(true)
+              }}
+            >
+              <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
+            </button>
+          </div>
+                    {/* Reviews section */}
+                    <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            CUSTOMER REVIEWS
+          </h3>
+          <div className="flex flex-wrap w-full px-2 mt-12 space-x-0 text-center text-white sm:px-0 md:flex-nowrap md:space-x-6">
+            <div className="w-full md:w-1/3">
+              <div className="flex justify-center mb-4">
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+              </div>
+              <p>
+                Every loop from my man Phelpsie is worth 100 of the ones you
+                already got. Just pull the trigger fam, these joints hard
+              </p>
+              <br />
+              <p className="font-bold">Darion Williams - Detroit, USA</p>
+            </div>
+            <div className="w-full mt-6 md:w-1/3 md:mt-0">
+              <div className="flex justify-center mb-4">
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+              </div>
+              <p>
+                Thank you bro, I was able to make 5 beats with your loops so
+                far. Every sound is soooo clean
+              </p>
+              <br />
+              <p className="font-bold">Ravi Mahajan - Brampton, Canada</p>
+            </div>
+            <div className="w-full mt-6 md:w-1/3 md:mt-0">
+              <div className="flex justify-center mb-4">
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+                <IoStarSharp className="w-6 h-6 text-yellow-500" />
+              </div>
+              <p>
+                I compose professionally for film & TV, and I can tell you that
+                this guy has it. The variety of vibes is just brilliant!
+              </p>
+              <br />
+              <p className="font-bold">Daniel Morris - Leeds, UK</p>
+            </div>
+          </div>
         </div>
       </div>
+      <div className="flex items-center justify-center mt-12">
+        <TfiLock className="w-8 h-8 text-white" />
+        <p className="ml-2 text-lg font-bold text-white sm:text-xl">
+          Secure Payment
+        </p>
+      </div>
+      <p className="max-w-xs mx-auto mt-6 mb-12 text-sm text-center text-white sm:text-justify sm:text-base sm:max-w-lg">
+        All orders are processed through Stripe, with industry-leading 256-bit
+        SSL encryption, and your information is never shared. I respect your
+        privacy.
+      </p>
       {/* Audio player section */}
       {isCrossSellModalOpen ? (
         <div

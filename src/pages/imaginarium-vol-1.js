@@ -5,6 +5,7 @@ import Seo from "../components/seo"
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 import { IoStarSharp } from "react-icons/io5"
+import { FaDiamond } from "react-icons/fa6"
 import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
@@ -295,7 +296,45 @@ const ImaginariumVol1Page = () => {
       {/* Who I've worked with section */}
       <div className="w-full pt-4 pb-20 md:pt-12 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
-          <h3 className="mt-12 text-2xl font-bold tracking-wide text-center sm:tracking-normal lg:text-4xl text-brand-teal">
+          <h3 className="mt-12 text-2xl font-bold tracking-wide text-center underline sm:tracking-normal lg:text-4xl text-brand-teal">
+            WHY YOU NEED IT
+          </h3>
+          <div className="px-2 mx-auto mt-12 text-white sm:px-0">
+            <p className="text-lg font-bold lg:text-xl">
+              <FaDiamond className="inline-block w-3 h-3 text-brand-teal" /> The
+              cure to your beat block
+            </p>
+            <p className="ml-5">Get inspired to create instantly</p>
+            <p className="mt-6 text-lg font-bold lg:text-xl">
+              <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+              Fast, easy workflow
+            </p>
+            <p className="ml-5">
+              With stems carefully separated to allow for quick beat arrangement
+            </p>
+            <p className="mt-6 text-lg font-bold lg:text-xl">
+              <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+              Advanced chords and melodies
+            </p>
+            <p className="ml-5">With no music theory required</p>
+            <p className="mt-6 text-lg font-bold lg:text-xl">
+              <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+              Make your beats stand out
+            </p>
+            <p className="ml-5">
+              Get the edgy, unique sound you need to compete in today's music
+              industry
+            </p>
+            <p className="mt-6 text-lg font-bold lg:text-xl">
+              <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+              Sound your best
+            </p>
+            <p className="ml-5">
+              With cutting edge sound design, real instruments, and professional
+              mixing
+            </p>
+          </div>
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHO I'VE WORKED WITH
           </h3>
           <div className="flex mt-8 lg:mt-16">
@@ -492,8 +531,8 @@ const ImaginariumVol1Page = () => {
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
               </div>
               <p>
-                Every loop from my man Phelpsie is worth 100 of the ones you already got. Just pull the trigger fam,
-                these joints hard
+                Every loop from my man Phelpsie is worth 100 of the ones you
+                already got. Just pull the trigger fam, these joints hard
               </p>
               <br />
               <p className="font-bold">Darion Williams - Detroit, USA</p>
@@ -506,7 +545,10 @@ const ImaginariumVol1Page = () => {
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
               </div>
-              <p>Thank you bro, I was able to make 5 beats with your loops so far. Every sound is soooo clean</p>
+              <p>
+                Thank you bro, I was able to make 5 beats with your loops so
+                far. Every sound is soooo clean
+              </p>
               <br />
               <p className="font-bold">Ravi Mahajan - Brampton, Canada</p>
             </div>
@@ -518,7 +560,10 @@ const ImaginariumVol1Page = () => {
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
                 <IoStarSharp className="w-6 h-6 text-yellow-500" />
               </div>
-              <p>I compose professionally for film & TV, and I can tell you that this guy has it. The variety of vibes is just brilliant!</p>
+              <p>
+                I compose professionally for film & TV, and I can tell you that
+                this guy has it. The variety of vibes is just brilliant!
+              </p>
               <br />
               <p className="font-bold">Daniel Morris - Leeds, UK</p>
             </div>
