@@ -18,7 +18,7 @@ function formatDurationDisplay(duration) {
   return formatted
 }
 
-export default function AudioPlayer({
+export default function AudioPlayerMidiCrate({
   currentSong,
   songIndex,
   isPaused,
@@ -243,6 +243,7 @@ export default function AudioPlayer({
           onPlaying={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPaused(true)}
+          // src={currentSong.audioSrc}
           // onEnded={handleNext}
           onLoadedMetadata={e => {
             e.currentTarget.volume = volume
@@ -341,7 +342,7 @@ export default function AudioPlayer({
               {currentSong?.title ?? "Select a track"}
             </p>
           </div>
-          <div>
+          {/* <div>
             {!isCrossSellModalOpen && (
               <p className="px-2 line-through bg-red-700 rounded-full">
                 ${currentSong?.oldPrice}
@@ -352,15 +353,22 @@ export default function AudioPlayer({
             {!isCrossSellModalOpen && (
               <p className="font-black">${currentSong?.price}</p>
             )}
-          </div>
+          </div> */}
           {!isCrossSellModalOpen && (
             <div className="">
               <button
                 type="button"
-                onClick={() => addToCart()}
+                onClick={() => {
+                  const anchor = document.querySelector("#pricingsection")
+                  anchor.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                    inline: "nearest",
+                  })
+                }}
                 className="px-4 py-2 text-xs font-bold text-white rounded-full sm:text-sm md:text-base whitespace-nowrap bg-brand-teal hover:bg-teal-300"
               >
-                ADD TO CART
+                START FOR FREE
               </button>
             </div>
           )}

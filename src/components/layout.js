@@ -20,7 +20,7 @@ import { useUserIdle } from "../hooks/use-user-idle"
 import EmailCollector from "./EmailCollector"
 import ExitIntentModal from "./ExitIntentModal"
 
-const Layout = ({ children, isPlayerOpen = false }) => {
+const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
   const {
     isCartOpen,
     isVideoPlayerOpen,
@@ -66,8 +66,8 @@ const Layout = ({ children, isPlayerOpen = false }) => {
   return (
     <>
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
-        <Banner />
-        <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
+        {hasBanner && <Banner />}
+        <Header hasBanner={hasBanner} siteTitle={data.site.siteMetadata?.title || `Title`} />
         <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
         <IosChecker />
         {isCartOpen && <Cart />}

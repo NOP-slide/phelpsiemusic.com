@@ -32,7 +32,7 @@ const Footer = ({ isPlayerOpen }) => (
         isPlayerOpen ? "lg:mb-24 mb-36" : "mb-0"
       }`}
     >
-      <p className='text-sm sm:text-base whitespace-nowrap'><span className='text-xs sm:text-sm'>&copy;</span> 2023 Phelpsie Music</p>
+      <p className='text-sm sm:text-base whitespace-nowrap'><span className='text-xs sm:text-sm'>&copy;</span> {new Date().getFullYear()} Phelpsie Music</p>
       <Link className='text-sm sm:text-base hover:text-brand-teal whitespace-nowrap' to='/privacy-policy'>Privacy Policy</Link>
       <Link className='text-sm sm:text-base hover:text-brand-teal whitespace-nowrap' to='/refund-policy'>Refund Policy</Link>
     </div>

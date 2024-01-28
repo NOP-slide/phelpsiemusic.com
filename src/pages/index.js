@@ -2,7 +2,7 @@ import * as React from "react"
 import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import {navigate} from 'gatsby';
+import { navigate } from "gatsby"
 import AudioPlayer from "../components/AudioPlayer"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 import { IoStarSharp } from "react-icons/io5"
@@ -16,6 +16,7 @@ const IndexPage = () => {
   const [isPaused, setIsPaused] = React.useState(false)
   const [isHoveringProd1, setIsHoveringProd1] = React.useState(false)
   const [isHoveringProd2, setIsHoveringProd2] = React.useState(false)
+  const [isHoveringProd3, setIsHoveringProd3] = React.useState(false)
 
   const currentSong = allProducts[currentSongIndex]
 
@@ -40,13 +41,13 @@ const IndexPage = () => {
         />
         <div className="absolute -translate-y-1/2 -translate-x-1/3 top-1/2 left-1/3">
           <h2 className="text-4xl font-bold text-white sm:text-6xl">
-            Loop Kits
+            Trusted By The Pros.
           </h2>
           <br />
           <p className="max-w-lg text-white text-md sm:text-xl">
             Want to make your beats sound professional? Ready to get the
             attention of major artists and move your career forward? Download
-            pro-quality loops for the inspiration you need.
+            pro-quality loops and MIDIs for the inspiration you need.
           </p>
         </div>
       </div>
@@ -186,6 +187,50 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
+        <div className="flex w-full h-full max-w-[22rem] sm:gap-4 sm:max-w-xl gap-0 mx-auto mt-4 md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl md:mt-16 lg:gap-10">
+          <div
+            onMouseEnter={() => setIsHoveringProd3(true)}
+            onMouseLeave={() => setIsHoveringProd3(false)}
+            onClick={() => {
+              navigate("/midi-crate/")
+            }}
+            className="relative w-1/2 p-2 md:p-4 bg-brand-tealDark hover:cursor-pointer"
+          >
+            <div className="relative">
+              <StaticImage
+                quality={95}
+                src="../images/products/midi-crate-art.jpg"
+                placeholder="blurred"
+                alt=""
+                className={` transition ease-in-out duration-300 w-full h-48 sm:h-64 lg:h-[28rem] ${
+                  isHoveringProd3 && "brightness-75"
+                }`}
+              />
+              <button
+                type="button"
+                className={`${
+                  isHoveringProd3 ? "opacity-100" : "opacity-0"
+                } transition ease-in-out duration-500 absolute px-4 text-sm sm:px-8 lg:px-16 py-1 md:py-3 sm:text-lg font-bold text-white -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 whitespace-nowrap bg-brand-teal`}
+              >
+                LEARN MORE
+              </button>
+            </div>
+            <div className="flex items-center justify-between mt-6 mb-3">
+              <p className="max-w-none lg:max-w-[16rem] text-sm font-bold text-white hover:text-gray-300 sm:text-base">
+                MIDI Crate - Chord Progressions & Arpeggios
+              </p>
+              {/* <div className="flex flex-col gap-1">
+                <p className="px-2 text-xs font-bold text-center text-white line-through bg-red-700 rounded-full sm:text-sm">
+                  ${allProducts[0].oldPrice}
+                </p>
+                <p className="px-2 text-lg font-bold sm:text-xl text-brand-teal">
+                  ${allProducts[0].price}
+                </p>
+              </div> */}
+            </div>
+          </div>
+          <div className="relative w-1/2 p-2 md:p-4"></div>
+        </div>
       </div>
 
       {/* Who I've worked with section */}
@@ -197,22 +242,38 @@ const IndexPage = () => {
           </h3>
           <div className="flex mt-8 lg:mt-16">
             <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">Twysted Genius</p>
-              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(Lil Baby, Future, Moneybagg Yo)</p>
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
+                Twysted Genius
+              </p>
+              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
+                (Lil Baby, Future, Moneybagg Yo)
+              </p>
             </div>
             <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">Ronny J</p>
-              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(Eminem, Kanye West)</p>
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
+                Ronny J
+              </p>
+              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
+                (Eminem, Kanye West)
+              </p>
             </div>
           </div>
           <div className="flex mt-8 lg:mt-16">
             <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">CuBeatz</p>
-              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(Travis Scott, Drake, Nicki Minaj)</p>
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
+                CuBeatz
+              </p>
+              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
+                (Travis Scott, Drake, Nicki Minaj)
+              </p>
             </div>
             <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">Kid Hazel</p>
-              <p className='mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg'>(21 Savage, Coi Leray)</p>
+              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
+                Kid Hazel
+              </p>
+              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
+                (21 Savage, Coi Leray)
+              </p>
             </div>
           </div>
           {/* IG screenshots section */}
@@ -278,8 +339,8 @@ const IndexPage = () => {
               <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
             </button>
           </div>
-                    {/* Reviews section */}
-                    <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+          {/* Reviews section */}
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             CUSTOMER REVIEWS
           </h3>
           <div className="flex flex-wrap w-full px-2 mt-12 space-x-0 text-center text-white sm:px-0 md:flex-nowrap md:space-x-6">
@@ -354,11 +415,9 @@ const IndexPage = () => {
             key={crossSellItemNum}
             isPaused={!playerZIndexBoost}
             setIsPaused={setIsPaused}
-            currentSong={allProducts[crossSellItemNum]
-            }
+            currentSong={allProducts[crossSellItemNum]}
             songCount={allProducts.length}
-            songIndex={crossSellItemNum
-            }
+            songIndex={crossSellItemNum}
             onNext={() => setCurrentSongIndex(i => i + 1)}
             onPrev={() => setCurrentSongIndex(i => i - 1)}
           />
