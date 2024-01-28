@@ -17,6 +17,8 @@ exports.handler = async ({ body, headers }) => {
       apiKey: process.env.MAILERSEND_API_KEY,
     })
 
+    console.log("******Stripe Event********: ", stripeEvent);
+
     // Fulfill purchase or subscription
     if (stripeEvent.type === "checkout.session.completed") {
       const eventObject = stripeEvent.data.object
