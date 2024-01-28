@@ -177,7 +177,7 @@ export default function AudioPlayerMidiCrate({
         setIsPlaying(true)
       }
     }
-  }, [isPaused])
+  }, [isPaused, isReady])
 
   const togglePlayPause = () => {
     if (isPlaying) {

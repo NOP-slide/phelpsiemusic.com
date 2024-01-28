@@ -177,7 +177,7 @@ export default function AudioPlayer({
         setIsPlaying(true)
       }
     }
-  }, [isPaused])
+  }, [isPaused, isReady])
 
   const togglePlayPause = () => {
     if (isPlaying) {
