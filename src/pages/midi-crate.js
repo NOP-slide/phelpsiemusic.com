@@ -213,8 +213,8 @@ const MidiCratePage = () => {
         />
         <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           <h2 className="text-2xl font-bold tracking-wide text-center text-white sm:tracking-normal sm:text-4xl xl:text-5xl whitespace-nowrap">
-            Placement-Ready MIDIs. <br className="block lg:hidden" />
-            Trusted By The Pros.
+            Your Shortcut To Hits. <br className="block lg:hidden" />
+            Every Single Month.
           </h2>
         </div>
       </div>
@@ -453,7 +453,7 @@ const MidiCratePage = () => {
           >
             START FOR FREE
           </button>
-          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+          {/* <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHO I'VE WORKED WITH
           </h3>
           <div className="flex mt-8 lg:mt-16">
@@ -491,7 +491,7 @@ const MidiCratePage = () => {
                 (21 Savage, Coi Leray)
               </p>
             </div>
-          </div>
+          </div> */}
           {/* IG screenshots section */}
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHAT THE PROS SAY
@@ -596,7 +596,7 @@ const MidiCratePage = () => {
             <br />
             <br />
             To start for free, and get the tools you need to make{" "}
-            <span className="font-bold">industry-level beats</span>, simply
+            <span className="font-bold">hit-level beats</span>, simply
             click "<span className="font-bold">Get MIDI Crate Now</span>".
           </p>
           <p className="mx-auto mt-12 text-center text-white">
