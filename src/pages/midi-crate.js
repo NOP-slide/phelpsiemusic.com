@@ -80,9 +80,10 @@ const MidiCratePage = () => {
   async function stripeSubscriptionCheckout() {
     setIsCheckoutLoading(true)
 
-    let eventID = crypto.randomUUID();
-    conversionsAPI(eventID, "InitiateCheckout");
-    if (isBrowser && window.fbq) window.fbq('track', 'InitiateCheckout', {}, { eventID: eventID });
+    let eventID = crypto.randomUUID()
+    conversionsAPI(eventID, "InitiateCheckout")
+    if (isBrowser && window.fbq)
+      window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })
 
     let stripeCode = "price_1OH8QSAHwqgwuHo3DFgteSqv"
     console.log("Subscription cart: ", stripeCode)
@@ -410,14 +411,11 @@ const MidiCratePage = () => {
           <p className="px-2 mt-6 text-white sm:px-0">
             From ethereal twinkling to the filthiest, most aggressive textures
             imaginable, arpeggios are the key to any musical atmosphere your
-            mind could envision. This technique breaks chords into their
-            individual notes, playing them sequentially in various patterns,
-            often with simple melodies in the upper notes. Arpeggios are highly
-            versatile and are suitable for any musical genre, from hip-hop to
-            synthwave, orchestral to dubstep - you get the idea. Just drag and
-            drop one of the arps from MIDI Crate, assign it to a sound, and
-            instantly have the perfect filler or even focal point for your next
-            track.
+            mind could envision. Arpeggios are highly versatile and are suitable
+            for any musical genre, from hip-hop to synthwave, orchestral to
+            dubstep - you get the idea. Just drag and drop one of the arps from
+            MIDI Crate, assign it to a sound, and instantly have the perfect
+            filler or even focal point for your next track.
           </p>
           <div className="grid grid-cols-2 grid-rows-3 mx-auto mt-6 gap-x-12 md:gap-x-24">
             <div className="">
@@ -596,8 +594,8 @@ const MidiCratePage = () => {
             <br />
             <br />
             To start for free, and get the tools you need to make{" "}
-            <span className="font-bold">hit-level beats</span>, simply
-            click "<span className="font-bold">Get MIDI Crate Now</span>".
+            <span className="font-bold">hit-level beats</span>, simply click "
+            <span className="font-bold">Get MIDI Crate Now</span>".
           </p>
           <p className="mx-auto mt-12 text-center text-white">
             <span className="font-bold">First Month Free</span>, Then Only
