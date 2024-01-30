@@ -595,11 +595,14 @@ const MidiCratePage = () => {
             <br />
             To start for free, and get the tools you need to make{" "}
             <span className="font-bold">hit-level beats</span>, simply click "
-            <span className="font-bold">Get MIDI Crate Now</span>".
+            <span className="font-bold">Get My Free Trial</span>".
           </p>
-          <p className="mx-auto mt-12 text-center text-white">
-            <span className="font-bold">First Month Free</span>, Then Only
-            $9/Month
+          <p className="mx-auto mt-12 text-lg text-center text-white">
+            <span className="font-bold">
+              First Month Free, Then Only<br/>
+              <span className="text-red-600 line-through"> $27 </span>
+              <span className="text-brand-teal">$9/Month</span>
+            </span>
           </p>
           <button
             type="button"
@@ -608,7 +611,7 @@ const MidiCratePage = () => {
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
           >
-            GET MIDI CRATE NOW
+            GET MY FREE TRIAL
           </button>
           <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
             Try It Risk-Free. Cancel anytime with 1 click, no questions asked
