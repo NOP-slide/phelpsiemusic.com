@@ -189,17 +189,17 @@ const MidiCratePage = () => {
     setIsCartOpen(true)
   }
 
-  React.useEffect(() => {
-    let eventID = crypto.randomUUID()
-    conversionsAPI(eventID, "ViewContent")
-    if (isBrowser && window.fbq)
-      window.fbq(
-        "track",
-        "ViewContent",
-        { content_name: "MIDI Crate" },
-        { eventID: eventID }
-      )
-  }, [])
+  // React.useEffect(() => {
+  //   let eventID = crypto.randomUUID()
+  //   conversionsAPI(eventID, "ViewContent")
+  //   if (isBrowser && window.fbq)
+  //     window.fbq(
+  //       "track",
+  //       "ViewContent",
+  //       { content_name: "MIDI Crate" },
+  //       { eventID: eventID }
+  //     )
+  // }, [])
 
   // Lazy load videos
   React.useEffect(() => {
@@ -226,7 +226,7 @@ const MidiCratePage = () => {
           videoElement1.src = "/step1.mp4"
           videoElement1.alt = "Step 1"
           videoElement1.poster = "/placeholder1.jpg"
-          videoElement1.className = "w-full md:w-1/2"
+          videoElement1.className = "w-full px-2 mt-4 md:w-1/2"
           videoElement1.autoplay = true
           videoElement1.playsInline = true
           videoElement1.loop = true
@@ -253,7 +253,7 @@ const MidiCratePage = () => {
           videoElement2.src = "/step2.mp4"
           videoElement2.alt = "Step 2"
           videoElement2.poster = "/placeholder2.jpg"
-          videoElement2.className = "w-full md:w-1/2"
+          videoElement2.className = "w-full px-2 mt-4 md:w-1/2"
           videoElement2.autoplay = true
           videoElement2.playsInline = true
           videoElement2.loop = true
@@ -280,7 +280,7 @@ const MidiCratePage = () => {
           videoElement3.src = "/step3.mp4"
           videoElement3.alt = "Step 3"
           videoElement3.poster = "/placeholder3.jpg"
-          videoElement3.className = "w-full md:w-1/2"
+          videoElement3.className = "w-full px-2 mt-4 md:w-1/2"
           videoElement3.autoplay = true
           videoElement3.playsInline = true
           videoElement3.loop = true
@@ -601,7 +601,7 @@ const MidiCratePage = () => {
                 And check out all the MIDI files + bonus content
               </div>
             </div>
-            <img className="w-full md:w-1/2" id="placeholder1" src="/placeholder1.jpg" />
+            <img className="w-full px-2 mt-4 md:w-1/2" id="placeholder1" src="/placeholder1.jpg" />
           </div>
           <div id="lazy2" className="relative flex flex-wrap mt-12">
             <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
@@ -613,7 +613,7 @@ const MidiCratePage = () => {
                 With full flexibility to edit notes and use your own sounds & instruments
               </div>
             </div>
-            <img className="w-full md:w-1/2" id="placeholder2" src="/placeholder2.jpg" />
+            <img className="w-full px-2 mt-4 md:w-1/2" id="placeholder2" src="/placeholder2.jpg" />
           </div>
           <div id="lazy3" className="relative flex flex-wrap mt-12">
             <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
@@ -625,7 +625,7 @@ const MidiCratePage = () => {
                 Turn the volume to 11, 'cause you just produced some heat 🔥🔥🔥
               </div>
             </div>
-            <img className="w-full md:w-1/2" id="placeholder3" src="/placeholder3.jpg" />
+            <img className="w-full px-2 mt-4 md:w-1/2" id="placeholder3" src="/placeholder3.jpg" />
           </div>
           <button
             type="button"
