@@ -201,6 +201,103 @@ const MidiCratePage = () => {
       )
   }, [])
 
+  // Lazy load videos
+  React.useEffect(() => {
+    let img1 = document.getElementById("placeholder1")
+    let lazyContainer1 = document.getElementById("lazy1")
+    let img2 = document.getElementById("placeholder2")
+    let lazyContainer2 = document.getElementById("lazy2")
+    let img3 = document.getElementById("placeholder3")
+    let lazyContainer3 = document.getElementById("lazy3")
+
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0,
+    }
+
+    let observer1 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // remove the img
+          lazyContainer1.removeChild(img1)
+          // create a video instead
+          const videoElement1 = document.createElement("video")
+          videoElement1.src = "/step1.mp4"
+          videoElement1.alt = "Step 1"
+          videoElement1.poster = "/placeholder1.jpg"
+          videoElement1.className = "w-full md:w-1/2"
+          videoElement1.autoplay = true
+          videoElement1.playsInline = true
+          videoElement1.loop = true
+          videoElement1.muted = true
+          // swap it in for the img
+          lazyContainer1.appendChild(videoElement1)
+          // load video
+          videoElement1.load()
+          // disconnect observer
+          observer1.unobserve(img1)
+        }
+      })
+    }, options)
+
+    observer1.observe(img1)
+
+    let observer2 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // remove the img
+          lazyContainer2.removeChild(img2)
+          // create a video instead
+          const videoElement2 = document.createElement("video")
+          videoElement2.src = "/step2.mp4"
+          videoElement2.alt = "Step 2"
+          videoElement2.poster = "/placeholder2.jpg"
+          videoElement2.className = "w-full md:w-1/2"
+          videoElement2.autoplay = true
+          videoElement2.playsInline = true
+          videoElement2.loop = true
+          videoElement2.muted = true
+          // swap it in for the img
+          lazyContainer2.appendChild(videoElement2)
+          // load video
+          videoElement2.load()
+          // disconnect observer
+          observer2.unobserve(img2)
+        }
+      })
+    }, options)
+
+    observer2.observe(img2)
+
+    let observer3 = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // remove the img
+          lazyContainer3.removeChild(img3)
+          // create a video instead
+          const videoElement3 = document.createElement("video")
+          videoElement3.src = "/step3.mp4"
+          videoElement3.alt = "Step 3"
+          videoElement3.poster = "/placeholder3.jpg"
+          videoElement3.className = "w-full md:w-1/2"
+          videoElement3.autoplay = true
+          videoElement3.playsInline = true
+          videoElement3.loop = true
+          videoElement3.muted = true
+          // swap it in for the img
+          lazyContainer3.appendChild(videoElement3)
+          // load video
+          videoElement3.load()
+          // disconnect observer
+          observer3.unobserve(img3)
+        }
+      })
+    }, options)
+
+    observer3.observe(img3)
+  }, [])
+
   return (
     <Layout isPlayerOpen={currentSongIndex !== -1}>
       {/* Hero section */}
@@ -491,6 +588,59 @@ const MidiCratePage = () => {
             </div>
           </div> */}
           {/* IG screenshots section */}
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center underline border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            HOW TO USE IT
+          </h3>
+          <div id="lazy1" className="relative flex flex-wrap mt-12">
+            <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
+              <div className="text-xl font-bold text-center md:text-2xl text-brand-teal">
+                <span className="">1. </span>
+                <span className="">Download MIDI Crate</span>
+              </div>
+              <div className="mt-6 text-lg text-center text-white md:text-xl">
+                And check out all the MIDI files + bonus content
+              </div>
+            </div>
+            <img className="w-full md:w-1/2" id="placeholder1" src="/placeholder1.jpg" />
+          </div>
+          <div id="lazy2" className="relative flex flex-wrap mt-12">
+            <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
+              <div className="text-xl font-bold text-center md:text-2xl text-brand-teal">
+                <span className="">2. </span>
+                <span className="">Drag & Drop What You Need</span>
+              </div>
+              <div className="mt-6 text-lg text-center text-white md:text-xl">
+                With full flexibility to edit notes and use your own sounds & instruments
+              </div>
+            </div>
+            <img className="w-full md:w-1/2" id="placeholder2" src="/placeholder2.jpg" />
+          </div>
+          <div id="lazy3" className="relative flex flex-wrap mt-12">
+            <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
+              <div className="text-xl font-bold text-center md:text-2xl text-brand-teal">
+                <span className="">3. </span>
+                <span className="">Add Your Own Touch, And Press Play</span>
+              </div>
+              <div className="mt-6 text-lg text-center text-white md:text-xl">
+                Turn the volume to 11, 'cause you just produced some heat 🔥🔥🔥
+              </div>
+            </div>
+            <img className="w-full md:w-1/2" id="placeholder3" src="/placeholder3.jpg" />
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              const anchor = document.querySelector("#pricingsection")
+              anchor.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "nearest",
+              })
+            }}
+            className="w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+          >
+            START FOR FREE
+          </button>
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHAT THE PROS SAY
           </h3>
@@ -532,7 +682,7 @@ const MidiCratePage = () => {
               </div>
             </div>
           </div>
-          <div className="relative px-2 mx-auto mt-12 sm:px-0">
+          {/* <div className="relative px-2 mx-auto mt-12 sm:px-0">
             <StaticImage
               quality={95}
               src="../images/twysted-screenshot.jpg"
@@ -552,7 +702,7 @@ const MidiCratePage = () => {
             >
               <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
             </button>
-          </div>
+          </div> */}
           <h3
             id="pricingsection"
             className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal"
@@ -599,7 +749,8 @@ const MidiCratePage = () => {
           </p>
           <p className="mx-auto mt-12 text-lg text-center text-white">
             <span className="font-bold">
-              First Month Free, Then Only<br/>
+              First Month Free, Then Only
+              <br />
               <span className="text-red-600 line-through"> $27 </span>
               <span className="text-brand-teal">$9/Month</span>
             </span>
