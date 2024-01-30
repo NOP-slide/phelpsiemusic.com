@@ -74,7 +74,7 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
         {isVideoPlayerOpen && <VideoPlayer />}
         {isCrossSellModalOpen && <CrossSellModal />}
         {isEmailCollectorOpen && <EmailCollector />}
-        {isExitIntentModalOpen && <ExitIntentModal />}
+        {/* {isExitIntentModalOpen && <ExitIntentModal />} */}
         <Footer
           isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}
         />
