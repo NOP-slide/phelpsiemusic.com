@@ -601,7 +601,11 @@ const MidiCratePage = () => {
                 And check out all the MIDI files + bonus content
               </div>
             </div>
-            <img className="w-full px-2 mt-2 md:w-1/2" id="placeholder1" src="/placeholder1.jpg" />
+            <img
+              className="w-full px-2 mt-2 md:w-1/2"
+              id="placeholder1"
+              src="/placeholder1.jpg"
+            />
           </div>
           <div id="lazy2" className="relative flex flex-wrap mt-12">
             <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
@@ -610,10 +614,15 @@ const MidiCratePage = () => {
                 <span className="">Drag & Drop What You Need</span>
               </div>
               <div className="mt-6 text-lg text-center text-white md:text-xl">
-                With full flexibility to edit notes and use your own sounds & instruments
+                With full flexibility to edit notes and use your own sounds &
+                instruments
               </div>
             </div>
-            <img className="w-full px-2 mt-2 md:w-1/2" id="placeholder2" src="/placeholder2.jpg" />
+            <img
+              className="w-full px-2 mt-2 md:w-1/2"
+              id="placeholder2"
+              src="/placeholder2.jpg"
+            />
           </div>
           <div id="lazy3" className="relative flex flex-wrap mt-12">
             <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
@@ -625,7 +634,11 @@ const MidiCratePage = () => {
                 Turn the volume to 11, 'cause you just produced some heat 🔥🔥🔥
               </div>
             </div>
-            <img className="w-full px-2 mt-2 md:w-1/2" id="placeholder3" src="/placeholder3.jpg" />
+            <img
+              className="w-full px-2 mt-2 md:w-1/2"
+              id="placeholder3"
+              src="/placeholder3.jpg"
+            />
           </div>
           <button
             type="button"
@@ -767,6 +780,37 @@ const MidiCratePage = () => {
           <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
             Try It Risk-Free. Cancel anytime with 1 click, no questions asked
           </p>
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center underline border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+            ABOUT ME
+          </h3>
+          <div id="" className="relative flex flex-wrap justify-around mt-12">
+            <div className="order-last w-full mt-6 md:order-none md:w-1/2 md:my-auto">
+              <div className="text-xl font-bold text-center md:text-2xl text-brand-teal">
+                <span className="">Hey, I'm Phelpsie</span>
+              </div>
+              <div className="mt-6 text-base text-white lg:text-lg">
+                A music producer just like you. Everything you see and hear on
+                this website - including the website itself - was created from
+                scratch, by me. When you make a purchase from my site, you're
+                helping to support a musician like yourself, not a faceless
+                corporate entity, and for that I thank you. Feel free to get in
+                touch via email at{" "}
+                <a href="mailto:phelpsie@phelpsiemusic.com">
+                  phelpsie@phelpsiemusic.com
+                </a>
+                , or hit me up on Instagram anytime with questions, comments, or just
+                to discuss music. I appreciate you 🙏
+              </div>
+            </div>
+            <StaticImage
+              quality={95}
+              src="../images/me.jpg"
+              placeholder="blurred"
+              alt=""
+              imgStyle={{ objectFit: "cover" }}
+              className={`order-first md:order-none`}
+            />
+          </div>
           {/* Reviews section */}
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             CUSTOMER REVIEWS
