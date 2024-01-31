@@ -788,7 +788,7 @@ const MidiCratePage = () => {
               <div className="text-xl font-bold text-center md:text-2xl text-brand-teal">
                 <span className="">Hey, I'm Phelpsie</span>
               </div>
-              <div className="mt-6 text-base text-white lg:text-lg">
+              <div className="px-2 mt-6 text-base text-white md:px-0 lg:text-lg">
                 A music producer just like you. Everything you see and hear on
                 this website - including the website itself - was created from
                 scratch, by me. When you make a purchase from my site, you're
