@@ -717,10 +717,9 @@ const MidiCratePage = () => {
             </button>
           </div> */}
           <h3
-            id="pricingsection"
             className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal"
           >
-            ARE YOU READY?
+            <span id="pricingsection">ARE YOU READY?</span>
           </h3>
           <p className="px-2 mt-12 text-xl font-bold text-white underline sm:px-0">
             Here's what you'll get:
