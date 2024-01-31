@@ -81,7 +81,7 @@ const MidiCratePage = () => {
     setIsCheckoutLoading(true)
 
     let eventID = crypto.randomUUID()
-    conversionsAPI(eventID, "InitiateCheckout")
+    const capi = await conversionsAPI(eventID, "InitiateCheckout")
     if (isBrowser && window.fbq)
       window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })
 
