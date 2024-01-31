@@ -48,7 +48,7 @@ const SuccessPage = () => {
     try {
       const email = await getSHA256Hash(em)
       const thecountry = await getSHA256Hash(country)
-      const thevalue = Number(value.toString().slice(0, -2))
+      const thevalue = value < 1 ? 9.00 : Number(value.toString().slice(0, -2))
       console.log("TheValue: ", thevalue)
       const res = await fetch("/.netlify/functions/conversions-api", {
         method: "POST",
@@ -101,7 +101,7 @@ const SuccessPage = () => {
             "track",
             "Purchase",
             {
-              value: Number(data.session.amount_total.toString().slice(0, -2)),
+              value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
               currency: data.session.currency.toUpperCase(),
             },
             { eventID: sessionID }
@@ -112,7 +112,7 @@ const SuccessPage = () => {
           })
           gtag("event", "conversion", {
             send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
-            value: Number(data.session.amount_total.toString().slice(0, -2)),
+            value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
             currency: data.session.currency.toUpperCase(),
             transaction_id: "",
           })
