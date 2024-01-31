@@ -745,6 +745,29 @@ const MidiCratePage = () => {
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
               Bonus - Access To Our Discord Community
             </p>
+            <div className="block md:hidden">
+              <p className="mx-auto mt-12 text-lg text-center text-white">
+                <span className="font-bold">
+                  First Month Free, Then Only
+                  <br />
+                  <span className="text-red-600 line-through"> $27 </span>
+                  <span className="text-brand-teal">$9/Month</span>
+                </span>
+              </p>
+              <button
+                type="button"
+                onClick={() => stripeSubscriptionCheckout()}
+                className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-3 text-base md:text-lg text-white font-bold rounded-full ${
+                  isCheckoutLoading ? "checkout-loading" : ""
+                }`}
+              >
+                GET MY FREE TRIAL
+              </button>
+              <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
+                Try It Risk-Free. Cancel anytime with 1 click, no questions
+                asked
+              </p>
+            </div>
             <br />
             Everything in MIDI Crate is{" "}
             <span className="font-bold">royalty-free</span>. Any money you make
@@ -760,26 +783,28 @@ const MidiCratePage = () => {
             <span className="font-bold">hit-level beats</span>, simply click "
             <span className="font-bold">Get My Free Trial</span>".
           </p>
-          <p className="mx-auto mt-12 text-lg text-center text-white">
-            <span className="font-bold">
-              First Month Free, Then Only
-              <br />
-              <span className="text-red-600 line-through"> $27 </span>
-              <span className="text-brand-teal">$9/Month</span>
-            </span>
-          </p>
-          <button
-            type="button"
-            onClick={() => stripeSubscriptionCheckout()}
-            className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-3 text-base md:text-lg text-white font-bold rounded-full ${
-              isCheckoutLoading ? "checkout-loading" : ""
-            }`}
-          >
-            GET MY FREE TRIAL
-          </button>
-          <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
-            Try It Risk-Free. Cancel anytime with 1 click, no questions asked
-          </p>
+          <div className="hidden md:block">
+            <p className="mx-auto mt-12 text-lg text-center text-white">
+              <span className="font-bold">
+                First Month Free, Then Only
+                <br />
+                <span className="text-red-600 line-through"> $27 </span>
+                <span className="text-brand-teal">$9/Month</span>
+              </span>
+            </p>
+            <button
+              type="button"
+              onClick={() => stripeSubscriptionCheckout()}
+              className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-3 text-base md:text-lg text-white font-bold rounded-full ${
+                isCheckoutLoading ? "checkout-loading" : ""
+              }`}
+            >
+              GET MY FREE TRIAL
+            </button>
+            <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
+              Try It Risk-Free. Cancel anytime with 1 click, no questions asked
+            </p>
+          </div>
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center underline border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             ABOUT ME
           </h3>
@@ -798,8 +823,8 @@ const MidiCratePage = () => {
                 <a href="mailto:phelpsie@phelpsiemusic.com">
                   phelpsie@phelpsiemusic.com
                 </a>
-                , or hit me up on Instagram anytime with questions, comments, or just
-                to discuss music. I appreciate you 🙏
+                , or hit me up on Instagram anytime with questions, comments, or
+                just to discuss music. I appreciate you 🙏
               </div>
             </div>
             <StaticImage
