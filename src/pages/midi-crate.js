@@ -389,34 +389,24 @@ const MidiCratePage = () => {
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  const anchor = document.querySelector("#pricingsection")
-                  anchor.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                    inline: "nearest",
-                  })
-                }}
-                className="hidden w-2/3 py-3 mt-3 text-xs font-bold text-white rounded-full sm:block lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+                onClick={() => stripeSubscriptionCheckout()}
+                className={`hidden w-2/3 py-3 mt-3 text-xs font-bold text-white rounded-full sm:block lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
+                  isCheckoutLoading ? "checkout-loading" : ""
+                }`}
               >
-                START FOR FREE
+                GET MY FREE TRIAL
               </button>
             </div>
           </div>
         </div>
         <button
           type="button"
-          onClick={() => {
-            const anchor = document.querySelector("#pricingsection")
-            anchor.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-              inline: "nearest",
-            })
-          }}
-          className="block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+          onClick={() => stripeSubscriptionCheckout()}
+          className={`block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
+            isCheckoutLoading ? "checkout-loading" : ""
+          }`}
         >
-          START FOR FREE
+          GET MY FREE TRIAL
         </button>
       </div>
 
@@ -536,17 +526,12 @@ const MidiCratePage = () => {
           </div>
           <button
             type="button"
-            onClick={() => {
-              const anchor = document.querySelector("#pricingsection")
-              anchor.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-                inline: "nearest",
-              })
-            }}
-            className="w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+            onClick={() => stripeSubscriptionCheckout()}
+            className={`w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
+              isCheckoutLoading ? "checkout-loading" : ""
+            }`}
           >
-            START FOR FREE
+            GET MY FREE TRIAL
           </button>
           {/* <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHO I'VE WORKED WITH
@@ -642,17 +627,12 @@ const MidiCratePage = () => {
           </div>
           <button
             type="button"
-            onClick={() => {
-              const anchor = document.querySelector("#pricingsection")
-              anchor.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-                inline: "nearest",
-              })
-            }}
-            className="w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300"
+            onClick={() => stripeSubscriptionCheckout()}
+            className={`w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
+              isCheckoutLoading ? "checkout-loading" : ""
+            }`}
           >
-            START FOR FREE
+            GET MY FREE TRIAL
           </button>
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHAT THE PROS SAY
@@ -716,9 +696,7 @@ const MidiCratePage = () => {
               <MdPlayArrow className="w-20 h-20 rounded-full bg-brand-teal checkout-loading" />
             </button>
           </div> */}
-          <h3
-            className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal"
-          >
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             <span id="pricingsection">ARE YOU READY?</span>
           </h3>
           <p className="px-2 mt-12 text-xl font-bold text-white underline sm:px-0">

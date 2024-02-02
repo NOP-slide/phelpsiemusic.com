@@ -16,7 +16,7 @@ exports.handler = async ({ body }) => {
     line_items: lineItems,
     mode: "subscription",
     success_url: `https://phelpsiemusic.com/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `https://phelpsiemusic.com/`,
+    cancel_url: `https://phelpsiemusic.com/midi-crate`,
     subscription_data: {
       trial_period_days: 30,
     },
