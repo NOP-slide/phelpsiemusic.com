@@ -396,6 +396,9 @@ const MidiCratePage = () => {
               >
                 GET MY FREE TRIAL
               </button>
+              <p className="hidden mt-3 text-xs text-gray-400 md:text-sm sm:block">
+                Try It Risk-Free. Cancel anytime with 1 click
+              </p>
             </div>
           </div>
         </div>
@@ -408,6 +411,9 @@ const MidiCratePage = () => {
         >
           GET MY FREE TRIAL
         </button>
+        <p className="block mt-3 text-xs text-center text-gray-400 md:text-sm sm:hidden">
+          Try It Risk-Free. Cancel anytime with 1 click
+        </p>
       </div>
 
       {/* Who I've worked with section */}
