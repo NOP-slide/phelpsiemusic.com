@@ -56,7 +56,7 @@ async function conversionsAPI(
     }
   }
 
-  if (eventName === "AddToCart" || eventName === "InitiateCheckout") {
+  if (eventName === "AddToCart" || eventName === "InitiateCheckout" || eventName === 'Subscribe') {
     body = {
       data: [
         {

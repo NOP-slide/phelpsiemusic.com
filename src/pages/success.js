@@ -73,6 +73,57 @@ const SuccessPage = () => {
       console.error(error)
     }
   }
+  async function conversionsAPISubscribe(em, country, currency, value, sessionID) {
+    const cookies = document.cookie.split(";")
+    let fbp = "none"
+    let fbc = "none"
+    console.log(cookies)
+
+    cookies.map(cookie => {
+      if (cookie.includes("_fbp=")) {
+        fbp = cookie.slice(cookie.indexOf("_fbp=") + 5)
+        console.log(fbp)
+      }
+    })
+    cookies.map(cookie => {
+      if (cookie.includes("_fbc=")) {
+        fbc = cookie.slice(cookie.indexOf("_fbc=") + 5)
+        console.log(fbc)
+      }
+    })
+
+    if (fbc === "none" && window.location.search.includes("fbclid=")) {
+      const params = new URL(document.location).searchParams
+      fbc = "fb.1." + +new Date() + "." + params.get("fbclid")
+    }
+    try {
+      const email = await getSHA256Hash(em)
+      const thecountry = await getSHA256Hash(country)
+      const thevalue = value < 1 ? 9.00 : Number(value.toString().slice(0, -2))
+      console.log("TheValue: ", thevalue)
+      const res = await fetch("/.netlify/functions/conversions-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          eventType: "Subscribe",
+          fbp,
+          fbc,
+          email,
+          thecountry,
+          currency,
+          thevalue,
+          sessionID,
+        }),
+      })
+      const result = await res.json()
+      console.log("Return from netlify functions conversionsAPI =", result)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+  }
 
   async function stripeGetCustomerInfo(sessionID) {
     try {
@@ -89,7 +140,14 @@ const SuccessPage = () => {
       console.log("Return from Get Customer Info =", data)
 
       if (localStorage.getItem("phelpsieSession") !== sessionID) {
-        conversionsAPI(
+        const res1 = await conversionsAPI(
+          data.customer.email.toLowerCase(),
+          data.customer.address.country.toLowerCase(),
+          data.session.currency.toUpperCase(),
+          data.session.amount_total,
+          sessionID
+        )
+        const res2 = await conversionsAPISubscribe(
           data.customer.email.toLowerCase(),
           data.customer.address.country.toLowerCase(),
           data.session.currency.toUpperCase(),
@@ -104,6 +162,12 @@ const SuccessPage = () => {
               value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
               currency: data.session.currency.toUpperCase(),
             },
+            { eventID: sessionID }
+          )
+          window.fbq(
+            "track",
+            "Subscribe",
+            {},
             { eventID: sessionID }
           )
         if (isBrowser && window.gtag) {
