@@ -6,6 +6,8 @@ const SiteContext = createContext({
   setIsIOS: () => {},
   isEmailCollectorOpen: false,
   setIsEmailCollectorOpen: () => {},
+  isMidiCratePopupOpen: false,
+  setIsMidiCratePopupOpen: () => {},
   iosFlagHasBeenSet: false,
   setIosFlagHasBeenSet: () => {},
   isCartOpen: false,
@@ -41,6 +43,7 @@ function SiteProvider({ children }) {
   const [isIOS, setIsIOS] = useState(true);
   const [iosFlagHasBeenSet, setIosFlagHasBeenSet] = useState(false);
   const [isEmailCollectorOpen, setIsEmailCollectorOpen] = useState(false);
+  const [isMidiCratePopupOpen, setIsMidiCratePopupOpen] = useState(false);
   const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
   const [isUserAFK, setIsUserAFK] = useState(false);
 
@@ -61,6 +64,8 @@ function SiteProvider({ children }) {
       value={{
         isEmailCollectorOpen,
         setIsEmailCollectorOpen,
+        isMidiCratePopupOpen,
+        setIsMidiCratePopupOpen,
         isIOS,
         setIsIOS,
         iosFlagHasBeenSet,

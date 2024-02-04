@@ -62,6 +62,7 @@ export default function AudioPlayerMidiCrate({
     setCrossSellItem,
     setCrossSellItemNum,
     setIsCrossSellModalOpen,
+    setIsMidiCratePopupOpen,
     isIOS,
   } = useSiteContext()
 
@@ -108,46 +109,13 @@ export default function AudioPlayerMidiCrate({
     }
   }
 
-  const addToCart = () => {
-    if (typeof localStorage !== undefined) {
-      let tempCart = {
-        items: [],
-      }
-      let eventID = crypto.randomUUID()
-      conversionsAPI(eventID)
-      if (isBrowser && window.fbq)
-        window.fbq("track", "AddToCart", {}, { eventID: eventID })
+  const openPopup = () => {
+    let eventID = crypto.randomUUID()
+    conversionsAPI(eventID, "AddToCart")
+    if (isBrowser && window.fbq)
+      window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
-      // If cart already exists
-      if (cartItemsFromLS.length > 0) {
-        // If product is not already in cart
-        if (!cartItemsFromLS.includes(currentSong.prodCode)) {
-          tempCart = JSON.parse(cartItemsFromLS)
-          tempCart.items.push(currentSong.prodCode)
-          localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
-          setCartItemsFromLS(JSON.stringify(tempCart))
-        }
-        // else make a new cart
-      } else {
-        tempCart.items.push(currentSong.prodCode)
-        localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
-        setCartItemsFromLS(JSON.stringify(tempCart))
-      }
-      console.log("Tempcart: ", tempCart)
-    }
-
-    if (allProducts[songIndex].crossSellsWith) {
-      if (!cartItemsFromLS.includes(allProducts[songIndex].crossSellsWith)) {
-        setCrossSellItem(allProducts[songIndex].crossSellsWith)
-        setCrossSellItemNum(allProducts[songIndex].crossSellsWithNum)
-        setTimeout(() => {
-          setIsPaused(true)
-          setIsCrossSellModalOpen(true)
-        }, 400)
-      }
-    }
-
-    setIsCartOpen(true)
+    setIsMidiCratePopupOpen(true)
   }
   // This is necessary because localStorage isn't available at build time
   React.useEffect(() => {
@@ -358,17 +326,10 @@ export default function AudioPlayerMidiCrate({
             <div className="">
               <button
                 type="button"
-                onClick={() => {
-                  const anchor = document.querySelector("#pricingsection")
-                  anchor.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                    inline: "nearest",
-                  })
-                }}
+                onClick={() => openPopup()}
                 className="px-4 py-2 text-xs font-bold text-white rounded-full sm:text-sm md:text-base whitespace-nowrap bg-brand-teal hover:bg-teal-300"
               >
-                START FOR FREE
+                GET MY FREE TRIAL
               </button>
             </div>
           )}

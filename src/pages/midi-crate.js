@@ -30,6 +30,7 @@ const MidiCratePage = () => {
     setCrossSellItemNum,
     crossSellItemNum,
     setCartItemsFromLS,
+    setIsMidiCratePopupOpen,
     playerZIndexBoost,
   } = useSiteContext()
 
@@ -147,46 +148,13 @@ const MidiCratePage = () => {
     )
   }
 
-  const addToCart = () => {
-    if (typeof localStorage !== undefined) {
-      let tempCart = {
-        items: [],
-      }
-      let eventID = crypto.randomUUID()
-      conversionsAPI(eventID, "AddToCart")
-      if (isBrowser && window.fbq)
-        window.fbq("track", "AddToCart", {}, { eventID: eventID })
+  const openPopup = () => {
+    let eventID = crypto.randomUUID()
+    conversionsAPI(eventID, "AddToCart")
+    if (isBrowser && window.fbq)
+      window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
-      // If cart already exists
-      if (cartItemsFromLS.length > 0) {
-        // If product is not already in cart
-        if (!cartItemsFromLS.includes(allProducts[1].prodCode)) {
-          tempCart = JSON.parse(cartItemsFromLS)
-          tempCart.items.push(allProducts[1].prodCode)
-          localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
-          setCartItemsFromLS(JSON.stringify(tempCart))
-        }
-        // else make a new cart
-      } else {
-        tempCart.items.push(allProducts[1].prodCode)
-        localStorage.setItem("phelpsieCart", JSON.stringify(tempCart))
-        setCartItemsFromLS(JSON.stringify(tempCart))
-      }
-      console.log("Tempcart: ", tempCart)
-    }
-
-    if (allProducts[1].crossSellsWith) {
-      if (!cartItemsFromLS.includes(allProducts[1].crossSellsWith)) {
-        setCrossSellItem(allProducts[1].crossSellsWith)
-        setCrossSellItemNum(allProducts[1].crossSellsWithNum)
-        setTimeout(() => {
-          setIsPaused(true)
-          setIsCrossSellModalOpen(true)
-        }, 400)
-      }
-    }
-
-    setIsCartOpen(true)
+    setIsMidiCratePopupOpen(true)
   }
 
   React.useEffect(() => {
@@ -389,31 +357,31 @@ const MidiCratePage = () => {
               </div>
               <button
                 type="button"
-                onClick={() => stripeSubscriptionCheckout()}
+                onClick={() => openPopup()}
                 className={`hidden w-2/3 py-3 mt-3 text-xs font-bold text-white rounded-full sm:block lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
                   isCheckoutLoading ? "checkout-loading" : ""
                 }`}
               >
                 GET MY FREE TRIAL
               </button>
-              <p className="hidden mt-3 text-xs text-gray-400 md:text-sm sm:block">
+              {/* <p className="hidden mt-3 text-xs text-gray-400 md:text-sm sm:block">
                 Try It Risk-Free. Cancel anytime with 1 click
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
         <button
           type="button"
-          onClick={() => stripeSubscriptionCheckout()}
+          onClick={() => openPopup()}
           className={`block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
             isCheckoutLoading ? "checkout-loading" : ""
           }`}
         >
           GET MY FREE TRIAL
         </button>
-        <p className="block mt-3 text-xs text-center text-gray-400 md:text-sm sm:hidden">
+        {/* <p className="block mt-3 text-xs text-center text-gray-400 md:text-sm sm:hidden">
           Try It Risk-Free. Cancel anytime with 1 click
-        </p>
+        </p> */}
       </div>
 
       {/* Who I've worked with section */}
@@ -532,7 +500,7 @@ const MidiCratePage = () => {
           </div>
           <button
             type="button"
-            onClick={() => stripeSubscriptionCheckout()}
+            onClick={() => openPopup()}
             className={`w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
@@ -633,7 +601,7 @@ const MidiCratePage = () => {
           </div>
           <button
             type="button"
-            onClick={() => stripeSubscriptionCheckout()}
+            onClick={() => openPopup()}
             className={`w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
@@ -729,27 +697,27 @@ const MidiCratePage = () => {
               Bonus - Access To Our Discord Community
             </p>
             <div className="block md:hidden">
-              <p className="mx-auto mt-12 text-lg text-center text-white">
+              {/* <p className="mx-auto mt-12 text-lg text-center text-white">
                 <span className="font-bold">
                   First Month Free, Then Only
                   <br />
                   <span className="text-red-600 line-through"> $27 </span>
                   <span className="text-brand-teal">$9/Month</span>
                 </span>
-              </p>
-              <button
+              </p> */}
+              {/* <button
                 type="button"
-                onClick={() => stripeSubscriptionCheckout()}
-                className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-3 text-base md:text-lg text-white font-bold rounded-full ${
+                onClick={() => openPopup()}
+                className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-6 text-base md:text-lg text-white font-bold rounded-full ${
                   isCheckoutLoading ? "checkout-loading" : ""
                 }`}
               >
                 GET MY FREE TRIAL
-              </button>
-              <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
+              </button> */}
+              {/* <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
                 Try It Risk-Free. Cancel anytime with 1 click, no questions
                 asked
-              </p>
+              </p> */}
             </div>
             <br />
             Everything in MIDI Crate is{" "}
@@ -766,27 +734,27 @@ const MidiCratePage = () => {
             <span className="font-bold">hit-level beats</span>, simply click "
             <span className="font-bold">Get My Free Trial</span>".
           </p>
-          <div className="hidden md:block">
-            <p className="mx-auto mt-12 text-lg text-center text-white">
+          <div className="">
+            {/* <p className="mx-auto mt-12 text-lg text-center text-white">
               <span className="font-bold">
                 First Month Free, Then Only
                 <br />
                 <span className="text-red-600 line-through"> $27 </span>
                 <span className="text-brand-teal">$9/Month</span>
               </span>
-            </p>
+            </p> */}
             <button
               type="button"
-              onClick={() => stripeSubscriptionCheckout()}
-              className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-3 text-base md:text-lg text-white font-bold rounded-full ${
+              onClick={() => openPopup()}
+              className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-8 text-base md:text-lg text-white font-bold rounded-full ${
                 isCheckoutLoading ? "checkout-loading" : ""
               }`}
             >
               GET MY FREE TRIAL
             </button>
-            <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
+            {/* <p className="max-w-[17rem] mx-auto mt-3 text-xs md:text-sm text-center text-gray-400 md:max-w-none">
               Try It Risk-Free. Cancel anytime with 1 click, no questions asked
-            </p>
+            </p> */}
           </div>
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center underline border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             ABOUT ME

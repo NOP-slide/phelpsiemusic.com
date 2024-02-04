@@ -19,6 +19,7 @@ import { useSiteContext } from "../hooks/use-site-context"
 import { useUserIdle } from "../hooks/use-user-idle"
 import EmailCollector from "./EmailCollector"
 import ExitIntentModal from "./ExitIntentModal"
+import MidiCratePopup from "./MidiCratePopup"
 
 const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
   const {
@@ -27,6 +28,7 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
     isCrossSellModalOpen,
     playerZIndexBoost,
     isEmailCollectorOpen,
+    isMidiCratePopupOpen,
     isExitIntentModalOpen,
     setIsUserAFK,
     setIsExitIntentModalOpen,
@@ -47,7 +49,7 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
       localStorage.setItem("phelpsieAFK", true)
       setIsExitIntentModalOpen(true)
     } else {
-      reset();
+      reset()
     }
   }
 
@@ -67,13 +69,17 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
     <>
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
         {hasBanner && <Banner />}
-        <Header hasBanner={hasBanner} siteTitle={data.site.siteMetadata?.title || `Title`} />
+        <Header
+          hasBanner={hasBanner}
+          siteTitle={data.site.siteMetadata?.title || `Title`}
+        />
         <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
         <IosChecker />
         {isCartOpen && <Cart />}
         {isVideoPlayerOpen && <VideoPlayer />}
         {isCrossSellModalOpen && <CrossSellModal />}
         {isEmailCollectorOpen && <EmailCollector />}
+        {isMidiCratePopupOpen && <MidiCratePopup />}
         {/* {isExitIntentModalOpen && <ExitIntentModal />} */}
         <Footer
           isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}
