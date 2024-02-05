@@ -16,6 +16,7 @@ import {
   MdStop,
 } from "react-icons/md"
 import { allProducts } from "../data/all-products"
+import { v4 as uuidv4 } from 'uuid';
 
 const MidiCratePopup = () => {
   const [modalOpen, setModalOpen] = React.useState(true)
@@ -97,7 +98,7 @@ const MidiCratePopup = () => {
   async function stripeMidiCrateCheckout() {
     setIsCheckoutLoading(true)
 
-    let eventID = crypto.randomUUID()
+    let eventID = uuidv4();
     const capi = await conversionsAPI(eventID, "InitiateCheckout")
     if (isBrowser && window.fbq)
       window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })

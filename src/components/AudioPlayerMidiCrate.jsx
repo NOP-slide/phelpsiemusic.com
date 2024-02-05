@@ -8,6 +8,7 @@ import AudioProgressBar from "./AudioProgressBar"
 import VolumeInput from "./VolumeInput"
 import { useSiteContext } from "../hooks/use-site-context"
 import { allProducts } from "../data/all-products"
+import { v4 as uuidv4 } from 'uuid';
 
 function formatDurationDisplay(duration) {
   const min = Math.floor(duration / 60)
@@ -110,7 +111,7 @@ export default function AudioPlayerMidiCrate({
   }
 
   const openPopup = () => {
-    let eventID = crypto.randomUUID()
+    let eventID = uuidv4();
     conversionsAPI(eventID, "AddToCart")
     if (isBrowser && window.fbq)
       window.fbq("track", "AddToCart", {}, { eventID: eventID })

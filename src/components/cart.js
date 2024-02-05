@@ -6,13 +6,14 @@ import { useOutsideClick } from "../hooks/use-outside-click"
 import { CgPushRight } from "react-icons/cg"
 import { MdClose } from "react-icons/md"
 import { allProducts } from "../data/all-products"
+import { v4 as uuidv4 } from 'uuid';
 
 const Cart = () => {
   const [isCheckoutLoading, setIsCheckoutLoading] = React.useState(false)
   const isBrowser = typeof window !== "undefined"
 
   const collectEmail = () => {
-    let eventID = crypto.randomUUID();
+    let eventID = uuidv4();
     conversionsAPI(eventID);
     if (isBrowser && window.fbq) window.fbq('track', 'InitiateCheckout', {}, { eventID: eventID });
     setIsEmailCollectorOpen(true);

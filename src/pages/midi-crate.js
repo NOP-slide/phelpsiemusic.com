@@ -10,6 +10,7 @@ import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
+import { v4 as uuidv4 } from 'uuid';
 
 const MidiCratePage = () => {
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
@@ -81,7 +82,7 @@ const MidiCratePage = () => {
   async function stripeSubscriptionCheckout() {
     setIsCheckoutLoading(true)
 
-    let eventID = crypto.randomUUID()
+    let eventID = uuidv4();
     const capi = await conversionsAPI(eventID, "InitiateCheckout")
     if (isBrowser && window.fbq)
       window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })
@@ -149,7 +150,7 @@ const MidiCratePage = () => {
   }
 
   const openPopup = () => {
-    let eventID = crypto.randomUUID()
+    let eventID = uuidv4();
     conversionsAPI(eventID, "AddToCart")
     if (isBrowser && window.fbq)
       window.fbq("track", "AddToCart", {}, { eventID: eventID })
@@ -158,7 +159,7 @@ const MidiCratePage = () => {
   }
 
   React.useEffect(() => {
-    let eventID = crypto.randomUUID()
+    let eventID = uuidv4();
     conversionsAPI(eventID, "ViewContent")
     if (isBrowser && window.fbq)
       window.fbq(

@@ -10,6 +10,7 @@ import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
+import { v4 as uuidv4 } from 'uuid';
 
 const ImaginariumVol1Page = () => {
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
@@ -129,7 +130,7 @@ const ImaginariumVol1Page = () => {
       let tempCart = {
         items: [],
       }
-      let eventID = crypto.randomUUID()
+      let eventID = uuidv4();
       conversionsAPI(eventID, "AddToCart")
       if (isBrowser && window.fbq)
         window.fbq("track", "AddToCart", {}, { eventID: eventID })
@@ -167,7 +168,7 @@ const ImaginariumVol1Page = () => {
   }
 
   React.useEffect(() => {
-    let eventID = crypto.randomUUID()
+    let eventID = uuidv4();
     conversionsAPI(eventID, "ViewContent")
     if (isBrowser && window.fbq)
       window.fbq(
