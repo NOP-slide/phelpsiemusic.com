@@ -695,7 +695,7 @@ const MidiCratePage = () => {
             <br />
             <p className="font-bold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-              Bonus - Access To Our Discord Community
+              Bonus - Access To My Discord Community
             </p>
             <div className="block md:hidden">
               {/* <p className="mx-auto mt-12 text-lg text-center text-white">

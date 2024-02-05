@@ -135,7 +135,7 @@ const MidiCratePopup = () => {
       }`}
     >
       <div
-        className={`fixed h-2/3 md:h-3/4 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl top-6 -translate-y-0 md:top-1/3 left-1/2 -translate-x-1/2 md:-translate-y-1/3 bg-brand-dark ${
+        className={`fixed pb-6 md:pb-12 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl top-6 -translate-y-0 md:top-1/3 left-1/2 -translate-x-1/2 md:-translate-y-1/3 bg-brand-dark ${
           modalOpen ? "cross-sell-modal-fadein" : "cross-sell-modal-fadeout"
         }`}
       >
@@ -148,8 +148,8 @@ const MidiCratePopup = () => {
             className="absolute text-white cursor-pointer md:text-lg lg:text-xl top-2 right-2"
           />
           <div className="flex items-center justify-center w-full h-16 md:h-24 crossSellBackground">
-            <h2 className="max-w-[16rem] sm:max-w-sm text-xl font-bold text-center text-white md:text-2xl md:max-w-xl">
-              Almost There
+            <h2 className="max-w-[16rem] sm:max-w-sm text-base font-bold text-center text-white md:text-2xl md:max-w-xl">
+              Your Free MIDIs Are Waiting
             </h2>
           </div>
           <p className="mt-6 text-xl font-bold text-center md:mt-12 md:text-3xl text-brand-teal">
@@ -177,24 +177,24 @@ const MidiCratePopup = () => {
                 type="email"
               /> */}
           <div className="pl-4 mt-4 text-sm text-white sm:pl-20 md:pl-40 lg:pl-64 md:text-base lg:text-lg">
-            <p className="font-bold">
+            <p className="font-semibold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" /> 180
               MIDI Chord Progressions Every Month
             </p>
             <br />
-            <p className="font-bold">
+            <p className="font-semibold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" /> 180
               MIDI Arpeggios Every Month
             </p>
             <br />
-            <p className="font-bold">
+            <p className="font-semibold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
               Bonus - Free Hip-Hop Loop Kit
             </p>
             <br />
-            <p className="font-bold">
+            <p className="font-semibold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-              Bonus - Access To Our Discord Community
+              Bonus - Access To My Discord Community
             </p>
           </div>
           <button
@@ -204,10 +204,10 @@ const MidiCratePopup = () => {
             type="button"
             onClick={() => stripeMidiCrateCheckout()}
           >
-            GO TO CHECKOUT
+            GO TO FREE CHECKOUT
           </button>
           <p className="mt-4 text-xs font-semibold text-center text-gray-400 md:text-base">
-            Try it risk-free. Cancel anytime with 1 click.
+            Cancel anytime with 1 click, no questions asked
           </p>
         </div>
       </div>
