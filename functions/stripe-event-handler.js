@@ -17,7 +17,7 @@ exports.handler = async ({ body, headers }) => {
       apiKey: process.env.MAILERSEND_API_KEY,
     })
 
-    console.log("******Stripe Event********: ", stripeEvent);
+    console.log("******Stripe Event********: ", stripeEvent)
 
     // Fulfill purchase or subscription
     if (stripeEvent.type === "checkout.session.completed") {
@@ -162,11 +162,11 @@ exports.handler = async ({ body, headers }) => {
     }
 
     // Finalize invoices
-    if (stripeEvent.type === "invoice.created") {
-      const id = stripeEvent.data.object.id
-      const invoice = await stripe.invoices.finalizeInvoice(id, {auto_advance: true});
-      console.log(invoice);
-    }
+    // if (stripeEvent.type === "invoice.created") {
+    //   const id = stripeEvent.data.object.id
+    //   const invoice = await stripe.invoices.finalizeInvoice(id, {auto_advance: true});
+    //   console.log(invoice);
+    // }
 
     // Handle abandoned carts
     if (stripeEvent.type === "checkout.session.expired") {
@@ -176,7 +176,7 @@ exports.handler = async ({ body, headers }) => {
       const email = session.customer_details?.email
       const recoveryUrl = session.after_expiration?.recovery?.url
 
-      if (email && recoveryUrl) {
+      if (email && recoveryUrl && session.mode !== "subscription") {
         try {
           let emailHtml = `<p>Hey producer!</p><p>Thanks for checking out my website, I appreciate it. I noticed you didn't complete your purchase - no worries at all, but if you change your mind, use this link and enter the coupon code WELCOMEBACK to receive 15% off.</p>`
 
@@ -197,6 +197,35 @@ exports.handler = async ({ body, headers }) => {
             .setReplyTo(sentFrom)
             .setSubject(
               `Did you forget something? Get 15% off right now at Phelpsie Music`
+            )
+            .setHtml(emailHtml)
+          const res = await mailerSend.email.send(emailParams)
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+        }
+      }
+      if (email && recoveryUrl && session.mode === "subscription") {
+        try {
+          let emailHtml = `<p>Hey producer,</p><p>Thanks for checking out my website. I appreciate you! I noticed that you didn't finish downloading your free month of MIDI Crate, so I wanted to personally reach out and let you know that the offer is still on the table if you're interested: 360 mind-blowing MIDI files, including chord progressions and arpeggios, to save you tons of time and provide the perfect spark of inspiration for your next track. If you'd like to access your free trial month now, you can do so by clicking this link: </p>`
+
+          emailHtml +=
+            `<a href="` + recoveryUrl + `">Download MIDI Crate</a><br/>`
+
+          emailHtml += `<p>I am dedicated to providing only the highest value musical tools, and building a community of like-minded music producers. I'd love to have you join us, so if there are any further questions or concerns holding you back, please feel free to let me know and I'm sure I can help you out.</p><br/><p>Your friend in music,</p><p>Phelpsie</p>`
+
+          const sentFrom = new Sender(
+            "phelpsie@phelpsiemusic.com",
+            "Phelpsie Music"
+          )
+          const recipients = [new Recipient(email, "")]
+
+          const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setReplyTo(sentFrom)
+            .setSubject(
+              `Your MIDI Crate is waiting: 360 Free MIDI files + bonuses`
             )
             .setHtml(emailHtml)
           const res = await mailerSend.email.send(emailParams)

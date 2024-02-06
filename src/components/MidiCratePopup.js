@@ -96,6 +96,15 @@ const MidiCratePopup = () => {
     }
   }
 
+  const doCheckout = () => {
+    if (isValidEmail) {
+      stripeMidiCrateCheckout()
+    } else {
+      setIsInputBlinking(true);
+      setTimeout(()=>setIsInputBlinking(false), 700);
+    }
+  }
+
   async function stripeMidiCrateCheckout() {
     setIsCheckoutLoading(true)
 
@@ -115,7 +124,7 @@ const MidiCratePopup = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(stripeCode),
+          body: JSON.stringify(emailAddress),
         }
       )
       const data = await res.json()
@@ -204,7 +213,7 @@ const MidiCratePopup = () => {
               Bonus - Access To My Discord Community
             </p>
           </div>
-          <p className="mt-6 text-xl font-bold text-center md:mt-12 md:text-2xl text-brand-teal">
+          <p className="mt-6 text-xl font-bold text-center md:mt-8 md:text-2xl text-brand-teal">
             <span className="font-bold">
               Get It All Free Now,
               <br />Then Only $9/Month
@@ -212,18 +221,34 @@ const MidiCratePopup = () => {
               {/* <span className="text-brand-teal"> $9/Month</span> */}
             </span>
           </p>
+          <input
+            onChange={e => {
+              setEmailAddress(e.target.value)
+              setIsValidEmail(
+                e.target.value.match(
+                  /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+                )
+              )
+            }}
+            onKeyDown={(e)=>e.key === 'Enter' && doCheckout() }
+            placeholder="Your Email Address"
+            className={`transition ${
+              isInputBlinking && "invalid-email"
+            } flex justify-center appearance-none w-64 md:w-72 lg:w-1/3 mx-auto mt-4 mb-6 text-lg font-semibold text-center bg-white rounded-full outline-none text-brand-dark ring-8 ring-blue-800`}
+            type="email"
+          />
           <button
             className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
             type="button"
-            onClick={() => stripeMidiCrateCheckout()}
+            onClick={() => doCheckout()}
           >
             GO TO FREE CHECKOUT
           </button>
-          <p className="mt-4 text-xs font-semibold text-center text-gray-400 md:text-base">
+          {/* <p className="mt-4 text-xs font-semibold text-center text-gray-400 md:text-base">
             If you don't absolutely love MIDI Crate,<br/>cancel anytime with 1 click, no questions asked
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

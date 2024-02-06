@@ -4,13 +4,14 @@ exports.handler = async ({ body }) => {
   console.log("Body: ", body)
   let lineItems = []
   let obj = {}
-  obj.price = JSON.parse(body)
+  obj.price = "price_1OH8QSAHwqgwuHo3DFgteSqv";
   obj.quantity = 1
   lineItems.push(obj)
 
-  const email = JSON.parse(body).email
+  const email = JSON.parse(body);
 
   console.log("Lineitems: ", lineItems)
+  console.log("Email: ", email);
 
   const session = await stripe.checkout.sessions.create({
     line_items: lineItems,
@@ -20,6 +21,13 @@ exports.handler = async ({ body }) => {
     subscription_data: {
       trial_period_days: 30,
     },
+    after_expiration: {
+      recovery: {
+        enabled: true,
+      },
+    },
+    customer_email: email,
+    expires_at: Math.floor(Date.now() / 1000) + (1800), // Configured to expire after 6 hours (21600)
   })
   return {
     statusCode: 200,
