@@ -149,17 +149,24 @@ const MidiCratePopup = () => {
           />
           <div className="flex items-center justify-center w-full h-16 md:h-24 crossSellBackground">
             <h2 className="max-w-[16rem] sm:max-w-sm text-base font-bold text-center text-white md:text-2xl md:max-w-xl">
-              Your Free MIDIs Are Waiting
+              Ready For Your Free Month?
             </h2>
           </div>
-          <p className="mt-6 text-xl font-bold text-center md:mt-12 md:text-3xl text-brand-teal">
+          {/* <p className="mt-6 text-xl font-bold text-center md:mt-12 md:text-3xl text-brand-teal">
             <span className="font-bold">
               First Month Free, Then Only
               <br />
               <span className="text-red-600 line-through"> $27</span>
               <span className="text-brand-teal">{' '}$9/Month</span>
             </span>
-          </p>
+          </p> */}
+          {/* <p className="mt-6 text-xl font-bold text-center md:mt-12 md:text-3xl text-brand-teal">
+            <span className="font-bold">
+              Level Up Your Music Today
+              <br />
+              With MIDI Crate
+            </span>
+          </p> */}
           {/* <input
             onChange={e => {
               setEmailAddress(e.target.value)
@@ -176,7 +183,7 @@ const MidiCratePopup = () => {
                 } flex justify-center appearance-none w-64 md:w-72 lg:w-1/3 mx-auto mt-2 text-lg font-semibold text-center bg-white rounded-full outline-none text-brand-dark focus:ring-8 focus:ring-blue-800`}
                 type="email"
               /> */}
-          <div className="pl-4 mt-4 text-sm text-white sm:pl-20 md:pl-40 lg:pl-64 md:text-base lg:text-lg">
+          <div className="pl-4 mt-6 text-sm text-white md:mt-12 sm:pl-20 md:pl-40 lg:pl-64 md:text-base lg:text-lg">
             <p className="font-semibold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" /> 180
               MIDI Chord Progressions Every Month
@@ -197,8 +204,16 @@ const MidiCratePopup = () => {
               Bonus - Access To My Discord Community
             </p>
           </div>
+          <p className="mt-6 text-xl font-bold text-center md:mt-12 md:text-2xl text-brand-teal">
+            <span className="font-bold">
+              Get It All Free Now,
+              <br />Then Only $9/Month
+              {/* <span className="text-red-600 line-through">$27</span> */}
+              {/* <span className="text-brand-teal"> $9/Month</span> */}
+            </span>
+          </p>
           <button
-            className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-8 text-base md:text-lg text-white font-bold rounded-full ${
+            className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
             type="button"
@@ -207,7 +222,7 @@ const MidiCratePopup = () => {
             GO TO FREE CHECKOUT
           </button>
           <p className="mt-4 text-xs font-semibold text-center text-gray-400 md:text-base">
-            Cancel anytime with 1 click, no questions asked
+            If you don't absolutely love MIDI Crate,<br/>cancel anytime with 1 click, no questions asked
           </p>
         </div>
       </div>
