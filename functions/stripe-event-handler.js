@@ -207,12 +207,12 @@ exports.handler = async ({ body, headers }) => {
       }
       if (email && recoveryUrl && session.mode === "subscription") {
         try {
-          let emailHtml = `<p>Hey producer,</p><p>Thanks for checking out my website. I appreciate you! I noticed that you didn't finish downloading your free month of MIDI Crate, so I wanted to personally reach out and let you know that the offer is still on the table if you're interested: 360 mind-blowing MIDI files, including chord progressions and arpeggios, to save you tons of time and provide the perfect spark of inspiration for your next track. If you'd like to access your free trial month now, you can do so by clicking this link: </p>`
+          let emailHtml = `<p>Hey producer,</p><p>Thanks for checking out my website. I appreciate you! I noticed that you didn't finish downloading your free month of MIDI Crate, so I wanted to personally reach out and let you know that the offer is still on the table if you're interested: 360 mind-blowing MIDI files - including chord progressions and arpeggios - to save you tons of time and provide the perfect spark of inspiration for your next track. If you'd like to access your free trial month now, you can do so by clicking this link: </p>`
 
           emailHtml +=
-            `<a href="` + recoveryUrl + `">Download MIDI Crate</a><br/>`
+            `<a href="` + recoveryUrl + `">Get My Free MIDI Crate Now</a><br/>`
 
-          emailHtml += `<p>I am dedicated to providing only the highest value musical tools, and building a community of like-minded music producers. I'd love to have you join us, so if there are any further questions or concerns holding you back, please feel free to let me know and I'm sure I can help you out.</p><br/><p>Your friend in music,</p><p>Phelpsie</p>`
+          emailHtml += `<p>I am dedicated to providing only the highest quality musical tools, and building a community of like-minded music producers to share knowledge and grow together. I'd love for you to join us, so if you have any questions or concerns on your mind, please feel free to let me know and I'm sure I can help you out.</p><br/><p>Your friend in music,</p><p>Phelpsie</p>`
 
           const sentFrom = new Sender(
             "phelpsie@phelpsiemusic.com",

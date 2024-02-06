@@ -27,7 +27,7 @@ exports.handler = async ({ body }) => {
       },
     },
     customer_email: email,
-    expires_at: Math.floor(Date.now() / 1000) + (1800), // Configured to expire after 6 hours (21600)
+    expires_at: Math.floor(Date.now() / 1000) + (2700), // Configured to expire after 6 hours (21600)
   })
   return {
     statusCode: 200,
