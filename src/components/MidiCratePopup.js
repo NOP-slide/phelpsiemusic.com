@@ -230,7 +230,9 @@ const MidiCratePopup = () => {
                 )
               )
             }}
-            onKeyDown={(e)=>e.key === 'Enter' && doCheckout() }
+            onKeyDown={e => {
+              if (e.key === "Enter" && !isCheckoutLoading) doCheckout()
+            }}
             placeholder="Your Email Address"
             className={`transition ${
               isInputBlinking && "invalid-email"
@@ -241,6 +243,7 @@ const MidiCratePopup = () => {
             className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
+            disabled={isCheckoutLoading}
             type="button"
             onClick={() => doCheckout()}
           >

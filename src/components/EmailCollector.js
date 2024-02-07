@@ -53,19 +53,18 @@ const EmailCollector = () => {
     if (isValidEmail) {
       stripeCheckout()
     } else {
-      setIsInputBlinking(true);
-      setTimeout(()=>setIsInputBlinking(false), 700);
+      setIsInputBlinking(true)
+      setTimeout(() => setIsInputBlinking(false), 700)
     }
   }
-  
+
   async function stripeCheckout() {
-    
     setIsCheckoutLoading(true)
 
-    let finalCart = {};
-    finalCart.cartItems = cartItems;
-    finalCart.email = emailAddress;
-    console.log("Final cart: ",finalCart);
+    let finalCart = {}
+    finalCart.cartItems = cartItems
+    finalCart.email = emailAddress
+    console.log("Final cart: ", finalCart)
 
     try {
       const res = await fetch("/.netlify/functions/stripe-checkout", {
@@ -110,7 +109,8 @@ const EmailCollector = () => {
             </h2>
           </div>
           <p className="mt-6 text-2xl font-bold text-center md:mt-12 md:text-3xl text-brand-teal">
-            Where should I send <br className='block md:hidden'/>your download links?
+            Where should I send <br className="block md:hidden" />
+            your download links?
           </p>
           <p className="mt-4 text-lg font-semibold text-center text-white md:mt-8 md:text-xl">
             Your email address:
@@ -124,7 +124,9 @@ const EmailCollector = () => {
                 )
               )
             }}
-            onKeyDown={(e)=>e.key === 'Enter' && doCheckout() }
+            onKeyDown={e => {
+              if (e.key === "Enter" && !isCheckoutLoading) doCheckout()
+            }}
             autoFocus
             className={`transition ${
               isInputBlinking && "invalid-email"
@@ -136,6 +138,7 @@ const EmailCollector = () => {
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
             type="button"
+            disabled={isCheckoutLoading}
             onClick={() => doCheckout()}
           >
             FINISH
