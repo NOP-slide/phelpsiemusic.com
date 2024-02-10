@@ -91,7 +91,7 @@ const EmailCollector = () => {
       }`}
     >
       <div
-        className={`fixed h-1/2 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl top-6 -translate-y-0 md:top-1/3 left-1/2 -translate-x-1/2 md:-translate-y-1/3 bg-brand-dark ${
+        className={`fixed pb-6 md:pb-12 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl top-6 -translate-y-0 md:top-1/3 left-1/2 -translate-x-1/2 md:-translate-y-1/3 bg-brand-dark ${
           modalOpen ? "cross-sell-modal-fadein" : "cross-sell-modal-fadeout"
         }`}
       >
