@@ -10,7 +10,7 @@ import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid"
 
 const MidiCratePage = () => {
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
@@ -82,7 +82,7 @@ const MidiCratePage = () => {
   async function stripeSubscriptionCheckout() {
     setIsCheckoutLoading(true)
 
-    let eventID = uuidv4();
+    let eventID = uuidv4()
     const capi = await conversionsAPI(eventID, "InitiateCheckout")
     if (isBrowser && window.fbq)
       window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })
@@ -150,7 +150,7 @@ const MidiCratePage = () => {
   }
 
   const openPopup = () => {
-    let eventID = uuidv4();
+    let eventID = uuidv4()
     conversionsAPI(eventID, "AddToCart")
     if (isBrowser && window.fbq)
       window.fbq("track", "AddToCart", {}, { eventID: eventID })
@@ -159,7 +159,7 @@ const MidiCratePage = () => {
   }
 
   React.useEffect(() => {
-    let eventID = uuidv4();
+    let eventID = uuidv4()
     conversionsAPI(eventID, "ViewContent")
     if (isBrowser && window.fbq)
       window.fbq(
@@ -290,7 +290,14 @@ const MidiCratePage = () => {
       <div className="w-full bg-brand-dark">
         <div className="flex w-full h-full max-w-[22rem] gap-4 sm:gap-4 sm:max-w-xl mx-auto mt-12 md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl md:mt-16 lg:gap-10">
           <div className="relative w-1/2 px-0 lg:px-12">
-            <div className="relative">
+            <div
+              onClick={() => {
+                setIsPaused(true)
+                setVideoPlayerSrc("/midi-crate-video.mp4")
+                setIsVideoPlayerOpen(true)
+              }}
+              className="relative cursor-pointer"
+            >
               <StaticImage
                 quality={95}
                 src="../images/products/midi-crate-art.jpg"
@@ -298,6 +305,17 @@ const MidiCratePage = () => {
                 alt=""
                 className={` transition ease-in-out duration-300 w-full h-48 sm:h-64 md:h-72 lg:h-[22rem]`}
               />
+              <button
+                className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
+                type="button"
+                // onClick={() => {
+                //   setIsPaused(true)
+                //   setVideoPlayerSrc("/midi-crate-video.mp4")
+                //   setIsVideoPlayerOpen(true)
+                // }}
+              >
+                <MdPlayArrow className="w-16 h-14 md:w-24 md:h-20 bg-brand-teal checkout-loading" />
+              </button>
             </div>
           </div>
           <div className="lg:block hidden border-l border-white h-48 sm:h-64 lg:h-[22rem]"></div>
@@ -353,7 +371,7 @@ const MidiCratePage = () => {
                   }}
                   className="ml-3 text-sm font-bold text-white md:text-lg lg:text-xl"
                 >
-                  Play Demos
+                  Audio Demos
                 </p>
               </div>
               <button
