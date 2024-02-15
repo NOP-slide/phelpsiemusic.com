@@ -302,14 +302,14 @@ const SuccessPage = () => {
                 <p className="max-w-[6rem] sm:max-w-[10rem] md:max-w-[13rem] text-sm font-bold text-white hover:text-gray-300 sm:text-base">
                   {allProducts[0].title}
                 </p>
-                <div className="flex flex-col gap-1">
+                {/* <div className="flex flex-col gap-1">
                   <p className="px-2 text-xs font-bold text-center text-white line-through bg-red-700 rounded-full sm:text-sm">
                     ${allProducts[0].oldPrice}
                   </p>
                   <p className="px-2 text-lg font-bold sm:text-xl text-brand-teal">
                     ${allProducts[0].price}
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
             <div
@@ -343,14 +343,14 @@ const SuccessPage = () => {
                 <p className="max-w-[6rem] sm:max-w-[10rem] md:max-w-[13rem] text-sm font-bold text-white hover:text-gray-300 sm:text-base">
                   {allProducts[1].title}
                 </p>
-                <div className="flex flex-col gap-1">
+                {/* <div className="flex flex-col gap-1">
                   <p className="px-2 text-xs font-bold text-center text-white line-through bg-red-700 rounded-full sm:text-sm">
                     ${allProducts[1].oldPrice}
                   </p>
                   <p className="px-2 text-lg font-bold sm:text-xl text-brand-teal">
                     ${allProducts[1].price}
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
