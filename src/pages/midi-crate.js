@@ -406,7 +406,7 @@ const MidiCratePage = () => {
       {/* Who I've worked with section */}
       <div className="w-full pt-4 pb-20 md:pt-12 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
-          <h3 className="mt-12 text-2xl font-bold tracking-wide text-center underline sm:tracking-normal lg:text-4xl text-brand-teal">
+          <h3 className="mt-12 text-2xl font-bold tracking-wide text-center sm:tracking-normal lg:text-4xl text-brand-teal">
             WHY YOU NEED IT
           </h3>
           <div className="px-2 mx-auto mt-12 text-white sm:px-0">
@@ -566,14 +566,14 @@ const MidiCratePage = () => {
             </div>
           </div> */}
           {/* IG screenshots section */}
-          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center underline border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             HOW TO USE IT
           </h3>
           <div id="lazy1" className="relative flex flex-wrap mt-12">
             <div className="w-full px-6 mb-6 md:w-1/2 md:my-auto">
               <div className="text-xl font-bold text-center md:text-2xl text-brand-teal">
                 <span className="">1. </span>
-                <span className="">Download MIDI Crate</span>
+                <span className="">Open MIDI Crate</span>
               </div>
               <div className="mt-6 text-lg text-center text-white md:text-xl">
                 And check out all the MIDI files + bonus content
@@ -775,7 +775,7 @@ const MidiCratePage = () => {
               Try It Risk-Free. Cancel anytime with 1 click, no questions asked
             </p> */}
           </div>
-          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center underline border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
+          <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             ABOUT ME
           </h3>
           <div id="" className="relative flex flex-wrap justify-around mt-12">
