@@ -193,17 +193,17 @@ const SuccessPage = () => {
             { eventID: sessionID }
           )
         window.fbq("track", "Subscribe", {}, { eventID: sessionID })
-        if (isBrowser && window.gtag) {
-          gtag("set", "user_data", {
-            email: data.customer.email.toLowerCase(),
-          })
-          gtag("event", "conversion", {
-            send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
-            value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
-            currency: data.session.currency.toUpperCase(),
-            transaction_id: "",
-          })
-        }
+        // if (isBrowser && window.gtag) {
+        //   gtag("set", "user_data", {
+        //     email: data.customer.email.toLowerCase(),
+        //   })
+        //   gtag("event", "conversion", {
+        //     send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
+        //     value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
+        //     currency: data.session.currency.toUpperCase(),
+        //     transaction_id: "",
+        //   })
+        // }
       } else {
         console.log("duplicate session conversion prevented")
       }
