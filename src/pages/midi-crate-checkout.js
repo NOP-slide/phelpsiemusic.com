@@ -30,13 +30,13 @@ const MidiCrateCheckoutPage = () => {
     amount: 0,
     currency: "usd",
     layout: {
-      type: 'tabs',
+      type: "tabs",
       defaultCollapsed: false,
     },
     // Fully customizable with appearance API.
     appearance: {
-      theme: 'night',
-      labels: 'floating',
+      theme: "night",
+      labels: "floating",
       /*...*/
     },
   }
@@ -194,7 +194,7 @@ const MidiCrateCheckoutPage = () => {
   return (
     <Layout isPlayerOpen={currentSongIndex !== -1}>
       <Elements stripe={stripePromise} options={options}>
-        <form className='w-full max-w-lg mx-auto mt-48'>
+        <form className="w-full max-w-lg mx-auto mt-48">
           <PaymentElement />
           <button>Submit</button>
         </form>
