@@ -7,9 +7,10 @@ import { CgSpinner } from "react-icons/cg"
 import { useSiteContext } from "../hooks/use-site-context"
 import { allProducts } from "../data/all-products"
 import { MdPlayArrow, MdPause } from "react-icons/md"
+import { loadStripe } from "@stripe/stripe-js"
 import { StaticImage } from "gatsby-plugin-image"
 
-const SuccessPage = () => {
+const SuccessMCPage = () => {
   const [customerInfo, setCustomerInfo] = React.useState({})
   const [sessionInfo, setSessionInfo] = React.useState({})
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
@@ -17,6 +18,7 @@ const SuccessPage = () => {
   const [isHoveringProd1, setIsHoveringProd1] = React.useState(false)
   const [isHoveringProd2, setIsHoveringProd2] = React.useState(false)
   const [isHoveringProd3, setIsHoveringProd3] = React.useState(false)
+  const [paymentStatus, setPaymentStatus] = React.useState(null)
 
   const currentSong = allProducts[currentSongIndex]
 
@@ -30,6 +32,21 @@ const SuccessPage = () => {
   } = useSiteContext()
 
   const isBrowser = typeof window !== "undefined"
+
+  async function InitStripe() {
+    const stripe = await loadStripe(
+      "pk_test_51MplK1AHwqgwuHo3WGTdPMNEuleddIAg8UbILfyuEMmMUzKJTE0Pj4zj2zGyBJWYalkI60kQnCivUYfe92P6Sp9300a20YnF2m"
+    )
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "setup_intent_client_secret"
+    )
+
+    // Retrieve the PaymentIntent
+    stripe.retrieveSetupIntent(clientSecret).then(({ setupIntent }) => {
+      setPaymentStatus(setupIntent.status)
+      console.log(setupIntent)
+    })
+  }
 
   const getSHA256Hash = async input => {
     const textAsBuffer = new TextEncoder().encode(input)
@@ -193,17 +210,17 @@ const SuccessPage = () => {
             { eventID: sessionID }
           )
         window.fbq("track", "Subscribe", {}, { eventID: sessionID })
-        if (isBrowser && window.gtag) {
-          gtag("set", "user_data", {
-            email: data.customer.email.toLowerCase(),
-          })
-          gtag("event", "conversion", {
-            send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
-            value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
-            currency: data.session.currency.toUpperCase(),
-            transaction_id: "",
-          })
-        }
+        // if (isBrowser && window.gtag) {
+        //   gtag("set", "user_data", {
+        //     email: data.customer.email.toLowerCase(),
+        //   })
+        //   gtag("event", "conversion", {
+        //     send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
+        //     value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
+        //     currency: data.session.currency.toUpperCase(),
+        //     transaction_id: "",
+        //   })
+        // }
       } else {
         console.log("duplicate session conversion prevented")
       }
@@ -217,10 +234,29 @@ const SuccessPage = () => {
   }
 
   React.useEffect(() => {
+    // InitStripe()
     const params = new URL(document.location).searchParams
-    const sessionID = params.get("session_id")
-    console.log(sessionID)
-    const customer = stripeGetCustomerInfo(sessionID.toString())
+    const name = params.get("vr1")
+    let str_out = ""
+
+    let num_out = name
+    for (let i = 0; i < num_out.length; i += 2) {
+      let num_in = parseInt(num_out.substr(i, [2])) + 23
+      num_in = unescape("%" + num_in.toString(16))
+      str_out += num_in
+    }
+
+    const email = params.get("vr2")
+    let str_out2 = ""
+
+    let num_out2 = email
+    for (let i = 0; i < num_out2.length; i += 2) {
+      let num_in2 = parseInt(num_out2.substr(i, [2])) + 23
+      num_in2 = unescape("%" + num_in2.toString(16))
+      str_out2 += num_in2
+    }
+    setCustomerInfo({ name: str_out, email: str_out2 })
+
     localStorage.removeItem("phelpsieCart")
     setCartItemsFromLS([])
   }, [])
@@ -246,29 +282,23 @@ const SuccessPage = () => {
             </h2>
             <p className="mt-2 text-lg text-center text-white md:text-xl">
               Please check your email at {customerInfo.email} for your download
-              links.
+              links. If you don't see the email, please check your spam folder.
             </p>
-            {sessionInfo.mode !== "subscription" && (
-              <button
-                type="button"
-                onClick={() => navigate("/")}
-                className="flex items-center justify-center px-4 py-1 mx-auto mt-12 text-xl font-bold text-white rounded-full bg-brand-teal"
-              >
-                Back To Shop
-              </button>
-            )}
           </>
         )}
       </div>
-      {sessionInfo.mode === "subscription" && (
+      {customerInfo.name && (
         <div className="w-full mt-6 mb-12 bg-brand-dark">
-          <div className='max-w-xs mx-auto mb-6 border-t-2 border-gray-600 sm:max-w-lg'/>
+          <div className="max-w-xs mx-auto mb-6 border-t-2 border-gray-600 sm:max-w-lg" />
           <div className="text-2xl font-bold text-center text-brand-teal">
             Produce Hip-Hop?
           </div>
           <div className="max-w-xs mx-auto mt-2 text-base text-center text-white md:text-lg md:max-w-lg">
-            To thank you for checking out MIDI Crate, get <span className='font-bold text-brand-teal'>20% OFF</span> these dope loop
-            kits using the code <span className='font-bold text-brand-teal'>THANKYOU</span> at checkout.
+            To thank you for checking out MIDI Crate, get{" "}
+            <span className="font-bold text-brand-teal">20% OFF</span> these
+            dope loop kits using the code{" "}
+            <span className="font-bold text-brand-teal">THANKYOU</span> at
+            checkout.
           </div>
           <div className="flex w-full h-full max-w-[22rem] sm:gap-4 mt-4 sm:max-w-xl gap-0 mx-auto md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl lg:gap-10">
             <div
@@ -362,4 +392,4 @@ const SuccessPage = () => {
 
 export const Head = () => <Seo title="Thank You" />
 
-export default SuccessPage
+export default SuccessMCPage

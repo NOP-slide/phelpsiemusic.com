@@ -4,7 +4,7 @@ import { StaticImage } from "gatsby-plugin-image"
 import { HiOutlineShoppingCart } from "react-icons/hi"
 import { useSiteContext } from "../hooks/use-site-context"
 
-const Header = ({hasBanner}) => {
+const Header = ({hasBanner, hideCart}) => {
   console.log(hasBanner);
   const { setIsCartOpen, cartItemsFromLS } = useSiteContext()
   
@@ -24,7 +24,7 @@ const Header = ({hasBanner}) => {
             </Link>
             <div
               onClick={() => setIsCartOpen(true)}
-              className="flex cursor-pointer"
+              className={`${hideCart ? 'hidden' : 'flex'} cursor-pointer`}
             >
               {cartItemsFromLS.length > 0 && (
                 <p className="absolute flex items-center px-3 font-bold text-gray-200 bg-red-600 rounded-full top-2 sm:top-1.5 sm:right-9 right-7 text-xs sm:text-base">
