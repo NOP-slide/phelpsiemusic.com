@@ -268,7 +268,7 @@ const MidiCratePage = () => {
   }, [])
 
   return (
-    <Layout isPlayerOpen={currentSongIndex !== -1}>
+    <Layout hideCart isPlayerOpen={currentSongIndex !== -1}>
       {/* Hero section */}
       <div className="relative">
         <StaticImage
@@ -276,7 +276,7 @@ const MidiCratePage = () => {
           src="../images/northern-lights-2.jpg"
           placeholder="blurred"
           alt=""
-          className="relative w-full h-36 sm:h-48"
+          className="relative w-full h-24 sm:h-36"
         />
         <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           <h2 className="text-2xl font-bold tracking-wide text-center text-white sm:tracking-normal sm:text-4xl xl:text-5xl whitespace-nowrap">
@@ -301,9 +301,9 @@ const MidiCratePage = () => {
               <StaticImage
                 quality={95}
                 src="../images/products/midi-crate-art.jpg"
-                placeholder="blurred"
+                placeholder="none"
                 alt=""
-                className={` transition ease-in-out duration-300 w-full h-48 sm:h-64 md:h-72 lg:h-[22rem]`}
+                className={` w-full h-48 sm:h-64 md:h-72 lg:h-[22rem]`}
               />
               <button
                 className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
@@ -409,7 +409,7 @@ const MidiCratePage = () => {
           <h3 className="mt-12 text-2xl font-bold tracking-wide text-center sm:tracking-normal lg:text-4xl text-brand-teal">
             WHY YOU NEED IT
           </h3>
-          <div className="px-2 mx-auto mt-12 text-white sm:px-0">
+          <div className="px-2 mx-auto mt-6 text-white sm:mt-12 sm:px-0">
             <p className="text-lg font-bold lg:text-xl">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" /> The
               cure to your beat block
@@ -695,7 +695,7 @@ const MidiCratePage = () => {
           <p className="px-2 mt-12 text-xl font-bold text-white underline sm:px-0">
             Here's what you'll get:
           </p>
-          <p className="px-2 mt-6 text-white sm:px-0">
+          <div className="px-2 mt-6 text-white sm:px-0">
             <p className="font-bold">
               <FaDiamond className="inline-block w-3 h-3 text-brand-teal" /> 180
               MIDI Chord Progressions Every Month
@@ -752,7 +752,7 @@ const MidiCratePage = () => {
             To start for free, and get the tools you need to make{" "}
             <span className="font-bold">hit-level beats</span>, simply click "
             <span className="font-bold">Get My Free Trial</span>".
-          </p>
+          </div>
           <div className="">
             {/* <p className="mx-auto mt-12 text-lg text-center text-white">
               <span className="font-bold">

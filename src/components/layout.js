@@ -21,7 +21,7 @@ import EmailCollector from "./EmailCollector"
 import ExitIntentModal from "./ExitIntentModal"
 import MidiCratePopup from "./MidiCratePopup"
 
-const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
+const Layout = ({ children, isPlayerOpen = false, hasBanner = false, hideCart = false }) => {
   const {
     isCartOpen,
     isVideoPlayerOpen,
@@ -70,6 +70,7 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false }) => {
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
         {hasBanner && <Banner />}
         <Header
+          hideCart={hideCart}
           hasBanner={hasBanner}
           siteTitle={data.site.siteMetadata?.title || `Title`}
         />
