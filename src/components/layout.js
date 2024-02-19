@@ -21,7 +21,13 @@ import EmailCollector from "./EmailCollector"
 import ExitIntentModal from "./ExitIntentModal"
 import MidiCratePopup from "./MidiCratePopup"
 
-const Layout = ({ children, isPlayerOpen = false, hasBanner = false, hideCart = false }) => {
+const Layout = ({
+  children,
+  isPlayerOpen = false,
+  hasBanner = false,
+  hideCart = false,
+  isMidiCrateCheckout = false,
+}) => {
   const {
     isCartOpen,
     isVideoPlayerOpen,
@@ -69,11 +75,13 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false, hideCart = 
     <>
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
         {hasBanner && <Banner />}
-        <Header
-          hideCart={hideCart}
-          hasBanner={hasBanner}
-          siteTitle={data.site.siteMetadata?.title || `Title`}
-        />
+        {!isMidiCrateCheckout && (
+          <Header
+            hideCart={hideCart}
+            hasBanner={hasBanner}
+            siteTitle={data.site.siteMetadata?.title || `Title`}
+          />
+        )}
         <main className="flex flex-col flex-1 bg-brand-dark">{children}</main>
         <IosChecker />
         {isCartOpen && <Cart />}
@@ -83,6 +91,7 @@ const Layout = ({ children, isPlayerOpen = false, hasBanner = false, hideCart = 
         {isMidiCratePopupOpen && <MidiCratePopup />}
         {/* {isExitIntentModalOpen && <ExitIntentModal />} */}
         <Footer
+          isMidiCrateCheckout={isMidiCrateCheckout}
           isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}
         />
       </div>

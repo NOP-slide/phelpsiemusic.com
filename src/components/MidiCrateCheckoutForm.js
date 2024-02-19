@@ -7,9 +7,11 @@ import {
   useElements,
 } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
+import { CgSpinner } from "react-icons/cg"
 
 const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
   const [isLoading, setIsLoading] = React.useState(false)
+  const [isStripeFormLoading, setIsStripeFormLoading] = React.useState(true)
   const stripe = useStripe()
   const elements = useElements()
 
@@ -73,7 +75,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://localhost:8888/success-mc?vr1=${temp2}&vr2=${temp4}`,
+        return_url: `https://www.phelpsiemusic.com/success-mc?vr1=${temp2}&vr2=${temp4}`,
       },
     })
 
@@ -90,7 +92,12 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
 
   return (
     <form onSubmit={handleSubmit} className="">
+      {/* <div className={`${isStripeFormLoading ? "mb-6" : "mb-0"}`} /> */}
+      {isStripeFormLoading && (
+        <CgSpinner className="m-6 mx-auto w-36 h-36 text-brand-teal spinner" />
+      )}
       <PaymentElement
+        onReady={() => setIsStripeFormLoading(false)}
         options={{
           layout: {
             type: "tabs",
@@ -98,24 +105,25 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
           },
         }}
       />
-      <p className="-mt-4 text-sm text-center text-gray-400">
+      <p className={`-mt-4 text-sm text-center text-gray-400 `}>
         Try it risk-free. Cancel anytime with 1 click
       </p>
-      {/* <button
-        disabled={!stripe || isLoading}
-        className="w-full mx-auto mt-4 text-4xl text-white"
-      >
-        Submit
-      </button> */}
       <button
         className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-24 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
           isLoading ? "checkout-loading" : ""
         }`}
-        disabled={!stripe || isLoading}
+        disabled={!stripe || isLoading || isStripeFormLoading}
       >
         FINISH
       </button>
-      {errorMessage && <div style={{color: "rgb(254, 135, 161)"}} className="mt-4 text-center">Error: {errorMessage}</div>}
+      {errorMessage && (
+        <div
+          style={{ color: "rgb(254, 135, 161)" }}
+          className="mt-4 text-center"
+        >
+          Error: {errorMessage}
+        </div>
+      )}
     </form>
   )
 }

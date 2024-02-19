@@ -12,6 +12,8 @@ import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
 import { v4 as uuidv4 } from "uuid"
+import { Tab } from "@headlessui/react"
+
 import {
   Elements,
   PaymentElement,
@@ -21,16 +23,27 @@ import {
 import { loadStripe } from "@stripe/stripe-js"
 
 const stripePromise = loadStripe(
-  "pk_test_51MplK1AHwqgwuHo3WGTdPMNEuleddIAg8UbILfyuEMmMUzKJTE0Pj4zj2zGyBJWYalkI60kQnCivUYfe92P6Sp9300a20YnF2m"
+  "pk_live_51MplK1AHwqgwuHo39JVgHbX84FyoQbDjUIUeLvTB93pug2ZDAPepzVow5DPAadqyqt6P4M3AgHSF0ON6FrClPaQS00bhUrO46Z"
 )
 
 const MidiCrateCheckoutPage = () => {
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
   const [isPaused, setIsPaused] = React.useState(false)
+  const [isBusyCreatingCustomer, setIsBusyCreatingCustomer] =
+    React.useState(false)
   const [customerId, setCustomerId] = React.useState(null)
-  const [customerName, setCustomerName] = React.useState(null)
-  const [customerEmail, setCustomerEmail] = React.useState(null)
+  const [hasFiredInitiateCheckout, setHasFiredInitiateCheckout] =
+    React.useState(false)
+  const [hasAddedAbandonedCart, setHasAddedAbandonedCart] =
+    React.useState(false)
+  const [customerName, setCustomerName] = React.useState("")
+  const [customerEmail, setCustomerEmail] = React.useState("")
+  const [createdName, setCreatedName] = React.useState("")
+  const [createdEmail, setCreatedEmail] = React.useState("")
+  const [isFormNameError, setIsFormNameError] = React.useState(false)
+  const [isFormEmailError, setIsFormEmailError] = React.useState(false)
   const [isCheckoutLoading, setIsCheckoutLoading] = React.useState(false)
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
   const isBrowser = typeof window !== "undefined"
   const currentSong = allProducts[currentSongIndex]
   // console.log(currentSong);
@@ -39,12 +52,13 @@ const MidiCrateCheckoutPage = () => {
     mode: "subscription",
     amount: 0,
     currency: "usd",
+    loader: "never",
     // Fully customizable with appearance API.
     appearance: {
       theme: "night",
       labels: "floating",
       variables: {
-        colorPrimary: 'rgb(45 212 191)',
+        colorPrimary: "rgb(45 212 191)",
       },
       rules: {
         ".TermsText": {
@@ -116,66 +130,91 @@ const MidiCrateCheckoutPage = () => {
     }
   }
 
-  async function stripeSubscriptionCheckout() {
-    setIsCheckoutLoading(true)
-
-    let eventID = uuidv4()
-    const capi = await conversionsAPI(eventID, "InitiateCheckout")
-    if (isBrowser && window.fbq)
-      window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })
-
-    let stripeCode = "price_1OH8QSAHwqgwuHo3DFgteSqv"
-    console.log("Subscription cart: ", stripeCode)
-
+  async function addAbandonedCart() {
     try {
       const res = await fetch(
-        "/.netlify/functions/stripe-subscription-checkout",
+        "https://connect.mailerlite.com/api/subscribers",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNTZkN2ViYmNhOTNiYTYwYWU1ZjhlY2MwZDkxN2JmYzE3MWExM2FjY2FmYTI0OGUzOTRjYTMxNzFkYzJlOGY2Mzk2ODYwNTdmY2EwODJjZjIiLCJpYXQiOjE2OTczMDI2MzEuNDQzOTksIm5iZiI6MTY5NzMwMjYzMS40NDM5OTIsImV4cCI6NDg1Mjk3NjIzMS40Mzk4NTYsInN1YiI6IjU5NTA0MCIsInNjb3BlcyI6W119.tK7vkOIUzMLX1zfxmJA6SofJfRetwAc4k6P-6qQ_hyhErCLBAZC-oq3kpyZHsgLopoqIkQSKOAJ_HsHGjgb8Ar1NQiiGcCoql3QCXAYzAJCC8qiOW-OVHf3KoS5gWbbD-R6juOvsP32Vm-PA2f54eqOrHOIRoh0bX7aO4ZSxK1bl6L07u3avVgSduyWzkgXQzMRbZ5M0a8POn5JCnvrMVrxu-w0L48hRT5daossj4HhdaUsA72VtBH_EFoPiQEDIOxdbThtqsMNLxmePsC6nz2o__41dqheKfAhbBurhUpgtovO0QQNoUCOE-PJwZLjM6KLqmNCtfRIrzEL_HwDUK8Vvnp_And8bvUvf4TBIwptXiJw-6v4cvBrkpn37Zc6s0J8wk5qqNYhgQVButjR9Wj2oDHJ1pOF9IASslsqLrowwwQjoAN4d699gGUrb9aofv1o7yKTN3S-Ed-sOMUuMM_ybWKgxzkcCPY0rcVHLTo8T52dBjHD5L4JQOdqnaD96ehNds0uK6pZ1Q0BsGYba5Ucpopd4T5_DfuAh1bmEFjmD8z-BBag382jp0_eOTkH1wsT4NstuFJzbTvI-Jn1G5FyaGkc3-0DuWuOhjnpTImjx7lHxhzmt7lausraIqO3cve3O6XhQtBNdJqOyHeVBIU29leB-whazwWOA_yfdNCs",
+            Accept: "application/json",
           },
-          body: JSON.stringify(stripeCode),
+          body: JSON.stringify({
+            email: customerEmail,
+            fields: {
+              name: customerName,
+              recovery_url: "https://www.phelpsiemusic.com/midi-crate-checkout",
+            },
+            groups: ["113629656536582040"],
+          }),
         }
       )
       const data = await res.json()
-      console.log("Return from netlify functions =", data)
-      window.location = data.url
+      console.log("Return from mailerlite =", data)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      setIsCheckoutLoading(false)
     }
   }
 
-  const openPopup = () => {
-    let eventID = uuidv4()
-    conversionsAPI(eventID, "AddToCart")
-    if (isBrowser && window.fbq)
-      window.fbq("track", "AddToCart", {}, { eventID: eventID })
+  async function goToTab2() {
+    let hasError = false
 
-    setIsMidiCratePopupOpen(true)
+    if (customerName.trim() === "") {
+      hasError = true
+      setIsFormNameError(true)
+    }
+    if (
+      customerEmail.trim() === "" ||
+      !customerEmail.match(
+        /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+      )
+    ) {
+      hasError = true
+      setIsFormEmailError(true)
+    }
+
+    if (hasError) return
+
+    setSelectedIndex(1)
+    if (customerName !== createdName || customerEmail !== createdEmail) {
+      setCreatedEmail(customerEmail)
+      setCreatedName(customerName)
+      const res = await fetch("/.netlify/functions/stripe-create-customer", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: customerEmail,
+          name: customerName,
+        }),
+      })
+      const data = await res.json()
+      setCustomerId(data.customer.id)
+      const res2 = await addAbandonedCart()
+    }
+
+    if (!hasFiredInitiateCheckout) {
+      let eventID = uuidv4()
+      const capi = await conversionsAPI(eventID, "InitiateCheckout")
+      if (isBrowser && window.fbq)
+        window.fbq("track", "InitiateCheckout", {}, { eventID: eventID })
+      setHasFiredInitiateCheckout(true)
+    }
   }
 
-  async function createCustomer() {
-    const res = await fetch("/.netlify/functions/stripe-create-customer", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "seadoo14@gmail.com",
-        name: "AJ",
-      }),
-    })
-    const data = await res.json()
-    setCustomerId(data.customer.id)
-    setCustomerName("AJ")
-    setCustomerEmail("seadoo14@gmail.com")
+  const handleTabChange = index => {
+    if (index === 0) setSelectedIndex(index)
+    else goToTab2()
+    // setSelectedIndex(index)
   }
 
   return (
-    <Layout hideCart isPlayerOpen={currentSongIndex !== -1}>
+    <Layout isMidiCrateCheckout hideCart isPlayerOpen={currentSongIndex !== -1}>
       <div className="relative">
         <StaticImage
           quality={95}
@@ -194,7 +233,7 @@ const MidiCrateCheckoutPage = () => {
       <div className="w-full pt-4 pb-20 md:pt-12 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
           <div className="flex flex-wrap justify-around">
-            <div className='w-full md:w-auto'>
+            <div className="w-full md:w-auto">
               <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
                 <span id="pricingsection">Here's What You Get:</span>
               </h3>
@@ -233,19 +272,138 @@ const MidiCrateCheckoutPage = () => {
                 </p>
               </div>
             </div>
-            <div className='w-full mt-4 md:mt-0 md:w-auto'>
+            <div className="w-full px-2 mt-4 md:mt-0 md:w-auto sm:px-0">
               <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
                 <span id="pricingsection">Complete Your Order:</span>
               </h3>
-              <div className="">
-                <p className='mt-2 mb-4 font-bold leading-10 text-center text-white sm:mt-6'>First Month Free, Then Only $9/Month</p>
-                <Elements stripe={stripePromise} options={options}>
-                  <MidiCrateCheckoutForm
-                    customerId={customerId}
-                    customerName={customerName}
-                    customerEmail={customerEmail}
-                  />
-                </Elements>
+              <div className="px-4 pt-4 pb-6 mt-6 shadow-2xl bg-brand-tealTranslucent shadow-brand-tealShadow">
+                <Tab.Group
+                  manual
+                  selectedIndex={selectedIndex}
+                  onChange={index => handleTabChange(index)}
+                >
+                  <Tab.List className="flex justify-around font-bold leading-10">
+                    <Tab
+                      className={({ selected }) =>
+                        `w-full rounded-l-lg bg-brand-dark border-r-2 border-brand-tealShadow focus:outline-none shadow-md ${
+                          selected
+                            ? "shadow-brand-teal"
+                            : "shadow-brand-tealShadow"
+                        }`
+                      }
+                    >
+                      {({ selected }) => (
+                        /* Use the `selected` state to conditionally style the selected tab. */
+                        <span
+                          className={
+                            selected
+                              ? " text-brand-teal border-b-2 border-brand-teal"
+                              : " text-white"
+                          }
+                        >
+                          1. Your Info
+                        </span>
+                      )}
+                    </Tab>
+                    <Tab
+                      onClick={() => goToTab2()}
+                      className={({ selected }) =>
+                        `w-full rounded-r-lg bg-brand-dark focus:outline-none shadow-md ${
+                          selected
+                            ? "shadow-brand-teal"
+                            : "shadow-brand-tealShadow"
+                        }`
+                      }
+                    >
+                      {({ selected }) => (
+                        /* Use the `selected` state to conditionally style the selected tab. */
+                        <span
+                          className={
+                            selected
+                              ? " text-brand-teal border-b-2 border-brand-teal"
+                              : " text-white"
+                          }
+                        >
+                          2. Get Access
+                        </span>
+                      )}
+                    </Tab>
+                  </Tab.List>
+                  <Tab.Panels>
+                    <Tab.Panel>
+                      <div className="">
+                        <input
+                          value={customerName}
+                          style={{ backgroundColor: "rgb(48, 49, 61)" }}
+                          className={`w-full px-3 py-4 mt-6 text-white placeholder-white transition duration-150 ease-in-out border rounded-md outline-none focus:shadow-formLight ${
+                            isFormNameError
+                              ? "shadow-formError border-brand-formError"
+                              : "shadow-formDark border-brand-formInputNormalBorder"
+                          } focus:outline-none focus:border-brand-formInputBorder`}
+                          placeholder="Your First Name"
+                          type="text"
+                          onKeyDown={e => {
+                            if (e.key === "Enter") goToTab2()
+                          }}
+                          onChange={e => {
+                            setIsFormNameError(false)
+                            setCustomerName(e.target.value)
+                          }}
+                        />
+                        {isFormNameError && (
+                          <p className="-mb-6 text-brand-formError">
+                            Please enter your first name
+                          </p>
+                        )}
+                        <br />
+                        <input
+                          value={customerEmail}
+                          onKeyDown={e => {
+                            if (e.key === "Enter") goToTab2()
+                          }}
+                          style={{ backgroundColor: "rgb(48, 49, 61)" }}
+                          className={`w-full px-3 py-4 mt-3 text-white placeholder-white transition duration-150 ease-in-out border rounded-md outline-none focus:shadow-formLight ${
+                            isFormEmailError
+                              ? "shadow-formError border-brand-formError"
+                              : "shadow-formDark border-brand-formInputNormalBorder"
+                          } focus:outline-none focus:border-brand-formInputBorder`}
+                          placeholder="Your Email Address"
+                          type="email"
+                          onChange={e => {
+                            setIsFormEmailError(false)
+                            setCustomerEmail(e.target.value)
+                          }}
+                        />
+                        {isFormEmailError && (
+                          <p className="-mb-3 text-brand-formError">
+                            Please enter a valid email address
+                          </p>
+                        )}
+                        <button
+                          className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-16 py-2 mt-6 text-base md:text-lg text-white font-bold rounded-full`}
+                          type="button"
+                          onClick={() => goToTab2()}
+                        >
+                          GO TO STEP 2
+                        </button>
+                      </div>
+                    </Tab.Panel>
+                    <Tab.Panel>
+                      <div className="">
+                        <p className="mt-4 mb-4 font-bold leading-10 text-center text-white sm:mt-6">
+                          First Month Free, Then Only $9/Month
+                        </p>
+                        <Elements stripe={stripePromise} options={options}>
+                          <MidiCrateCheckoutForm
+                            customerId={customerId}
+                            customerName={customerName}
+                            customerEmail={customerEmail}
+                          />
+                        </Elements>
+                      </div>
+                    </Tab.Panel>
+                  </Tab.Panels>
+                </Tab.Group>
               </div>
             </div>
           </div>
@@ -396,11 +554,6 @@ const MidiCrateCheckoutPage = () => {
   )
 }
 
-/**
- * Head export to define metadata for the page
- *
- * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
- */
 export const Head = () => <Seo title="MIDI Crate Checkout" />
 
 export default MidiCrateCheckoutPage

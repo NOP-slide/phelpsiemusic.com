@@ -4,7 +4,7 @@ exports.handler = async ({ body }) => {
   const customerId = JSON.parse(body).id
   console.log("ID IN FunC= ", customerId);
 
-  const priceId = "price_1OH1YhAHwqgwuHo3XWYkO70D"
+  const priceId = "price_1OH8QSAHwqgwuHo3DFgteSqv"
 
   try {
     const subscription = await stripe.subscriptions.create({

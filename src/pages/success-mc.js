@@ -9,6 +9,7 @@ import { allProducts } from "../data/all-products"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 import { loadStripe } from "@stripe/stripe-js"
 import { StaticImage } from "gatsby-plugin-image"
+import { v4 as uuidv4 } from 'uuid';
 
 const SuccessMCPage = () => {
   const [customerInfo, setCustomerInfo] = React.useState({})
@@ -35,7 +36,7 @@ const SuccessMCPage = () => {
 
   async function InitStripe() {
     const stripe = await loadStripe(
-      "pk_test_51MplK1AHwqgwuHo3WGTdPMNEuleddIAg8UbILfyuEMmMUzKJTE0Pj4zj2zGyBJWYalkI60kQnCivUYfe92P6Sp9300a20YnF2m"
+      "pk_live_51MplK1AHwqgwuHo39JVgHbX84FyoQbDjUIUeLvTB93pug2ZDAPepzVow5DPAadqyqt6P4M3AgHSF0ON6FrClPaQS00bhUrO46Z"
     )
     const clientSecret = new URLSearchParams(window.location.search).get(
       "setup_intent_client_secret"
@@ -58,7 +59,7 @@ const SuccessMCPage = () => {
     return hashArray.map(item => item.toString(16).padStart(2, "0")).join("")
   }
 
-  async function conversionsAPI(em, country, currency, value, sessionID) {
+  async function conversionsAPI(em, fn, currency, value, sessionID) {
     const cookies = document.cookie.split(";")
     let fbp = "none"
     let fbc = "none"
@@ -83,10 +84,10 @@ const SuccessMCPage = () => {
     }
     try {
       const email = await getSHA256Hash(em)
-      const thecountry = await getSHA256Hash(country)
+      const firstName = await getSHA256Hash(fn)
       const thevalue = value < 1 ? 9.0 : Number(value.toString().slice(0, -2))
       console.log("TheValue: ", thevalue)
-      const res = await fetch("/.netlify/functions/conversions-api", {
+      const res = await fetch("/.netlify/functions/conversions-api-mc", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +97,7 @@ const SuccessMCPage = () => {
           fbp,
           fbc,
           email,
-          thecountry,
+          firstName,
           currency,
           thevalue,
           sessionID,
@@ -109,13 +110,7 @@ const SuccessMCPage = () => {
       console.error(error)
     }
   }
-  async function conversionsAPISubscribe(
-    em,
-    country,
-    currency,
-    value,
-    sessionID
-  ) {
+  async function conversionsAPISubscribe(em, fn, currency, value, sessionID) {
     const cookies = document.cookie.split(";")
     let fbp = "none"
     let fbc = "none"
@@ -140,10 +135,10 @@ const SuccessMCPage = () => {
     }
     try {
       const email = await getSHA256Hash(em)
-      const thecountry = await getSHA256Hash(country)
+      const firstName = await getSHA256Hash(fn)
       const thevalue = value < 1 ? 9.0 : Number(value.toString().slice(0, -2))
       console.log("TheValue: ", thevalue)
-      const res = await fetch("/.netlify/functions/conversions-api", {
+      const res = await fetch("/.netlify/functions/conversions-api-mc", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +148,7 @@ const SuccessMCPage = () => {
           fbp,
           fbc,
           email,
-          thecountry,
+          firstName,
           currency,
           thevalue,
           sessionID,
@@ -164,6 +159,36 @@ const SuccessMCPage = () => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
+    }
+  }
+
+  async function doCAPI(name, email) {
+    let sessionID = uuidv4();
+    const res1 = await conversionsAPI(
+      email.toLowerCase(),
+      name.toLowerCase(),
+      "USD",
+      9.0,
+      sessionID
+    )
+    const res2 = await conversionsAPISubscribe(
+      email.toLowerCase(),
+      name.toLowerCase(),
+      "USD",
+      9.0,
+      sessionID
+    )
+    if (isBrowser && window.fbq) {
+      window.fbq(
+        "track",
+        "Purchase",
+        {
+          value: 9.0,
+          currency: "USD",
+        },
+        { eventID: sessionID }
+      )
+      window.fbq("track", "Subscribe", {}, { eventID: sessionID })
     }
   }
 
@@ -259,6 +284,7 @@ const SuccessMCPage = () => {
 
     localStorage.removeItem("phelpsieCart")
     setCartItemsFromLS([])
+    doCAPI(str_out, str_out2);
   }, [])
 
   return (

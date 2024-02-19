@@ -11,6 +11,7 @@ import { useSiteContext } from "../hooks/use-site-context"
 
 import { allProducts } from "../data/all-products"
 import { v4 as uuidv4 } from "uuid"
+import { navigate } from "gatsby"
 
 const MidiCratePage = () => {
   const [currentSongIndex, setCurrentSongIndex] = React.useState(-1)
@@ -155,7 +156,7 @@ const MidiCratePage = () => {
     if (isBrowser && window.fbq)
       window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
-    setIsMidiCratePopupOpen(true)
+    navigate("/midi-crate-checkout")
   }
 
   React.useEffect(() => {

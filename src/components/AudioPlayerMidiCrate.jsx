@@ -9,6 +9,7 @@ import VolumeInput from "./VolumeInput"
 import { useSiteContext } from "../hooks/use-site-context"
 import { allProducts } from "../data/all-products"
 import { v4 as uuidv4 } from 'uuid';
+import { navigate } from "gatsby"
 
 function formatDurationDisplay(duration) {
   const min = Math.floor(duration / 60)
@@ -116,7 +117,7 @@ export default function AudioPlayerMidiCrate({
     if (isBrowser && window.fbq)
       window.fbq("track", "AddToCart", {}, { eventID: eventID })
 
-    setIsMidiCratePopupOpen(true)
+    navigate("/midi-crate-checkout")
   }
   // This is necessary because localStorage isn't available at build time
   React.useEffect(() => {
