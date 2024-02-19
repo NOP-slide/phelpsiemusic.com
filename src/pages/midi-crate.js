@@ -301,7 +301,7 @@ const MidiCratePage = () => {
               <StaticImage
                 quality={95}
                 src="../images/products/midi-crate-art.jpg"
-                placeholder="none"
+                placeholder="blurred"
                 alt=""
                 className={` w-full h-48 sm:h-64 md:h-72 lg:h-[22rem]`}
               />

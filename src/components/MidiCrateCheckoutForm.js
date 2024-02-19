@@ -89,7 +89,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto mt-48">
+    <form onSubmit={handleSubmit} className="">
       <PaymentElement
         options={{
           layout: {
@@ -98,13 +98,24 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
           },
         }}
       />
-      <button
+      <p className="-mt-4 text-sm text-center text-gray-400">
+        Try it risk-free. Cancel anytime with 1 click
+      </p>
+      {/* <button
         disabled={!stripe || isLoading}
         className="w-full mx-auto mt-4 text-4xl text-white"
       >
         Submit
+      </button> */}
+      <button
+        className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-24 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
+          isLoading ? "checkout-loading" : ""
+        }`}
+        disabled={!stripe || isLoading}
+      >
+        FINISH
       </button>
-      {errorMessage && <div className="text-xl text-white">{errorMessage}</div>}
+      {errorMessage && <div style={{color: "rgb(254, 135, 161)"}} className="mt-4 text-center">Error: {errorMessage}</div>}
     </form>
   )
 }

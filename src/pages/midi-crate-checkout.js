@@ -43,6 +43,16 @@ const MidiCrateCheckoutPage = () => {
     appearance: {
       theme: "night",
       labels: "floating",
+      variables: {
+        colorPrimary: 'rgb(45 212 191)',
+      },
+      rules: {
+        ".TermsText": {
+          color: "rgb(17 24 39)",
+          fontSize: "0",
+        },
+        // See all supported class names and selector syntax below
+      },
       /*...*/
     },
   }
@@ -180,59 +190,72 @@ const MidiCrateCheckoutPage = () => {
           </h2>
         </div>
       </div>
-      <button onClick={() => createCustomer()} className="mt-12 text-3xl text-white ">
-        Create customer
-      </button>
-      <Elements stripe={stripePromise} options={options}>
-        <MidiCrateCheckoutForm
-          customerId={customerId}
-          customerName={customerName}
-          customerEmail={customerEmail}
-        />
-      </Elements>
 
       <div className="w-full pt-4 pb-20 md:pt-12 bg-brand-dark">
         <div className="flex flex-col w-full bg-brand-dark mx-auto max-w-[22rem] sm:max-w-xl md:max-w-2xl lg:max-w-[60rem] xl:max-w-5xl">
-          {/* <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
-            WHO I'VE WORKED WITH
-          </h3>
-          <div className="flex mt-8 lg:mt-16">
-            <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
-                CuBeatz
-              </p>
-              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
-                (Travis Scott, Drake, Nicki Minaj)
-              </p>
+          <div className="flex flex-wrap justify-around">
+            <div className='w-full md:w-auto'>
+              <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
+                <span id="pricingsection">Here's What You Get:</span>
+              </h3>
+              <div className="px-2 mt-2 leading-10 text-white sm:mt-6 sm:px-0 whitespace-nowrap">
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  180 MIDI Chord Progressions Every Month
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  180 MIDI Arpeggios Every Month
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  BONUS - Free Hip-Hop Loop Kit
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  BONUS - Access To My Discord Community
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  100% Royalty Free
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  Works With Any Audio Software
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  Compatible With Both Mac & PC
+                </p>
+                <p className="font-bold">
+                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                  No Commitments - Cancel Anytime
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
-                Ronny J
-              </p>
-              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
-                (Eminem, Kanye West)
-              </p>
+            <div className='w-full mt-4 md:mt-0 md:w-auto'>
+              <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
+                <span id="pricingsection">Complete Your Order:</span>
+              </h3>
+              <div className="">
+                <p className='mt-2 mb-4 font-bold leading-10 text-center text-white sm:mt-6'>First Month Free, Then Only $9/Month</p>
+                <Elements stripe={stripePromise} options={options}>
+                  <MidiCrateCheckoutForm
+                    customerId={customerId}
+                    customerName={customerName}
+                    customerEmail={customerEmail}
+                  />
+                </Elements>
+              </div>
             </div>
           </div>
-          <div className="flex mt-8 lg:mt-16">
-            <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
-                Twysted Genius
-              </p>
-              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
-                (Lil Baby, Future, Moneybagg Yo)
-              </p>
-            </div>
-            <div className="flex flex-col items-center w-1/2">
-              <p className="text-xl italic font-bold text-gray-200 lg:text-3xl">
-                Kid Hazel
-              </p>
-              <p className="mt-4 text-sm font-semibold text-center text-gray-200 lg:text-lg">
-                (21 Savage, Coi Leray)
-              </p>
-            </div>
-          </div> */}
 
+          {/* <button
+            onClick={() => createCustomer()}
+            className="text-3xl text-white mt-96 "
+          >
+            Create customer
+          </button> */}
           <h3 className="pt-12 mt-12 text-2xl font-bold tracking-wide text-center border-t-2 border-gray-600 sm:tracking-normal lg:text-4xl text-brand-teal">
             WHAT THE PROS SAY
           </h3>
