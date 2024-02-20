@@ -23,7 +23,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js"
 
 const stripePromise = loadStripe(
-  "pk_live_51MplK1AHwqgwuHo39JVgHbX84FyoQbDjUIUeLvTB93pug2ZDAPepzVow5DPAadqyqt6P4M3AgHSF0ON6FrClPaQS00bhUrO46Z"
+  "pk_test_51MplK1AHwqgwuHo3WGTdPMNEuleddIAg8UbILfyuEMmMUzKJTE0Pj4zj2zGyBJWYalkI60kQnCivUYfe92P6Sp9300a20YnF2m"
 )
 
 const MidiCrateCheckoutPage = () => {
@@ -38,6 +38,7 @@ const MidiCrateCheckoutPage = () => {
     React.useState(false)
   const [customerName, setCustomerName] = React.useState("")
   const [customerEmail, setCustomerEmail] = React.useState("")
+  const [clientSecret, setClientSecret] = React.useState("")
   const [createdName, setCreatedName] = React.useState("")
   const [createdEmail, setCreatedEmail] = React.useState("")
   const [isFormNameError, setIsFormNameError] = React.useState(false)
@@ -49,8 +50,6 @@ const MidiCrateCheckoutPage = () => {
   // console.log(currentSong);
 
   const options = {
-    mode: "subscription",
-    amount: 0,
     currency: "usd",
     loader: "never",
     // Fully customizable with appearance API.
@@ -196,6 +195,20 @@ const MidiCrateCheckoutPage = () => {
       const data = await res.json()
       setCustomerId(data.customer.id)
       const res2 = await addAbandonedCart()
+      const res3 = await fetch(
+        "/.netlify/functions/stripe-create-subscription",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: data.customer.id,
+          }),
+        }
+      )
+      const { type, clientSecret } = await res3.json()
+      setClientSecret(clientSecret)
     }
 
     if (!hasFiredInitiateCheckout) {
@@ -393,13 +406,18 @@ const MidiCrateCheckoutPage = () => {
                         <p className="mt-4 mb-4 font-bold leading-10 text-center text-white sm:mt-6">
                           First Month Free, Then Only $9/Month
                         </p>
-                        <Elements stripe={stripePromise} options={options}>
-                          <MidiCrateCheckoutForm
-                            customerId={customerId}
-                            customerName={customerName}
-                            customerEmail={customerEmail}
-                          />
-                        </Elements>
+                        {clientSecret && (
+                          <Elements
+                            stripe={stripePromise}
+                            options={{ clientSecret, ...options }}
+                          >
+                            <MidiCrateCheckoutForm
+                              customerId={customerId}
+                              customerName={customerName}
+                              customerEmail={customerEmail}
+                            />
+                          </Elements>
+                        )}
                       </div>
                     </Tab.Panel>
                   </Tab.Panels>

@@ -39,20 +39,8 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
       handleError(submitError)
       return
     }
-
-    // Create the subscription
-    const res = await fetch("/.netlify/functions/stripe-create-subscription", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: customerId,
-      }),
-    })
-    const { type, clientSecret } = await res.json()
-    const confirmIntent =
-      type === "setup" ? stripe.confirmSetup : stripe.confirmPayment
+    
+    const confirmIntent = stripe.confirmSetup
 
     // Confirm the Intent using the details collected by the Payment Element
     let temp1 = ""
@@ -73,7 +61,6 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
 
     const { error } = await confirmIntent({
       elements,
-      clientSecret,
       confirmParams: {
         return_url: `https://www.phelpsiemusic.com/success-mc?vr1=${temp2}&vr2=${temp4}`,
       },
