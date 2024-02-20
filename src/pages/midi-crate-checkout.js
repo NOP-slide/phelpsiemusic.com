@@ -23,7 +23,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js"
 
 const stripePromise = loadStripe(
-  "pk_test_51MplK1AHwqgwuHo3WGTdPMNEuleddIAg8UbILfyuEMmMUzKJTE0Pj4zj2zGyBJWYalkI60kQnCivUYfe92P6Sp9300a20YnF2m"
+  "pk_live_51MplK1AHwqgwuHo39JVgHbX84FyoQbDjUIUeLvTB93pug2ZDAPepzVow5DPAadqyqt6P4M3AgHSF0ON6FrClPaQS00bhUrO46Z"
 )
 
 const MidiCrateCheckoutPage = () => {
