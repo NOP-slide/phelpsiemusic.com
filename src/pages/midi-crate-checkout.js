@@ -393,6 +393,16 @@ const MidiCrateCheckoutPage = () => {
                         <p className="mt-4 mb-4 font-bold leading-10 text-center text-white sm:mt-6">
                           First Month Free, Then Only $9/Month
                         </p>
+                        <div className="flex justify-center">
+                          <div>
+                            <TfiLock className="w-8 h-6 transform -translate-y-0.5 text-brand-teal" />
+                          </div>
+                          <div>
+                            <p className="mb-4 font-bold text-center text-brand-teal">
+                              Secure Checkout
+                            </p>
+                          </div>
+                        </div>
                         <Elements stripe={stripePromise} options={options}>
                           <MidiCrateCheckoutForm
                             customerId={customerId}
