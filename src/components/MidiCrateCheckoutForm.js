@@ -103,6 +103,11 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
             type: "tabs",
             defaultCollapsed: false,
           },
+          defaultValues: {
+            billingDetails: {
+              email: customerEmail,
+            },
+          },
         }}
       />
       <p className={`-mt-4 text-sm text-center text-gray-400 `}>
