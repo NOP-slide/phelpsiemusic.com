@@ -2,7 +2,6 @@ import * as React from "react"
 import { useSiteContext } from "../hooks/use-site-context"
 import {
   Elements,
-  LinkAuthenticationElement,
   PaymentElement,
   useStripe,
   useElements,
@@ -97,7 +96,6 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
       {isStripeFormLoading && (
         <CgSpinner className="m-6 mx-auto w-36 h-36 text-brand-teal spinner" />
       )}
-      <LinkAuthenticationElement />
       <PaymentElement
         onReady={() => setIsStripeFormLoading(false)}
         options={{
