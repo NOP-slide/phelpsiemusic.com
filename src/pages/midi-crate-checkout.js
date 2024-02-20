@@ -53,6 +53,7 @@ const MidiCrateCheckoutPage = () => {
     amount: 0,
     currency: "usd",
     loader: "never",
+    setupFutureUsage: "off_session",
     // Fully customizable with appearance API.
     appearance: {
       theme: "night",
