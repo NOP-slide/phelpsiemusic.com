@@ -85,8 +85,11 @@ const SuccessMCPage = () => {
     try {
       const email = await getSHA256Hash(em)
       const firstName = await getSHA256Hash(fn)
-      const thevalue = value < 1 ? 9.0 : Number(value.toString().slice(0, -2))
+      console.log("FirstName = ", fn)
+      console.log("Email = ", em)
+      const thevalue = 9.0
       console.log("TheValue: ", thevalue)
+      console.log("SessionID: ", sessionID)
       const res = await fetch("/.netlify/functions/conversions-api-mc", {
         method: "POST",
         headers: {
@@ -136,7 +139,7 @@ const SuccessMCPage = () => {
     try {
       const email = await getSHA256Hash(em)
       const firstName = await getSHA256Hash(fn)
-      const thevalue = value < 1 ? 9.0 : Number(value.toString().slice(0, -2))
+      const thevalue = 9.0
       console.log("TheValue: ", thevalue)
       const res = await fetch("/.netlify/functions/conversions-api-mc", {
         method: "POST",
@@ -164,6 +167,7 @@ const SuccessMCPage = () => {
 
   async function doCAPI(name, email) {
     let sessionID = uuidv4();
+    console.log("event id: ", sessionID)
     const res1 = await conversionsAPI(
       email.toLowerCase(),
       name.toLowerCase(),

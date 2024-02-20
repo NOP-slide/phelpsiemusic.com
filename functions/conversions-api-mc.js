@@ -77,6 +77,7 @@ async function conversionsAPI(
   let purchaseBody
 
   if (eventName === "Purchase") {
+    console.log("EVENT ID: ", eventID)
     purchaseBody = {
       data: [
         {
@@ -137,7 +138,7 @@ async function conversionsAPI(
 }
 
 exports.handler = async event => {
-  console.log(event.body)
+  console.log("ASDF: ", event.body)
   const {
     eventType,
     firstName,
@@ -146,9 +147,12 @@ exports.handler = async event => {
     fbc,
     currency,
     thevalue,
-    eventID,
+    sessionID,
     content_name,
   } = JSON.parse(event.body)
+
+  console.log("sessionID 123: ", sessionID)
+
 
   const result = await conversionsAPI(
     eventType,
@@ -161,7 +165,7 @@ exports.handler = async event => {
     fbc,
     currency,
     thevalue,
-    eventID,
+    sessionID,
     content_name
   )
   return {
