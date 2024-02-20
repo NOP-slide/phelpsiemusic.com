@@ -105,7 +105,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
           },
           defaultValues: {
             billingDetails: {
-              email: "seadoo14@gmail.com",
+              email: customerEmail,
             },
           },
         }}
