@@ -608,5 +608,6 @@ const MidiCrateCheckoutPage = () => {
   )
 }
 
+export const Head = () => <Seo title="MIDI Crate Checkout" />
 
 export default MidiCrateCheckoutPage
