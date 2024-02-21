@@ -98,7 +98,7 @@ const MidiCrateCheckoutPage = () => {
         num_in = unescape("%" + num_in.toString(16))
         str_out += num_in
       }
-      const email = params.get("v2")
+      const email = params.get("amp;v2")
       let str_out2 = ""
 
       let num_out2 = email
