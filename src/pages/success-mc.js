@@ -20,6 +20,7 @@ const SuccessMCPage = () => {
   const [isHoveringProd2, setIsHoveringProd2] = React.useState(false)
   const [isHoveringProd3, setIsHoveringProd3] = React.useState(false)
   const [paymentStatus, setPaymentStatus] = React.useState(null)
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const currentSong = allProducts[currentSongIndex]
 
@@ -194,72 +195,18 @@ const SuccessMCPage = () => {
       )
       window.fbq("track", "Subscribe", {}, { eventID: sessionID })
     }
-  }
-
-  async function stripeGetCustomerInfo(sessionID) {
-    try {
-      const res = await fetch("/.netlify/functions/stripe-successpage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sessionID: sessionID,
-        }),
+    if (isBrowser && window.gtag) {
+      gtag("set", "user_data", {
+        email: email.toLowerCase(),
       })
-      const data = await res.json()
-      console.log("Return from Get Customer Info =", data)
-
-      if (localStorage.getItem("phelpsieSession") !== sessionID) {
-        const res1 = await conversionsAPI(
-          data.customer.email.toLowerCase(),
-          data.customer.address.country.toLowerCase(),
-          data.session.currency.toUpperCase(),
-          data.session.amount_total,
-          sessionID
-        )
-        const res2 = await conversionsAPISubscribe(
-          data.customer.email.toLowerCase(),
-          data.customer.address.country.toLowerCase(),
-          data.session.currency.toUpperCase(),
-          data.session.amount_total,
-          sessionID
-        )
-        if (isBrowser && window.fbq)
-          window.fbq(
-            "track",
-            "Purchase",
-            {
-              value:
-                data.session.amount_total < 1
-                  ? 9.0
-                  : Number(data.session.amount_total.toString().slice(0, -2)),
-              currency: data.session.currency.toUpperCase(),
-            },
-            { eventID: sessionID }
-          )
-        window.fbq("track", "Subscribe", {}, { eventID: sessionID })
-        if (isBrowser && window.gtag) {
-          gtag("set", "user_data", {
-            email: data.customer.email.toLowerCase(),
-          })
-          gtag("event", "conversion", {
-            send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
-            value: data.session.amount_total < 1 ? 9.00 : Number(data.session.amount_total.toString().slice(0, -2)),
-            currency: data.session.currency.toUpperCase(),
-            transaction_id: "",
-          })
-        }
-      } else {
-        console.log("duplicate session conversion prevented")
-      }
-      localStorage.setItem("phelpsieSession", sessionID)
-      setCustomerInfo(data.customer)
-      setSessionInfo(data.session)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
+      gtag("event", "conversion", {
+        send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
+        value: 9.00,
+        currency: "USD",
+        transaction_id: "",
+      })
     }
+    setIsLoading(false);
   }
 
   React.useEffect(() => {
@@ -286,8 +233,6 @@ const SuccessMCPage = () => {
     }
     setCustomerInfo({ name: str_out, email: str_out2 })
 
-    localStorage.removeItem("phelpsieCart")
-    setCartItemsFromLS([])
     doCAPI(str_out, str_out2);
   }, [])
 
@@ -298,7 +243,7 @@ const SuccessMCPage = () => {
           sessionInfo.mode !== "subscription" ? "my-auto" : "mt-2"
         } sm:max-w-md md:max-w-3xl`}
       >
-        {!customerInfo.name ? (
+        {isLoading ? (
           <div>
             <h2 className="mx-auto text-3xl font-bold text-center text-white sm:text-4xl">
               Loading Order Details

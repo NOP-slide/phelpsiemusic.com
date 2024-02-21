@@ -86,6 +86,34 @@ const MidiCrateCheckoutPage = () => {
     playerZIndexBoost,
   } = useSiteContext()
 
+  React.useEffect(() => {
+    if (isBrowser && window.location.search.includes("v1=")) {
+      const params = new URL(document.location).searchParams
+      const name = params.get("v1")
+      let str_out = ""
+
+      let num_out = name
+      for (let i = 0; i < num_out.length; i += 2) {
+        let num_in = parseInt(num_out.substr(i, [2])) + 23
+        num_in = unescape("%" + num_in.toString(16))
+        str_out += num_in
+      }
+      const email = params.get("v2")
+      let str_out2 = ""
+
+      let num_out2 = email
+      for (let i = 0; i < num_out2.length; i += 2) {
+        let num_in2 = parseInt(num_out2.substr(i, [2])) + 23
+        num_in2 = unescape("%" + num_in2.toString(16))
+        str_out2 += num_in2
+      }
+      setCustomerName(str_out);
+      setCreatedName(str_out);
+      setCustomerEmail(str_out2);
+      setCreatedEmail(str_out2);
+    }
+  }, [])
+
   async function conversionsAPI(eventID, eventType) {
     const cookies = document.cookie.split(";")
     let fbp = "none"
@@ -131,6 +159,22 @@ const MidiCrateCheckoutPage = () => {
   }
 
   async function addAbandonedCart() {
+    let temp1 = ""
+    let temp2 = ""
+
+    temp1 = escape(customerName)
+    for (let i = 0; i < temp1.length; i++) {
+      temp2 += temp1.charCodeAt(i) - 23
+    }
+
+    let temp3 = ""
+    let temp4 = ""
+
+    temp3 = escape(customerEmail)
+    for (let i = 0; i < temp3.length; i++) {
+      temp4 += temp3.charCodeAt(i) - 23
+    }
+
     try {
       const res = await fetch(
         "https://connect.mailerlite.com/api/subscribers",
@@ -146,7 +190,7 @@ const MidiCrateCheckoutPage = () => {
             email: customerEmail,
             fields: {
               name: customerName,
-              recovery_url: "https://www.phelpsiemusic.com/midi-crate-checkout",
+              recovery_url: `https://www.phelpsiemusic.com/midi-crate-checkout?v1=${temp2}&v2=${temp4}`,
             },
             groups: ["113629656536582040"],
           }),
@@ -564,6 +608,5 @@ const MidiCrateCheckoutPage = () => {
   )
 }
 
-export const Head = () => <Seo title="MIDI Crate Checkout" />
 
 export default MidiCrateCheckoutPage
