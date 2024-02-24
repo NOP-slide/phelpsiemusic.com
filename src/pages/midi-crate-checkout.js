@@ -107,10 +107,12 @@ const MidiCrateCheckoutPage = () => {
         num_in2 = unescape("%" + num_in2.toString(16))
         str_out2 += num_in2
       }
-      setCustomerName(str_out);
-      setCreatedName(str_out);
-      setCustomerEmail(str_out2);
-      setCreatedEmail(str_out2);
+      setCustomerName(unescape(str_out))
+      setCreatedName(unescape(str_out))
+      setCustomerEmail(unescape(str_out2))
+      setCreatedEmail(unescape(str_out2))
+      const custId = params.get("amp;v3")
+      setCustomerId(unescape(custId))
     }
   }, [])
 
@@ -158,7 +160,7 @@ const MidiCrateCheckoutPage = () => {
     }
   }
 
-  async function addAbandonedCart() {
+  async function addAbandonedCart(id) {
     let temp1 = ""
     let temp2 = ""
 
@@ -190,7 +192,7 @@ const MidiCrateCheckoutPage = () => {
             email: customerEmail,
             fields: {
               name: customerName,
-              recovery_url: `https://www.phelpsiemusic.com/midi-crate-checkout?v1=${temp2}&v2=${temp4}`,
+              recovery_url: `https://www.phelpsiemusic.com/midi-crate-checkout?v1=${temp2}&v2=${temp4}&v3=${id}`,
             },
             groups: ["113629656536582040"],
           }),
@@ -239,7 +241,7 @@ const MidiCrateCheckoutPage = () => {
       })
       const data = await res.json()
       setCustomerId(data.customer.id)
-      const res2 = await addAbandonedCart()
+      const res2 = await addAbandonedCart(data.customer.id)
     }
 
     if (!hasFiredInitiateCheckout) {
