@@ -87,7 +87,12 @@ const MidiCrateCheckoutPage = () => {
   } = useSiteContext()
 
   React.useEffect(() => {
-    if (isBrowser && window.location.search.includes("v1=")) {
+    if (
+      isBrowser &&
+      window.location.search.includes("v1=") &&
+      window.location.search.includes("amp;v2=") &&
+      window.location.search.includes("amp;v3=")
+    ) {
       const params = new URL(document.location).searchParams
       const name = params.get("v1")
       let str_out = ""
