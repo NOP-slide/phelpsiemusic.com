@@ -100,7 +100,8 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
       <PaymentElement
         onReady={() => {
           setIsStripeFormLoading(false)
-          if (!isUrgencyBannerOpen) setIsUrgencyBannerOpen(true)
+          if (!isUrgencyBannerOpen)
+            setTimeout(() => setIsUrgencyBannerOpen(true), 450)
         }}
         options={{
           layout: {

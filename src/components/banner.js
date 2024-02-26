@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <div
       id="thebanner"
-      className={`banner-slidein sticky top-0 z-10 w-full py-2 text-sm font-bold text-center text-white bg-red-700 md:text-lg`}
+      className={`banner-slidein sticky top-0 z-10 w-full pt-2 pb-1.5 md:pb-2 text-sm font-bold text-center text-white bg-red-700 md:text-lg`}
     >
       <p className="">
         Special Launch Offer: First Month FREE.
