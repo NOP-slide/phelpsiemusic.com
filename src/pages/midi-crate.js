@@ -6,6 +6,13 @@ import AudioPlayerMidiCrate from "../components/AudioPlayerMidiCrate"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 import { IoStarSharp } from "react-icons/io5"
 import { FaDiamond } from "react-icons/fa6"
+import { FaArrowCircleUp } from "react-icons/fa";
+import { FaArrowTurnUp } from "react-icons/fa6"
+import { PiArrowBendRightUpFill } from "react-icons/pi";
+import { PiArrowBendRightUpBold } from "react-icons/pi";
+
+
+
 import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
 
@@ -317,6 +324,10 @@ const MidiCratePage = () => {
               >
                 <MdPlayArrow className="w-16 h-14 md:w-24 md:h-20 bg-brand-teal checkout-loading" />
               </button>
+              <div className="absolute bottom-0 left-0 w-full py-2 text-sm font-bold text-center text-white select-none md:text-lg bg-teal-700/80">
+                Play Video
+                <FaArrowTurnUp className="inline-block ml-1 -translate-y-0.5 md:-translate-y-1" />
+              </div>
             </div>
           </div>
           <div className="lg:block hidden border-l border-white h-48 sm:h-64 lg:h-[22rem]"></div>
