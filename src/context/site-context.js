@@ -2,6 +2,8 @@ import PropTypes from "prop-types"
 import React, { createContext, useState } from "react"
 
 const SiteContext = createContext({
+  isUrgencyBannerOpen: false,
+  setIsUrgencyBannerOpen: ()  => {},
   isIOS: true,
   setIsIOS: () => {},
   isEmailCollectorOpen: false,
@@ -34,6 +36,7 @@ const SiteContext = createContext({
 
 function SiteProvider({ children }) {
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isUrgencyBannerOpen, setIsUrgencyBannerOpen] = useState(false)
   const [isVideoPlayerOpen, setIsVideoPlayerOpen] = useState(false)
   const [videoPlayerSrc, setVideoPlayerSrc] = useState('')
   const [isCrossSellModalOpen, setIsCrossSellModalOpen] = useState(false)
@@ -62,6 +65,8 @@ function SiteProvider({ children }) {
   return (
     <SiteContext.Provider
       value={{
+        isUrgencyBannerOpen,
+        setIsUrgencyBannerOpen,
         isEmailCollectorOpen,
         setIsEmailCollectorOpen,
         isMidiCratePopupOpen,

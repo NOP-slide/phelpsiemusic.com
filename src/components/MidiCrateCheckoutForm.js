@@ -10,6 +10,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import { CgSpinner } from "react-icons/cg"
 
 const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
+  const { isUrgencyBannerOpen, setIsUrgencyBannerOpen } = useSiteContext()
   const [isLoading, setIsLoading] = React.useState(false)
   const [isStripeFormLoading, setIsStripeFormLoading] = React.useState(true)
   const stripe = useStripe()
@@ -97,7 +98,10 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         <CgSpinner className="m-6 mx-auto w-36 h-36 text-brand-teal spinner" />
       )}
       <PaymentElement
-        onReady={() => setIsStripeFormLoading(false)}
+        onReady={() => {
+          setIsStripeFormLoading(false)
+          if (!isUrgencyBannerOpen) setIsUrgencyBannerOpen(true)
+        }}
         options={{
           layout: {
             type: "tabs",

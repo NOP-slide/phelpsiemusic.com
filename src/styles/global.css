@@ -125,6 +125,19 @@
   animation: modal-slideout 0.4s ease-in-out;
 }
 
+.banner-slidein {
+  animation: banner-slidein 0.4s ease-in-out;
+}
+
+@keyframes banner-slidein {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
 @keyframes modal-fadein {
   0% {
     background: rgba(0, 0, 0, 0);

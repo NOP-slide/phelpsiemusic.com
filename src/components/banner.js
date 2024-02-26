@@ -1,10 +1,19 @@
 import * as React from "react"
 import { useSiteContext } from "../hooks/use-site-context"
+import { MdOutlineTimer } from "react-icons/md"
 
 const Banner = () => {
   return (
-    <div id="thebanner" className={`fixed top-0 z-10 w-full py-2 text-xs font-bold text-center text-white bg-red-700 md:text-lg`}>
-      <p>Get 10% off your first order! Use code WELCOME at checkout</p>
+    <div
+      id="thebanner"
+      className={`banner-slidein sticky top-0 z-10 w-full py-2 text-sm font-bold text-center text-white bg-red-700 md:text-lg`}
+    >
+      <p className="">
+        Special Launch Offer: First Month FREE.
+        <br />
+        Get It Before It's Gone Forever
+        <MdOutlineTimer className="ml-1 inline-block w-5 h-5 md:w-6 md:h-6 transform -translate-y-0.5" />
+      </p>
     </div>
   )
 }

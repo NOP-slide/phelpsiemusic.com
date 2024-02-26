@@ -5,11 +5,11 @@ import { HiOutlineShoppingCart } from "react-icons/hi"
 import { useSiteContext } from "../hooks/use-site-context"
 
 const Header = ({ hasBanner, hideCart }) => {
-  console.log(hasBanner)
+  console.log("HASBANNER: ",hasBanner)
   const { setIsCartOpen, cartItemsFromLS } = useSiteContext()
 
   return (
-    <header className={`${hasBanner ? "mt-[32px] md:mt-[44px]" : ""}`}>
+    <header>
         <div className={`w-full bg-brand-dark py-4 px-6 lg:px-6`}>
           <div className="relative">
             <div className="relative flex items-center justify-between w-full">

@@ -84,6 +84,7 @@ const MidiCrateCheckoutPage = () => {
     setCartItemsFromLS,
     setIsMidiCratePopupOpen,
     playerZIndexBoost,
+    isUrgencyBannerOpen,
   } = useSiteContext()
 
   React.useEffect(() => {
@@ -265,7 +266,12 @@ const MidiCrateCheckoutPage = () => {
   }
 
   return (
-    <Layout isMidiCrateCheckout hideCart isPlayerOpen={currentSongIndex !== -1}>
+    <Layout
+      hasBanner={isUrgencyBannerOpen}
+      isMidiCrateCheckout
+      hideCart
+      isPlayerOpen={currentSongIndex !== -1}
+    >
       <div className="relative">
         <StaticImage
           quality={95}
