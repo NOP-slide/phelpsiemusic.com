@@ -301,13 +301,13 @@ const MidiCratePage = () => {
             >
               <StaticImage
                 quality={95}
-                src="../images/products/midi-crate-art.jpg"
+                src="../images/products/midi-crate-art-vidoutline.jpg"
                 placeholder="blurred"
                 alt=""
                 className={` w-full h-48 sm:h-64 md:h-72 lg:h-[22rem]`}
               />
               <button
-                className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 top-1/2 left-1/2"
+                className="absolute text-white duration-300 ease-in-out transform -translate-x-1/2 -translate-y-1/2 opacity-80 hover:scale-110 top-1/2 left-1/2"
                 type="button"
                 // onClick={() => {
                 //   setIsPaused(true)
