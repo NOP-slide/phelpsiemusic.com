@@ -38,56 +38,6 @@ const ExitIntentModal = () => {
     setIsUserAFK,
   } = useSiteContext()
 
-  // Get cart contents
-  let cartItems = []
-
-  console.log("CART: ", cartItemsFromLS)
-
-  if (cartItemsFromLS.length > 0) {
-    JSON.parse(cartItemsFromLS).items.map(item =>
-      cartItems.push(
-        allProducts[allProducts.findIndex(e => e.prodCode === item)]
-      )
-    )
-  }
-
-  const doExitIntentAction = () => {
-    if (isValidEmail) {
-      exitIntentAction()
-    } else {
-      setIsInputBlinking(true)
-      setTimeout(() => setIsInputBlinking(false), 700)
-    }
-  }
-
-  async function exitIntentAction() {
-    setIsCheckoutLoading(true)
-
-    let finalCart = {}
-    finalCart.cartItems = cartItems
-    finalCart.email = emailAddress
-    console.log("Final cart: ", finalCart)
-
-    try {
-      const res = await fetch("/.netlify/functions/exit-intent-action", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(finalCart),
-      })
-      const data = await res.json()
-      console.log("Return from netlify functions =", data)
-      setIsCheckoutLoading(false)
-      setModalOpen(false)
-      setTimeout(() => setIsExitIntentModalOpen(false), 350)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-      setIsCheckoutLoading(false)
-    }
-  }
-
   return (
     <div
       className={`cart-modal-container transform ${
@@ -95,7 +45,7 @@ const ExitIntentModal = () => {
       }`}
     >
       <div
-        className={`fixed h-1/2 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl top-6 -translate-y-0 md:top-1/3 left-1/2 -translate-x-1/2 md:-translate-y-1/3 bg-brand-dark ${
+        className={`fixed pb-6 md:pb-12 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl top-6 -translate-y-0 md:top-1/3 left-1/2 -translate-x-1/2 md:-translate-y-1/3 bg-brand-dark ${
           modalOpen ? "cross-sell-modal-fadein" : "cross-sell-modal-fadeout"
         }`}
       >
@@ -109,41 +59,42 @@ const ExitIntentModal = () => {
           />
           <div className="flex items-center justify-center w-full h-16 md:h-24 crossSellBackground">
             <h2 className="max-w-[16rem] sm:max-w-sm text-xl font-bold text-center text-white md:text-2xl md:max-w-xl">
-              {isUserAFK ? "Are You Still There?" : "Just Before You Go"}
+              {isUserAFK ? "Are You Still There?" : "Don't Miss Out!"}
             </h2>
           </div>
-          <p className="px-2 mt-6 text-xl font-bold text-center md:px-0 md:mt-12 md:text-3xl text-brand-teal">
-            A FREE loop for you, as a thank you{" "}
+          <div className="px-2 mt-6 text-xl font-bold text-center md:px-0 md:mt-8 md:text-3xl text-brand-teal">
+            <span className="">Today's Total: $0</span>
+            <br className="" />
             <br className="hidden md:block" />
-            from Phelpsie Music ❤
-          </p>
-          <p className="mt-4 text-lg font-semibold text-center text-white md:mt-8 md:text-xl">
-            Your email address:
-          </p>
-          <input
-            onChange={e => {
-              setEmailAddress(e.target.value)
-              setIsValidEmail(
-                e.target.value.match(
-                  /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
-                )
-              )
-            }}
-            onKeyDown={e => e.key === "Enter" && doExitIntentAction()}
-            autoFocus
-            className={`transition ${
-              isInputBlinking && "invalid-email"
-            } flex justify-center appearance-none w-64 md:w-72 lg:w-1/3 mx-auto mt-2 text-lg font-semibold text-center bg-white rounded-full outline-none text-brand-dark focus:ring-8 focus:ring-blue-800`}
-            type="email"
-          />
+            <div className="mt-4 text-white md:mt-0">
+              Are you sure you don't want
+              <br />
+              your 360 free MIDI files?
+            </div>
+          </div>
           <button
             className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-8 md:mt-12 text-base md:text-lg text-white font-bold rounded-full ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
             type="button"
-            onClick={() => doExitIntentAction()}
+            onClick={() => {
+              setModalOpen(false)
+              setTimeout(() => setIsExitIntentModalOpen(false), 350)
+            }}
           >
-            SEND MY FREE LOOP
+            YES, I WANT THEM
+          </button>
+          <button
+            className={`bg-red-900 whitespace-nowrap mx-auto flex justify-center px-12 py-2 mt-4 md:mt-6 text-base md:text-lg text-white font-bold rounded-full ${
+              isCheckoutLoading ? "checkout-loading" : ""
+            }`}
+            type="button"
+            onClick={() => {
+              setModalOpen(false)
+              setTimeout(() => setIsExitIntentModalOpen(false), 350)
+            }}
+          >
+            NO THANK YOU
           </button>
         </div>
       </div>

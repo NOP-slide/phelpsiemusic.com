@@ -89,7 +89,7 @@ const Layout = ({
         {isCrossSellModalOpen && <CrossSellModal />}
         {isEmailCollectorOpen && <EmailCollector />}
         {isMidiCratePopupOpen && <MidiCratePopup />}
-        {/* {isExitIntentModalOpen && <ExitIntentModal />} */}
+        {isExitIntentModalOpen && <ExitIntentModal />}
         <Footer
           isMidiCrateCheckout={isMidiCrateCheckout}
           isPlayerOpen={isCrossSellModalOpen ? playerZIndexBoost : isPlayerOpen}

@@ -85,6 +85,7 @@ const MidiCrateCheckoutPage = () => {
     setIsMidiCratePopupOpen,
     playerZIndexBoost,
     isUrgencyBannerOpen,
+    setIsExitIntentModalOpen,
   } = useSiteContext()
 
   React.useEffect(() => {
@@ -119,6 +120,24 @@ const MidiCrateCheckoutPage = () => {
       setCreatedEmail(unescape(str_out2))
       const custId = params.get("amp;v3")
       setCustomerId(unescape(custId))
+    }
+
+    if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
+      window.history.replaceState(
+        null,
+        document.title,
+        window.location.pathname + "#exit"
+      )
+      window.history.pushState(null, document.title, window.location.pathname)
+
+      window.addEventListener("popstate", event => {
+        console.log(event)
+        if (window.location.hash === "#exit") {
+          localStorage.setItem("phelpsiePopup", true)
+          // localStorage.removeItem("phelpsiePopup");
+          setIsExitIntentModalOpen(true)
+        }
+      })
     }
   }, [])
 
