@@ -132,7 +132,7 @@ const MidiCrateCheckoutPage = () => {
 
       window.addEventListener("popstate", event => {
         console.log(event)
-        if (window.location.hash === "#exit") {
+        if (window.location.hash === "#exit" && !localStorage.getItem("phelpsiePopup")) {
           localStorage.setItem("phelpsiePopup", true)
           // localStorage.removeItem("phelpsiePopup");
           setIsExitIntentModalOpen(true)
