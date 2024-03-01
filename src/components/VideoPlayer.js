@@ -98,6 +98,7 @@ const VideoPlayer = () => {
             ref={videoRef}
             className="w-full h-full"
             disableRemotePlayback
+            onClick={() => handlePlay()}
             onDurationChange={e => setDuration(e.currentTarget.duration)}
             onTimeUpdate={e => {
               setCurrrentProgress(e.currentTarget.currentTime)
@@ -120,18 +121,21 @@ const VideoPlayer = () => {
             playsInline
             src={videoPlayerSrc}
           />
-          <VideoProgressBar
-            duration={duration}
-            currentProgress={currrentProgress}
-            buffered={buffered}
-            onChange={e => {
-              if (!videoRef.current) return
+          {videoPlayerSrc !== "/midi-crate-video.mp4" && (
+            <VideoProgressBar
+              duration={duration}
+              currentProgress={currrentProgress}
+              buffered={buffered}
+              onChange={e => {
+                if (!videoRef.current) return
 
-              videoRef.current.currentTime = e.currentTarget.valueAsNumber
+                videoRef.current.currentTime = e.currentTarget.valueAsNumber
 
-              setCurrrentProgress(e.currentTarget.valueAsNumber)
-            }}
-          />
+                setCurrrentProgress(e.currentTarget.valueAsNumber)
+              }}
+            />
+          )}
+
           <button
             type="button"
             disabled={!isReady}
