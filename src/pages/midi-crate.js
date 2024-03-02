@@ -6,12 +6,10 @@ import AudioPlayerMidiCrate from "../components/AudioPlayerMidiCrate"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 import { IoStarSharp } from "react-icons/io5"
 import { FaDiamond } from "react-icons/fa6"
-import { FaArrowCircleUp } from "react-icons/fa";
+import { FaArrowCircleUp } from "react-icons/fa"
 import { FaArrowTurnUp } from "react-icons/fa6"
-import { PiArrowBendRightUpFill } from "react-icons/pi";
-import { PiArrowBendRightUpBold } from "react-icons/pi";
-
-
+import { PiArrowBendRightUpFill } from "react-icons/pi"
+import { PiArrowBendRightUpBold } from "react-icons/pi"
 
 import { TfiLock } from "react-icons/tfi"
 import { useSiteContext } from "../hooks/use-site-context"
@@ -355,15 +353,6 @@ const MidiCratePage = () => {
                       block: "start",
                       inline: "nearest",
                     })
-                    // if (currentSongIndex !== 2) {
-                    //   e.stopPropagation()
-                    //   setCurrentSongIndex(2)
-                    //   setIsPaused(false)
-                    // }
-                    // if (currentSongIndex === 2) {
-                    //   e.stopPropagation()
-                    //   setIsPaused(!isPaused)
-                    // }
                   }}
                   className="h-24 text-white"
                 >
@@ -381,12 +370,12 @@ const MidiCratePage = () => {
                       inline: "nearest",
                     })
                   }}
-                  className="ml-3 text-sm font-bold text-white md:text-lg lg:text-xl"
+                  className="ml-3 text-sm font-bold text-white underline cursor-pointer md:text-lg lg:text-xl"
                 >
                   Audio Demos
                 </p>
               </div>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => openPopup()}
                 className={`hidden w-2/3 py-3 mt-3 text-xs font-bold text-white rounded-full sm:block lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
@@ -394,14 +383,11 @@ const MidiCratePage = () => {
                 }`}
               >
                 GET MY FREE TRIAL
-              </button>
-              {/* <p className="hidden mt-3 text-xs text-gray-400 md:text-sm sm:block">
-                Try It Risk-Free. Cancel anytime with 1 click
-              </p> */}
+              </button> */}
             </div>
           </div>
         </div>
-        <button
+        {/* <button
           type="button"
           onClick={() => openPopup()}
           className={`block w-full max-w-[18rem] sm:max-w-sm py-3 mx-auto mt-2 text-sm font-bold text-white rounded-full sm:hidden lg:mt-6 sm:text-sm md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
@@ -409,10 +395,7 @@ const MidiCratePage = () => {
           }`}
         >
           GET MY FREE TRIAL
-        </button>
-        {/* <p className="block mt-3 text-xs text-center text-gray-400 md:text-sm sm:hidden">
-          Try It Risk-Free. Cancel anytime with 1 click
-        </p> */}
+        </button> */}
       </div>
 
       {/* Who I've worked with section */}
@@ -532,7 +515,7 @@ const MidiCratePage = () => {
           <button
             type="button"
             onClick={() => openPopup()}
-            className={`w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
+            className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 md:py-3 mt-8 text-base md:text-lg text-white font-bold rounded-full ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
           >
@@ -633,7 +616,7 @@ const MidiCratePage = () => {
           <button
             type="button"
             onClick={() => openPopup()}
-            className={`w-48 py-3 mx-auto mt-8 text-sm font-bold text-white rounded-full md:w-64 lg:mt-12 md:text-lg lg:text-xl whitespace-nowrap bg-brand-teal hover:bg-teal-300 ${
+            className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition md:py-3 mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-8 text-base md:text-lg text-white font-bold rounded-full ${
               isCheckoutLoading ? "checkout-loading" : ""
             }`}
           >
@@ -777,7 +760,7 @@ const MidiCratePage = () => {
             <button
               type="button"
               onClick={() => openPopup()}
-              className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-8 text-base md:text-lg text-white font-bold rounded-full ${
+              className={`bg-brand-teal md:py-3 hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-8 text-base md:text-lg text-white font-bold rounded-full ${
                 isCheckoutLoading ? "checkout-loading" : ""
               }`}
             >
@@ -869,6 +852,15 @@ const MidiCratePage = () => {
               <p className="font-bold">Daniel Morris - Leeds, UK</p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={() => openPopup()}
+            className={`bg-brand-teal md:py-3 hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-12 py-2 mt-12 text-base md:text-lg text-white font-bold rounded-full ${
+              isCheckoutLoading ? "checkout-loading" : ""
+            }`}
+          >
+            GET MY FREE TRIAL
+          </button>
         </div>
       </div>
       <div className="flex items-center justify-center mt-12">
