@@ -56,7 +56,7 @@ async function conversionsAPI(
     }
   }
 
-  if (eventName === "AddToCart" || eventName === "InitiateCheckout" || eventName === 'Subscribe') {
+  if (eventName === "AddToCart" || eventName === "InitiateCheckout") {
     body = {
       data: [
         {
@@ -69,6 +69,30 @@ async function conversionsAPI(
             client_user_agent: userAgent,
           },
           event_id: eventID,
+        },
+      ],
+    }
+  }
+
+  if (eventName === 'Subscribe') {
+    body = {
+      data: [
+        {
+          event_name: eventName,
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: "website",
+          event_source_url: source,
+          user_data: {
+            client_ip_address: ipAddress,
+            client_user_agent: userAgent,
+            em: email,
+            fn: firstName,
+          },
+          event_id: eventID,
+          custom_data: {
+            currency: thecurrency,
+            value: thevalue,
+          },
         },
       ],
     }

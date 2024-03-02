@@ -9,7 +9,7 @@ import { allProducts } from "../data/all-products"
 import { MdPlayArrow, MdPause } from "react-icons/md"
 import { loadStripe } from "@stripe/stripe-js"
 import { StaticImage } from "gatsby-plugin-image"
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid"
 
 const SuccessMCPage = () => {
   const [customerInfo, setCustomerInfo] = React.useState({})
@@ -20,7 +20,7 @@ const SuccessMCPage = () => {
   const [isHoveringProd2, setIsHoveringProd2] = React.useState(false)
   const [isHoveringProd3, setIsHoveringProd3] = React.useState(false)
   const [paymentStatus, setPaymentStatus] = React.useState(null)
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true)
 
   const currentSong = allProducts[currentSongIndex]
 
@@ -167,7 +167,7 @@ const SuccessMCPage = () => {
   }
 
   async function doCAPI(name, email) {
-    let sessionID = uuidv4();
+    let sessionID = uuidv4()
     console.log("event id: ", sessionID)
     const res1 = await conversionsAPI(
       email.toLowerCase(),
@@ -193,7 +193,12 @@ const SuccessMCPage = () => {
         },
         { eventID: sessionID }
       )
-      window.fbq("track", "Subscribe", {}, { eventID: sessionID })
+      window.fbq(
+        "track",
+        "Subscribe",
+        { value: 9.0, currency: "USD" },
+        { eventID: sessionID }
+      )
     }
     if (isBrowser && window.gtag) {
       gtag("set", "user_data", {
@@ -201,12 +206,12 @@ const SuccessMCPage = () => {
       })
       gtag("event", "conversion", {
         send_to: "AW-11150251828/nOO8CNbFuPgYELSu7cQp",
-        value: 9.00,
+        value: 9.0,
         currency: "USD",
         transaction_id: "",
       })
     }
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   React.useEffect(() => {
@@ -233,7 +238,7 @@ const SuccessMCPage = () => {
     }
     setCustomerInfo({ name: str_out, email: str_out2 })
 
-    doCAPI(str_out, str_out2);
+    doCAPI(str_out, str_out2)
   }, [])
 
   return (
