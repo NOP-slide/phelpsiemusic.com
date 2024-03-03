@@ -41,6 +41,7 @@ const MidiCrateCheckoutPage = () => {
   const [createdName, setCreatedName] = React.useState("")
   const [createdEmail, setCreatedEmail] = React.useState("")
   const [isFormNameError, setIsFormNameError] = React.useState(false)
+  const [isAbandonedCart, setIsAbandonedCart] = React.useState(false)
   const [isFormEmailError, setIsFormEmailError] = React.useState(false)
   const [isCheckoutLoading, setIsCheckoutLoading] = React.useState(false)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -120,6 +121,7 @@ const MidiCrateCheckoutPage = () => {
       setCreatedEmail(unescape(str_out2))
       const custId = params.get("amp;v3")
       setCustomerId(unescape(custId))
+      setIsAbandonedCart(true)
     }
 
     if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
@@ -132,7 +134,10 @@ const MidiCrateCheckoutPage = () => {
 
       window.addEventListener("popstate", event => {
         console.log(event)
-        if (window.location.hash === "#exit" && !localStorage.getItem("phelpsiePopup")) {
+        if (
+          window.location.hash === "#exit" &&
+          !localStorage.getItem("phelpsiePopup")
+        ) {
           localStorage.setItem("phelpsiePopup", true)
           // localStorage.removeItem("phelpsiePopup");
           setIsExitIntentModalOpen(true)
@@ -301,7 +306,7 @@ const MidiCrateCheckoutPage = () => {
         />
         <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           <h2 className="text-2xl font-bold tracking-wide text-center text-white sm:tracking-normal sm:text-4xl xl:text-5xl whitespace-nowrap">
-            Ready For Your Free Month?
+            {isAbandonedCart ? `Welcome Back` : "Ready For Your Free Month?"}
           </h2>
         </div>
       </div>
@@ -311,42 +316,68 @@ const MidiCrateCheckoutPage = () => {
           <div className="flex flex-wrap justify-around">
             <div className="w-full md:w-auto">
               <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
-                <span id="pricingsection">Here's What You Get:</span>
+                <span id="pricingsection" className="">
+                  {isAbandonedCart
+                    ? `Hey ${
+                        createdName.length > 17
+                          ? createdName.substring(0, 17) + "..."
+                          : createdName
+                      }!`
+                    : `Here's What You Get:`}
+                </span>
               </h3>
-              <div className="px-2 mt-2 leading-10 text-white sm:mt-6 sm:px-0 whitespace-nowrap">
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  180 MIDI Chord Progressions Every Month
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  180 MIDI Arpeggios Every Month
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  BONUS - Free Hip-Hop Loop Kit
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  BONUS - Access To My Discord Community
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  100% Royalty Free
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  Works With Any Audio Software
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  Compatible With Both Mac & PC
-                </p>
-                <p className="font-bold">
-                  <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
-                  No Commitments - Cancel Anytime
-                </p>
-              </div>
+              {isAbandonedCart ? (
+                <div className="max-w-sm px-2 mt-2 mb-6 leading-10 text-white lg:max-w-md lg:mb-0 sm:mt-6 sm:px-0">
+                  <p className="font-bold">
+                    Great to see you again. Are you ready to get your 360 free
+                    MIDI files? You'll pay $0 today, so your card won't be
+                    charged. You'll receive your first month of MIDI Crate to
+                    your email immediately upon getting access. If you don't
+                    love it, you can cancel anytime with 1 click. Hope to see
+                    you inside!
+                    <br />
+                    <div className="mb-2" />
+                    <span className="text-brand-teal">
+                      Your friend, Phelpsie
+                    </span>
+                  </p>
+                </div>
+              ) : (
+                <div className="px-2 mt-2 leading-10 text-white sm:mt-6 sm:px-0 whitespace-nowrap">
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    180 MIDI Chord Progressions Every Month
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    180 MIDI Arpeggios Every Month
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    BONUS - Free Hip-Hop Loop Kit
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    BONUS - Access To My Discord Community
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    100% Royalty Free
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    Works With Any Audio Software
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    Compatible With Both Mac & PC
+                  </p>
+                  <p className="font-bold">
+                    <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
+                    No Commitments - Cancel Anytime
+                  </p>
+                </div>
+              )}
             </div>
             <div className="w-full px-2 mt-4 md:mt-0 md:w-auto sm:px-0">
               <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
