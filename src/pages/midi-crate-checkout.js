@@ -124,7 +124,7 @@ const MidiCrateCheckoutPage = () => {
       setIsAbandonedCart(true)
     }
 
-    if (isBrowser && !localStorage.getItem("phelpsiePopup")) {
+    if (isBrowser && localStorage.getItem("phelpsiePopup") === null) {
       window.history.replaceState(
         null,
         document.title,
@@ -136,7 +136,7 @@ const MidiCrateCheckoutPage = () => {
         console.log(event)
         if (
           window.location.hash === "#exit" &&
-          !localStorage.getItem("phelpsiePopup")
+          localStorage.getItem("phelpsiePopup") === null
         ) {
           localStorage.setItem("phelpsiePopup", true)
           // localStorage.removeItem("phelpsiePopup");
