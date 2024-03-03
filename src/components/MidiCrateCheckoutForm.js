@@ -101,7 +101,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         onReady={() => {
           setIsStripeFormLoading(false)
           if (!isUrgencyBannerOpen)
-            setTimeout(() => setIsUrgencyBannerOpen(true), 450)
+            setTimeout(() => setIsUrgencyBannerOpen(true), 2000)
         }}
         options={{
           layout: {
@@ -116,15 +116,15 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         }}
       />
       <p className={`-mt-4 text-sm text-center text-gray-400 `}>
-        Try it risk-free. Cancel anytime with 1 click
+        You won't be charged today.<br/>Cancel anytime with 1 click.
       </p>
       <button
-        className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-24 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
+        className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-16 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
           isLoading ? "checkout-loading" : ""
         }`}
         disabled={!stripe || isLoading || isStripeFormLoading}
       >
-        FINISH
+        GET ACCESS NOW
       </button>
       {errorMessage && (
         <div

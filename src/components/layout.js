@@ -40,26 +40,26 @@ const Layout = ({
     setIsExitIntentModalOpen,
   } = useSiteContext()
 
-  const onAFK = () => {
-    if (
-      !isPlayerOpen &&
-      !playerZIndexBoost &&
-      !isVideoPlayerOpen &&
-      !isCrossSellModalOpen &&
-      !isEmailCollectorOpen &&
-      !isCartOpen &&
-      !isExitIntentModalOpen &&
-      !localStorage.getItem("phelpsieAFK")
-    ) {
-      setIsUserAFK(true)
-      localStorage.setItem("phelpsieAFK", true)
-      setIsExitIntentModalOpen(true)
-    } else {
-      reset()
-    }
-  }
+  // const onAFK = () => {
+  //   if (
+  //     !isPlayerOpen &&
+  //     !playerZIndexBoost &&
+  //     !isVideoPlayerOpen &&
+  //     !isCrossSellModalOpen &&
+  //     !isEmailCollectorOpen &&
+  //     !isCartOpen &&
+  //     !isExitIntentModalOpen &&
+  //     !localStorage.getItem("phelpsieAFK")
+  //   ) {
+  //     setIsUserAFK(true)
+  //     localStorage.setItem("phelpsieAFK", true)
+  //     setIsExitIntentModalOpen(true)
+  //   } else {
+  //     reset()
+  //   }
+  // }
 
-  const { reset } = useUserIdle(30000, onAFK)
+  // const { reset } = useUserIdle(30000, onAFK)
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {

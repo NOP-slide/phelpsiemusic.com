@@ -11,7 +11,7 @@ const Banner = () => {
       <p className="">
         Special Launch Offer: First Month FREE.
         <br />
-        Get It Before It's Gone Forever
+        360 MIDI Files - Don't Miss Out!
         <MdOutlineTimer className="ml-1 inline-block w-5 h-5 md:w-6 md:h-6 transform -translate-y-0.5" />
       </p>
     </div>

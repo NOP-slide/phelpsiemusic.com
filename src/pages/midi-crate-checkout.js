@@ -466,8 +466,11 @@ const MidiCrateCheckoutPage = () => {
                     </Tab.Panel>
                     <Tab.Panel>
                       <div className="">
-                        <p className="mt-4 mb-4 font-bold leading-10 text-center text-white sm:mt-6">
+                        <p className="mt-4 font-bold leading-10 text-center text-gray-300 sm:mt-6">
                           First Month Free, Then Only $9/Month
+                        </p>
+                        <p className="mb-4 text-lg font-black leading-10 text-center text-white">
+                          TODAY'S TOTAL: $0.00
                         </p>
                         <div className="flex justify-center">
                           <div>

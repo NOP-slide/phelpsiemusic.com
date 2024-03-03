@@ -63,7 +63,7 @@ const ExitIntentModal = () => {
             </h2>
           </div>
           <div className="px-2 mt-6 text-xl font-bold text-center md:px-0 md:mt-8 md:text-3xl text-brand-teal">
-            <span className="">Today's Total: $0</span>
+            <span className="">Today's Total: $0.00</span>
             <br className="" />
             <br className="hidden md:block" />
             <div className="mt-4 text-white md:mt-0">
