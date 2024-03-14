@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 exports.handler = async ({ body }) => {
   const customerId = JSON.parse(body).id
-  console.log("ID IN FunC= ", customerId);
+  console.log("ID IN FunC= ", customerId)
 
   const priceId = "price_1OH8QSAHwqgwuHo3DFgteSqv"
 
@@ -26,6 +26,7 @@ exports.handler = async ({ body }) => {
         body: JSON.stringify({
           type: "setup",
           clientSecret: subscription.pending_setup_intent.client_secret,
+          id: subscription.id,
         }),
       }
     } else {
@@ -35,6 +36,7 @@ exports.handler = async ({ body }) => {
           type: "payment",
           clientSecret:
             subscription.latest_invoice.payment_intent.client_secret,
+          id: subscription.id,
         }),
       }
     }

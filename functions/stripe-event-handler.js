@@ -109,6 +109,13 @@ exports.handler = async ({ body, headers }) => {
       }
     }
 
+    // Handle card authorization success
+    if (stripeEvent.type === 'payment_intent.amount_capturable_updated') {
+      const eventObject = stripeEvent.data.object
+      // Cancel the authorization charge
+      const cancelRes = await stripe.paymentIntents.cancel(eventObject.id);
+    }
+
     // Handle subscription success
     if (stripeEvent.type === "customer.subscription.updated") {
       const eventObject = stripeEvent.data.object

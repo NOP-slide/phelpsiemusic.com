@@ -20,7 +20,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
 
   const handleError = error => {
     setIsLoading(false)
-    setErrorMessage(error.message)
+    setErrorMessage(error.message ? error.message : error)
   }
 
   const handleSubmit = async event => {
@@ -33,6 +33,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
     }
 
     setIsLoading(true)
+    setErrorMessage("")
 
     // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit()
@@ -51,7 +52,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         id: customerId,
       }),
     })
-    const { type, clientSecret } = await res.json()
+    const { type, clientSecret, id } = await res.json()
     const confirmIntent =
       type === "setup" ? stripe.confirmSetup : stripe.confirmPayment
 
@@ -72,22 +73,94 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
       temp4 += temp3.charCodeAt(i) - 23
     }
 
-    const { error } = await confirmIntent({
+    const result = await confirmIntent({
       elements,
       clientSecret,
       confirmParams: {
         return_url: `https://www.phelpsiemusic.com/success-mc?vr1=${temp2}&vr2=${temp4}`,
       },
+      redirect: "if_required",
     })
 
-    if (error) {
-      // This point is only reached if there's an immediate error when confirming the Intent.
-      // Show the error to your customer (for example, "payment details incomplete").
-      handleError(error)
+    console.log("RESULT: ", result)
+
+    if (result.error) {
+      // *********************************
+      // There was an error such as insufficient funds or generic decline
+      // *********************************
+      const del = await fetch(
+        "/.netlify/functions/stripe-delete-subscription",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+          }),
+        }
+      )
+      handleError(result.error)
     } else {
-      // Your customer is redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer is redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+      // ***************************
+      // Check if card is prepaid
+      // ***************************
+      const res = await fetch(
+        "/.netlify/functions/stripe-retrieve-payment-method",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pm: result.setupIntent.payment_method,
+          }),
+        }
+      )
+      const data = await res.json()
+
+      if (data.paymentMethod.card?.funding === "prepaid") {
+        const del = await fetch(
+          "/.netlify/functions/stripe-delete-subscription",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: id,
+            }),
+          }
+        )
+        handleError(
+          "Sorry, prepaid cards aren't accepted. Please try a different card."
+        )
+      }
+      // ***************************
+      // If card is acceptable, authorize a $1 verification test
+      // ***************************
+      else {
+        const checkresult = await fetch(
+          "/.netlify/functions/stripe-verify-payment-method",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              pm: result.setupIntent.payment_method,
+              cus: customerId,
+            }),
+          }
+        )
+        const { verification } = await checkresult.json()
+        if (!verification) {
+          handleError("Card authorization failed. Please try a different card.")
+        } else {
+          // Card is good to go
+          window.location = `https://www.phelpsiemusic.com/success-mc?vr1=${temp2}&vr2=${temp4}`
+        }
+      }
     }
   }
 
@@ -116,7 +189,9 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         }}
       />
       <p className={`-mt-4 text-sm text-center text-gray-400 `}>
-        You won't be charged today.<br/>Cancel anytime with 1 click.
+        You won't be charged today.
+        <br />
+        Cancel anytime with 1 click.
       </p>
       <button
         className={`bg-brand-teal hover:bg-teal-300 whitespace-nowrap transition mx-auto flex justify-center ease-in-out hover:scale-110 duration-200 px-16 py-2 mt-4 text-base md:text-lg text-white font-bold rounded-full ${
@@ -129,7 +204,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
       {errorMessage && (
         <div
           style={{ color: "rgb(254, 135, 161)" }}
-          className="mt-4 text-center"
+          className="max-w-xs mx-auto mt-4 text-center"
         >
           Error: {errorMessage}
         </div>
