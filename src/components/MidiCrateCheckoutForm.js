@@ -158,6 +158,18 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
           handleError("Card authorization failed. Please try a different card.")
         } else {
           // Card is good to go
+          const upd = await fetch(
+            "/.netlify/functions/stripe-update-subscription",
+            {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: id,
+              }),
+            }
+          )
           window.location = `https://www.phelpsiemusic.com/success-mc?vr1=${temp2}&vr2=${temp4}`
         }
       }

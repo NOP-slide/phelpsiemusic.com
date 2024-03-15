@@ -5,8 +5,8 @@ exports.handler = async ({ body }) => {
     "*****************************************************************************************************************************BODY******************************************************************************",
     body
   )
-  const res = await stripe.subscriptions.cancel(JSON.parse(body).id, {
-    cancellation_details: { comment: "card_failed" },
+  const res = await stripe.subscriptions.update(JSON.parse(body).id, {
+    metadata: { authenticated: "true" },
   })
 
   return {

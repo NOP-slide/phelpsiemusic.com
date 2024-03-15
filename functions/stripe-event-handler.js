@@ -110,17 +110,20 @@ exports.handler = async ({ body, headers }) => {
     }
 
     // Handle card authorization success
-    if (stripeEvent.type === 'payment_intent.amount_capturable_updated') {
+    if (stripeEvent.type === "payment_intent.amount_capturable_updated") {
       const eventObject = stripeEvent.data.object
       // Cancel the authorization charge
-      const cancelRes = await stripe.paymentIntents.cancel(eventObject.id);
+      const cancelRes = await stripe.paymentIntents.cancel(eventObject.id)
     }
 
     // Handle subscription success
     if (stripeEvent.type === "customer.subscription.updated") {
       const eventObject = stripeEvent.data.object
       console.log("****EventObject******: ", eventObject)
-      if (eventObject.status === "trialing") {
+      if (
+        eventObject.status === "trialing" &&
+        eventObject.metadata.authenticated === "true"
+      ) {
         const customer = await stripe.customers.retrieve(eventObject.customer)
         console.log("***********Customer:*********** ", customer)
         const email = customer.email
@@ -157,7 +160,10 @@ exports.handler = async ({ body, headers }) => {
     }
 
     // Handle subscription cancellation
-    if (stripeEvent.type === "customer.subscription.deleted") {
+    if (
+      stripeEvent.type === "customer.subscription.deleted" &&
+      stripeEvent.data.object.cancellation_details.comment !== "card_failed"
+    ) {
       const eventObject = stripeEvent.data.object
       console.log("****EventObject******: ", eventObject)
       const customer = await stripe.customers.retrieve(eventObject.customer)
@@ -213,7 +219,7 @@ exports.handler = async ({ body, headers }) => {
       console.log("Invoice paid: ", stripeEvent.data.object)
 
       if (stripeEvent.data.object.amount_paid > 0) {
-        let customerEmail = stripeEvent.data.object.customer_email;
+        let customerEmail = stripeEvent.data.object.customer_email
 
         // Add to month x of MIDI Crate
         try {
