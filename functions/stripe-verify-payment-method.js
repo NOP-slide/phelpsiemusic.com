@@ -7,7 +7,7 @@ exports.handler = async ({ body }) => {
       amount: 900, // $9
       currency: 'usd',
       capture_method: 'manual',
-      statement_descriptor_suffix: 'Card Verify',
+      statement_descriptor_suffix: 'Temporary',
       confirm: true,
       payment_method: JSON.parse(body).pm,
       customer: JSON.parse(body).cus,
