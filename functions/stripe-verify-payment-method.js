@@ -4,7 +4,7 @@ exports.handler = async ({ body }) => {
   console.log("BODY: ", body)
   try {
     const intent = await stripe.paymentIntents.create({
-      amount: 100, // $1
+      amount: 900, // $9
       currency: 'usd',
       capture_method: 'manual',
       statement_descriptor_suffix: 'Card Verify',
