@@ -155,6 +155,18 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         )
         const { verification } = await checkresult.json()
         if (!verification) {
+          const del = await fetch(
+            "/.netlify/functions/stripe-delete-subscription",
+            {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: id,
+              }),
+            }
+          )
           handleError("Card authorization failed. Please try a different card.")
         } else {
           // Card is good to go
