@@ -9,6 +9,7 @@ exports.handler = async ({ body }) => {
       capture_method: 'manual',
       statement_descriptor_suffix: 'Temporary',
       confirm: true,
+      off_session: true,
       payment_method: JSON.parse(body).pm,
       customer: JSON.parse(body).cus,
       return_url: 'https://www.phelpsiemusic.com/success-mc',
