@@ -198,7 +198,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         onReady={() => {
           setIsStripeFormLoading(false)
           if (!isUrgencyBannerOpen)
-            setTimeout(() => setIsUrgencyBannerOpen(true), 2000)
+            setTimeout(() => setIsUrgencyBannerOpen(true), 1000)
         }}
         options={{
           layout: {
