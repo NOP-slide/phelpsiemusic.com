@@ -501,7 +501,13 @@ const MidiCrateCheckoutPage = () => {
                           First Month Free, Then Only $9/Month
                         </p>
                         <p className="mb-4 text-lg font-black leading-10 text-center text-white">
-                          TODAY'S TOTAL: $0.00
+                          TODAY'S TOTAL:{" "}
+                          <span className="relative text-red-600">
+                            $19
+                            <span className="absolute -left-1 w-10 text-2xl text-red-600 border-b-[2px] border-red-600 top-3">
+                            </span>
+                          </span>{" "}
+                          $0.00
                         </p>
                         <div className="flex justify-center">
                           <div>

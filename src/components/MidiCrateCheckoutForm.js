@@ -167,7 +167,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
               }),
             }
           )
-          handleError("Card authorization failed. Please try a different card.")
+          handleError("Card declined. Please try a different card.")
         } else {
           // Card is good to go
           const upd = await fetch(
