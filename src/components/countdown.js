@@ -4,7 +4,7 @@ import { MdOutlineTimer } from "react-icons/md"
 
 const Countdown = () => {
   const [time, setTime] = React.useState({
-    minutes: 5,
+    minutes: 4,
     seconds: 0,
     centiseconds: 0,
   })
