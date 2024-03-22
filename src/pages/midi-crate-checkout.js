@@ -504,7 +504,7 @@ const MidiCrateCheckoutPage = () => {
                           TODAY'S TOTAL:{" "}
                           <span className="relative text-red-600">
                             $19
-                            <span className="absolute -left-1 w-10 text-2xl text-red-600 border-b-[2px] border-red-600 top-3">
+                            <span className="absolute -left-1 w-10 text-2xl text-red-600 border-b-[2px] border-red-600 top-1/2">
                             </span>
                           </span>{" "}
                           $0.00
