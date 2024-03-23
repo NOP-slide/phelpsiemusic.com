@@ -198,7 +198,7 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
         onReady={() => {
           setIsStripeFormLoading(false)
           if (!isUrgencyBannerOpen)
-            setTimeout(() => setIsUrgencyBannerOpen(true), 1000)
+            setTimeout(() => setIsUrgencyBannerOpen(true), 750)
         }}
         options={{
           layout: {
@@ -212,8 +212,8 @@ const MidiCrateCheckoutForm = ({ customerId, customerName, customerEmail }) => {
           },
         }}
       />
-      <p className={`-mt-4 text-sm text-center text-gray-400 `}>
-        You won't be charged today.
+      <p className={`mt-0 text-sm text-center text-gray-400 `}>
+        First month free, then just $9/month.
         <br />
         Cancel anytime with 1 click.
       </p>

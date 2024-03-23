@@ -75,7 +75,7 @@ const Layout = ({
   return (
     <>
       <div className="relative flex flex-col min-h-screen antialiased bg-brand-dark fill-available">
-        {hasBanner && <Countdown />}
+        {hasBanner && <Banner />}
         {!isMidiCrateCheckout && (
           <Header
             hideCart={hideCart}

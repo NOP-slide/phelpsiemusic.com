@@ -497,14 +497,14 @@ const MidiCrateCheckoutPage = () => {
                     </Tab.Panel>
                     <Tab.Panel>
                       <div className="">
-                        <p className="mt-4 font-bold leading-10 text-center text-gray-400 sm:mt-6">
+                        {/* <p className="mt-4 font-bold leading-10 text-center text-gray-400 sm:mt-6">
                           First Month Free, Then Only $9/Month
-                        </p>
-                        <p className="mb-4 text-lg font-black leading-10 text-center text-white">
+                        </p> */}
+                        <p className="mt-4 mb-4 text-lg font-black leading-10 text-center text-white sm:mt-6">
                           TODAY'S TOTAL:{" "}
                           <span className="relative text-red-600">
-                            $19
-                            <span className="absolute -left-1 w-10 text-2xl text-red-600 border-b-[2px] border-red-600 top-1/2">
+                            $9
+                            <span className="absolute -left-1 w-[1.9rem] text-2xl text-red-600 border-b-[2px] border-red-600 top-1/2">
                             </span>
                           </span>{" "}
                           $0.00
