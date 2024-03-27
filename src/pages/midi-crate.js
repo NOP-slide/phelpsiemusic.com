@@ -287,7 +287,7 @@ const MidiCratePage = () => {
         <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           <h2 className="text-2xl font-bold tracking-wide text-center text-white sm:tracking-normal sm:text-4xl xl:text-5xl whitespace-nowrap">
             Your Shortcut To Hits. <br className="block lg:hidden" />
-            Every Single Month.
+            Hand-Picked For You.
           </h2>
         </div>
       </div>
