@@ -306,7 +306,7 @@ const MidiCrateCheckoutPage = () => {
         />
         <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           <h2 className="text-2xl font-bold tracking-wide text-center text-white sm:tracking-normal sm:text-4xl xl:text-5xl whitespace-nowrap">
-            {isAbandonedCart ? `Welcome Back` : "Ready For Your Free Trial?"}
+            {isAbandonedCart ? `Welcome Back` : "You're Almost There."}
           </h2>
         </div>
       </div>
