@@ -372,16 +372,16 @@ const MidiCrateCheckoutPage = () => {
                     <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
                     Compatible With Both Mac & PC
                   </p>
-                  <p className="font-bold">
+                  {/* <p className="font-bold">
                     <FaDiamond className="inline-block w-3 h-3 text-brand-teal" />{" "}
                     No Commitments - Cancel Anytime
-                  </p>
+                  </p> */}
                 </div>
               )}
             </div>
             <div className="w-full px-2 mt-4 md:mt-0 md:w-auto sm:px-0">
               <h3 className="text-xl font-bold tracking-wide text-center md:text-justify sm:tracking-normal lg:text-4xl text-brand-teal">
-                <span id="pricingsection">Complete Your Order:</span>
+                <span id="pricingsection">Complete Your Download:</span>
               </h3>
               <div className="px-4 pt-4 pb-6 mt-6 shadow-2xl bg-brand-tealTranslucent shadow-brand-tealShadow">
                 <Tab.Group
