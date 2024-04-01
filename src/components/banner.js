@@ -10,12 +10,12 @@ const Banner = () => {
     >
       <p className="">
         <span className="border-b border-white">
-          Why do you need my card?
+          Try It Risk-Free
         </span>
         <br />
-        To prove that you're willing to invest in yourself,
+        Your first month is 100% free.
         <br />
-        and want to make hits every single month.
+        Don't love it? Cancel in 1 click
         {/* <br />
         Don't love it? Cancel in 1 click. */}
         {/* <MdOutlineTimer className="ml-1 inline-block w-5 h-5 md:w-6 md:h-6 transform -translate-y-0.5" /> */}
