@@ -30,7 +30,7 @@ function Seo({ description, title, children }) {
     <>
       <title>{defaultTitle ? `${title} | ${defaultTitle}` : title}</title>
       <meta name="description" content={metaDescription} />
-      <meta property='og:image' content={title === 'MIDI Crate' ? 'https://www.phelpsiemusic.com/og-image-mc.jpg' : "https://www.phelpsiemusic.com/og-image.jpg"} />
+      <meta property='og:image' content={title === 'MIDI Crate - The Ultimate MIDI Pack' ? 'https://www.phelpsiemusic.com/og-image-mc.jpg' : "https://www.phelpsiemusic.com/og-image.jpg"} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
