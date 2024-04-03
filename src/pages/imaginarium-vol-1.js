@@ -614,6 +614,12 @@ const ImaginariumVol1Page = () => {
  *
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
-export const Head = () => <Seo title="Imaginarium Vol. 1" />
+export const Head = () => (
+  <Seo
+    title="Imaginarium Vol. 1"
+    image="https://www.phelpsiemusic.com/og-loopkit.jpg"
+    description="Trap & Drill Loop Kit. Trusted by the pros. Create industry-ready beats today!"
+  />
+)
 
 export default ImaginariumVol1Page

@@ -259,35 +259,35 @@ exports.handler = async ({ body, headers }) => {
       const email = session.customer_details?.email
       const recoveryUrl = session.after_expiration?.recovery?.url
 
-      // if (email && recoveryUrl && session.mode !== "subscription") {
-      //   try {
-      //     let emailHtml = `<p>Hey producer!</p><p>Thanks for checking out my website, I appreciate it. I noticed you didn't complete your purchase - no worries at all, but if you change your mind, use this link and enter the coupon code WELCOMEBACK to receive 15% off.</p>`
+      if (email && recoveryUrl && session.mode !== "subscription") {
+        try {
+          let emailHtml = `<p>Hey producer!</p><p>Thanks for checking out my website, I appreciate it. I noticed you didn't complete your purchase - no worries at all, but if you change your mind, use this link and enter the coupon code WELCOMEBACK to receive 15% off.</p>`
 
-      //     emailHtml +=
-      //       `<a href="` + recoveryUrl + `">Complete your purchase</a><br/>`
+          emailHtml +=
+            `<a href="` + recoveryUrl + `">Complete your purchase</a><br/>`
 
-      //     emailHtml += `<br/><p>Warm regards,</p><p>Phelpsie</p>`
+          emailHtml += `<br/><p>Warm regards,</p><p>Phelpsie</p>`
 
-      //     const sentFrom = new Sender(
-      //       "phelpsie@phelpsiemusic.com",
-      //       "Phelpsie Music"
-      //     )
-      //     const recipients = [new Recipient(email, "")]
+          const sentFrom = new Sender(
+            "phelpsie@phelpsiemusic.com",
+            "Phelpsie Music"
+          )
+          const recipients = [new Recipient(email, "")]
 
-      //     const emailParams = new EmailParams()
-      //       .setFrom(sentFrom)
-      //       .setTo(recipients)
-      //       .setReplyTo(sentFrom)
-      //       .setSubject(
-      //         `Did you forget something? Get 15% off right now at Phelpsie Music`
-      //       )
-      //       .setHtml(emailHtml)
-      //     const res = await mailerSend.email.send(emailParams)
-      //   } catch (error) {
-      //     // eslint-disable-next-line no-console
-      //     console.error(error)
-      //   }
-      // }
+          const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setReplyTo(sentFrom)
+            .setSubject(
+              `Did you forget something? Get 15% off right now at Phelpsie Music`
+            )
+            .setHtml(emailHtml)
+          const res = await mailerSend.email.send(emailParams)
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+        }
+      }
 
       // ********************************
       // MIDI Crate Abandoned Cart

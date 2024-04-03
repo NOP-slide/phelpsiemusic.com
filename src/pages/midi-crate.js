@@ -921,6 +921,12 @@ const MidiCratePage = () => {
  *
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
-export const Head = () => <Seo description="MIDI Crate - Your Shortcut To Hits. The only MIDI Chord Pack trusted by the pros to provide endless inspiration. Get 360 Free MIDI Chords today!" title="MIDI Crate - The Ultimate MIDI Pack" />
+export const Head = () => (
+  <Seo
+    image="https://www.phelpsiemusic.com/og-image-mc.jpg"
+    description="MIDI Crate - Your Shortcut To Hits. The only MIDI Chord Pack trusted by the pros to provide endless inspiration. Get 360 Free MIDI Chords today!"
+    title="MIDI Crate - The Ultimate MIDI Pack"
+  />
+)
 
 export default MidiCratePage
