@@ -244,11 +244,11 @@ exports.handler = async ({ body, headers }) => {
         }
 
         // Add to month x of MIDI Crate
-        let month = 2;
+        let month = '2';
         let group = ["114573246580393257"];
 
-        if (customerData.data.fields.midi_crate_month === 2) {
-          month = 3;
+        if (customerData.data.fields.midi_crate_month === '2') {
+          month = '3';
           group = ["118132620505646144"];
         }
         try {
