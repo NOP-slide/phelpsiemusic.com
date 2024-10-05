@@ -93,8 +93,8 @@ const MidiCrateCheckoutPage = () => {
     if (
       isBrowser &&
       window.location.search.includes("v1=") &&
-      window.location.search.includes("amp;v2=") &&
-      window.location.search.includes("amp;v3=")
+      window.location.search.includes("v2=") &&
+      window.location.search.includes("v3=")
     ) {
       const params = new URL(document.location).searchParams
       const name = params.get("v1")
@@ -106,7 +106,7 @@ const MidiCrateCheckoutPage = () => {
         num_in = unescape("%" + num_in.toString(16))
         str_out += num_in
       }
-      const email = params.get("amp;v2")
+      const email = params.get("v2")
       let str_out2 = ""
 
       let num_out2 = email
@@ -119,7 +119,7 @@ const MidiCrateCheckoutPage = () => {
       setCreatedName(unescape(str_out))
       setCustomerEmail(unescape(str_out2))
       setCreatedEmail(unescape(str_out2))
-      const custId = params.get("amp;v3")
+      const custId = params.get("v3")
       setCustomerId(unescape(custId))
       setIsAbandonedCart(true)
     }
