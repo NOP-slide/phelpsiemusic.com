@@ -271,6 +271,10 @@ exports.handler = async ({ body, headers }) => {
           month = '8';
           group = ["132023475689751938"];
         }
+        if (customerData.data.fields.midi_crate_month === '8') {
+          month = '9';
+          group = ["134930782118479326"];
+        }
         try {
           const res = await fetch(
             "https://connect.mailerlite.com/api/subscribers",
